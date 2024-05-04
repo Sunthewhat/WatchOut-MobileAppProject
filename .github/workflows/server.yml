@@ -12,6 +12,7 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         - uses: oven-sh/setup-bun@v1
+        - working-directory: ./server
         - run: bun install
         - run: bun run lint
         - run: bun run test
