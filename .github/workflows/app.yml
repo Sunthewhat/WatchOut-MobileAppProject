@@ -18,9 +18,12 @@ jobs:
         with:
           channel: stable
           flutter-version: 3.19.6
-      - working-directory: ./app
-        run: |
-          flutter pub get
-          flutter analyze
-          flutter test
-
+      - name: installing package
+        working-directory: ./app
+        run: flutter pub get
+      - name: checking errors
+        working-directory: ./app
+        run: flutter analyze
+      - name: running test
+        working-directory: ./app
+        run: flutter test
