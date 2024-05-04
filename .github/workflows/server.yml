@@ -10,9 +10,15 @@ jobs:
     name: validate-code-and-linting
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v4
-        - uses: oven-sh/setup-bun@v1
-        - working-directory: ./server
-        - run: bun install
-        - run: bun run lint
-        - run: bun run test
+      - uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install dependencies and lint code
+        working-directory: ./server
+        run: |
+          bun install
+          bun run lint
+          bun run test
+
