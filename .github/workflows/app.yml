@@ -9,6 +9,9 @@ jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
 
     steps:
       - name: Checkout Repository
@@ -22,12 +25,9 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ./app
 
       - name: Analyze code
         run: flutter analyze
-        working-directory: ./app
 
       - name: Run tests
         run: flutter test
-        working-directory: ./app
