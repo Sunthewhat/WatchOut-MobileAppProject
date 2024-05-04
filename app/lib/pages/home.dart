@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEBF4FF),
+      backgroundColor: const Color(0xFFEBF4FF),
       appBar: AppBar(
         title: const Text(
           'Home',
@@ -16,7 +18,7 @@ class HomePage extends StatelessWidget {
             ),
           ]),
         ),
-        backgroundColor: Color(0xFF2960AE),
+        backgroundColor: const Color(0xFF2960AE),
         elevation: 4,
         toolbarHeight: 130,
         centerTitle: true,
@@ -26,7 +28,7 @@ class HomePage extends StatelessWidget {
           // Report Cards
           _buildReport(
             incidentType: 'Wildfire',
-            reportCard: ReportCard(
+            reportCard: const ReportCard(
               imageUrl: 'assets/images/wildfire.jpg',
               userName: 'จนปัญญาว่ะ',
               userProfile: 'assets/images/jerrymeme.jpg',
@@ -34,7 +36,7 @@ class HomePage extends StatelessWidget {
           ),
           _buildReport(
             incidentType: 'Wildfire',
-            reportCard: ReportCard(
+            reportCard: const ReportCard(
               imageUrl: 'assets/images/wildfire.jpg',
               userName: 'จนปัญญาว่ะ',
               userProfile: 'assets/images/jerrymeme.jpg',
@@ -42,7 +44,7 @@ class HomePage extends StatelessWidget {
           ),
           _buildReport(
             incidentType: 'Wildfire',
-            reportCard: ReportCard(
+            reportCard: const ReportCard(
               imageUrl: 'assets/images/wildfire.jpg',
               userName: 'จนปัญญาว่ะ',
               userProfile: 'assets/images/jerrymeme.jpg',
@@ -51,20 +53,20 @@ class HomePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF2960AE),
+        color: const Color(0xFF2960AE),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.notifications),
+              icon: const Icon(Icons.notifications),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.report),
+              icon: const Icon(Icons.report),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.account_circle),
+              icon: const Icon(Icons.account_circle),
               onPressed: () {},
             ),
           ],
@@ -78,7 +80,7 @@ class HomePage extends StatelessWidget {
     required Widget reportCard,
   }) {
     return Container(
-      margin: EdgeInsets.all(20.0),
+      margin: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,14 +88,14 @@ class HomePage extends StatelessWidget {
             children: [
               Text(
                 incidentType,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 1.0), // Add spacing between text and card
+          const SizedBox(height: 1.0), // Add spacing between text and card
           reportCard,
         ],
       ),
@@ -106,7 +108,8 @@ class ReportCard extends StatelessWidget {
   final String userName;
   final String userProfile;
 
-  ReportCard({
+  const ReportCard({
+    super.key,
     required this.imageUrl,
     required this.userName,
     required this.userProfile,
@@ -122,7 +125,8 @@ class ReportCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16.0)),
               child: Image.asset(
                 imageUrl,
                 fit: BoxFit.cover,
@@ -142,7 +146,7 @@ class ReportCard extends StatelessWidget {
                           color: Colors.black.withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 1,
-                          offset: Offset(0, 1),
+                          offset: const Offset(0, 1),
                         ),
                       ],
                     ),
@@ -150,11 +154,11 @@ class ReportCard extends StatelessWidget {
                       backgroundImage: AssetImage(userProfile),
                     ),
                   ),
-                  SizedBox(width: 8.0),
+                  const SizedBox(width: 8.0),
                   Text(
                     userName,
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
