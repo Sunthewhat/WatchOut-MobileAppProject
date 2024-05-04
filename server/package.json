@@ -1,11 +1,23 @@
 {
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "lint": "bunx eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
     "hono": "^4.3.0"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@eslint/js": "^9.2.0",
+    "@types/bun": "latest",
+    "eslint": "^9.2.0",
+    "globals": "^15.1.0",
+    "typescript-eslint": "^7.8.0"
+  },
+  "name": "server",
+  "module": "index.ts",
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }
