@@ -15,10 +15,15 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
 
-      - name: Install dependencies and lint code
+      - name: Install dependencies
         working-directory: ./server
-        run: |
-          bun install
-          bun run lint
-          bun run test
+        run:  bun install
+        
+      - name: linting
+        working-directory: ./server
+        run: bun run lint
+        
+      - name: testing
+        working-directory: ./server
+        run: bun run test
 
