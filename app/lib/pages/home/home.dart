@@ -1,5 +1,6 @@
 import 'package:app/pages/Notification/notification.dart';
 import 'package:app/pages/profile/profile.dart';
+import 'package:app/pages/report/report.dart';
 import 'package:flutter/material.dart';
 
 class Report {
@@ -163,7 +164,8 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const NotificationPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationPage()),
                   );
                 },
                 child: SizedBox(
@@ -177,13 +179,23 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 100,
-                width: 100,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: Image.asset(
-                    'assets/images/report.png',
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ReportPage(),
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: Image.asset(
+                      'assets/images/report.png',
+                    ),
                   ),
                 ),
               ),
