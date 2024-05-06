@@ -1,5 +1,7 @@
+import 'package:app/pages/Notification/notification.dart';
 import 'package:app/pages/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:app/pages/profile/profile.dart';
 
 void main() {
   runApp(const MyApp());
