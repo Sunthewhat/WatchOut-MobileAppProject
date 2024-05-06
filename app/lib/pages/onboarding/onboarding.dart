@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:app/pages/home/home.dart';
 import 'package:app/pages/intro/intro.dart';
