@@ -19,7 +19,9 @@ class Report {
 }
 
 class ProfilePage extends StatelessWidget {
-  List<Report> reports = [
+  ProfilePage({super.key});
+
+  final List<Report> reports = [
     Report(
       incidentType: 'Wildfire',
       location: 'Ang thong, Bangkok',
@@ -29,6 +31,7 @@ class ProfilePage extends StatelessWidget {
       reportDescription: 'Wild fire near my house',
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     // Get the screen height

@@ -205,13 +205,13 @@ class ReportCard extends StatelessWidget {
   final String location;
 
   const ReportCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.userName,
     required this.userProfile,
     required this.reportDescription,
     required this.location,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

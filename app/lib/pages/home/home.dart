@@ -1,7 +1,6 @@
 import 'package:app/pages/Notification/notification.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Report {
   final String incidentType;
@@ -22,7 +21,7 @@ class Report {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -153,7 +152,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF2960AE),
+        color: const Color(0xFF2960AE),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           height: 70,
@@ -164,10 +163,10 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NotificationPage()),
+                    MaterialPageRoute(builder: (context) => const NotificationPage()),
                   );
                 },
-                child: Container(
+                child: SizedBox(
                   height: 40,
                   width: 40,
                   child: FittedBox(
@@ -178,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 100,
                 width: 100,
                 child: FittedBox(
@@ -266,13 +265,13 @@ class ReportCard extends StatelessWidget {
   final String location;
 
   const ReportCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.userName,
     required this.userProfile,
     required this.reportDescription,
     required this.location,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
