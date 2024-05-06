@@ -4,7 +4,7 @@ class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
 class _SignupPageState extends State<SignupPage> {
@@ -25,13 +25,18 @@ class _SignupPageState extends State<SignupPage> {
     String password = _passwordController.text;
     String confirmpassword = _confirmPasswordController.text;
 
-    print('First name: $firstname');
-    print('Last name: $lastname');
-    print('Confirm Password: $confirmpassword');
-    print('Email: $email');
-    print('Password: $password');
-    print('Policy Checked: $_policyChecked');
-    print('Data Policy Checked: $_dataPolicyChecked');
+    // print('First name: $firstname');
+    // print('Last name: $lastname');
+    // print('Confirm Password: $confirmpassword');
+    // print('Email: $email');
+    // print('Password: $password');
+    // print('Policy Checked: $_policyChecked');
+    // print('Data Policy Checked: $_dataPolicyChecked');
+    firstname;
+    lastname;
+    email;
+    password;
+    confirmpassword;
   }
 
   @override

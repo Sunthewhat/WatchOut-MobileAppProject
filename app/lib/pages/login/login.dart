@@ -15,8 +15,10 @@ class _LoginPageState extends State<LoginPage> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    print('Email: $email');
-    print('Password: $password');
+    email;
+    password;
+    // print('Email: $email');
+    // print('Password: $password');
   }
 
   @override
@@ -50,7 +52,8 @@ class _LoginPageState extends State<LoginPage> {
                               .withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 8,
-                          offset: const Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
@@ -98,8 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                           height: 10.0,
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 20.0), // Add padding on top
+                          padding: const EdgeInsets.only(
+                              top: 20.0), // Add padding on top
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Column(
@@ -140,8 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 20.0),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 30.0), // Add padding on top
+                          padding: const EdgeInsets.only(
+                              top: 30.0), // Add padding on top
                           child: Center(
                             child: ElevatedButton(
                               onPressed: _login,
