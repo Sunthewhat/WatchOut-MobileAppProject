@@ -46,7 +46,7 @@ class _SignupPageState extends State<SignupPage> {
         backgroundColor:
             const Color(0xFFB5432A), // Set the app bar background color
         elevation: 0,
-        toolbarHeight: 100.0, // Remove the drop shadow
+        toolbarHeight: 60.0, // Remove the drop shadow
         leading: IconButton(
           icon: const Icon(Icons.arrow_back), // Use a back arrow icon
           onPressed: () {
@@ -324,7 +324,6 @@ class _SignupPageState extends State<SignupPage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 10.0),
                             Row(
                               children: [
                                 Checkbox(
@@ -346,7 +345,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: 10.0),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 10.0), // Add padding on top
