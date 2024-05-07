@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -15,9 +16,7 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     String topicName = _topicController.text;
     String report = _reportController.text;
-    // temporary use for bypass error
-    topicName;
-    report;
+
     return Scaffold(
       backgroundColor: const Color(0xFFB5432A),
       appBar: AppBar(
@@ -27,7 +26,7 @@ class _ReportPageState extends State<ReportPage> {
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFB5432A),
-        toolbarHeight: 100.0,
+        toolbarHeight: 60.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -90,11 +89,27 @@ class _ReportPageState extends State<ReportPage> {
                 ),
               ),
               DescriptionTextField(controller: _reportController),
-              SubmitReportButton(
-                onPressed: () {
-                  topicName = _topicController.text;
-                  report = _reportController.text;
-                },
+              const SizedBox(height: 20.0),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SlideAction(
+                    borderRadius: 30,
+                    elevation: 0,
+                    innerColor: const Color(0xFFFF5833),
+                    outerColor: const Color(0xFFFFA590),
+                    sliderButtonIcon: const Icon(Icons.arrow_forward, color: Color(0xFFFF5833)),
+                    text: 'Slide to submit',
+                    textStyle: const TextStyle(
+                      color: Color(0xFFFFA590),
+                      fontSize: 20.0,
+                    ),
+                    onSubmit: () {
+                      print('Submitted');
+                      return null;
+                    },
+                  ),
+                ),
               ),
             ],
           ),
@@ -246,20 +261,6 @@ class DescriptionTextField extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class SubmitReportButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const SubmitReportButton({super.key, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: const Text('Submit Report'),
     );
   }
 }

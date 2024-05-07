@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class ReportInfoPage extends StatefulWidget {
   const ReportInfoPage({super.key});
@@ -22,7 +23,7 @@ class _ReportPageState extends State<ReportInfoPage> {
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFB5432A),
-        toolbarHeight: 100.0,
+        toolbarHeight: 60.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -72,6 +73,28 @@ class _ReportPageState extends State<ReportInfoPage> {
                 ),
               ),
               DescriptionTextField(controller: _reportController),
+              const SizedBox(height: 20.0),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SlideAction(
+                    borderRadius: 30,
+                    elevation: 0,
+                    innerColor: const Color(0xFFFF5833),
+                    outerColor: const Color(0xFFFFA590),
+                    sliderButtonIcon: const Icon(Icons.arrow_forward, color: Color(0xFFFF5833)),
+                    text: 'Slide to submit',
+                    textStyle: const TextStyle(
+                      color: Color(0xFFFFA590),
+                      fontSize: 20.0,
+                    ),
+                    onSubmit: () {
+                      print('Submitted');
+                      return null;
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
