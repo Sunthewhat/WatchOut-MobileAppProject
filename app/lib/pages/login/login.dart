@@ -12,6 +12,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isObscure = true;
+
+  void _toggleObscure() {
+    setState(() {
+      _isObscure = !_isObscure; // Toggle password visibility
+    });
+  }
 
   void _login() {
     String email = _emailController.text;
@@ -122,20 +129,28 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 TextField(
                                   controller: _passwordController,
-                                  obscureText: true,
+                                  obscureText: _isObscure,
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                       borderSide: const BorderSide(
-                                        color: Color(0xFFFFA590),
-                                        width: 2.0,
-                                      ),
+                                          color: Color(0xFFFFA590), width: 2.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                       borderSide: const BorderSide(
-                                        color: Color(0xFFFF5833),
-                                        width: 2.0,
+                                          color: Color(0xFFFF5833), width: 2.0),
+                                    ),
+                                    suffixIcon: Container(
+                                      margin: const EdgeInsets.all(10.0),
+                                      child: IconButton(
+                                        icon: Icon(
+                                          _isObscure
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color:const Color(0xFFFF5833), // Icon color
+                                        ),
+                                        onPressed:_toggleObscure, // Toggle password visibility
                                       ),
                                     ),
                                   ),
