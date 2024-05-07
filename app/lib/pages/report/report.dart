@@ -17,6 +17,9 @@ class _ReportPageState extends State<ReportPage> {
     String topicName = _topicController.text;
     String report = _reportController.text;
 
+    topicName;
+    report;
+
     return Scaffold(
       backgroundColor: const Color(0xFFB5432A),
       appBar: AppBar(
@@ -105,7 +108,7 @@ class _ReportPageState extends State<ReportPage> {
                       fontSize: 20.0,
                     ),
                     onSubmit: () {
-                      print('Submitted');
+                      // print('Submitted');
                       return null;
                     },
                   ),

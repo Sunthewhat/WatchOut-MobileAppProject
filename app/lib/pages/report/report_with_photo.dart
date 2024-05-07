@@ -102,7 +102,7 @@ class _ReportPageState extends State<ReportWithPhotoPage> {
                       fontSize: 20.0,
                     ),
                     onSubmit: () {
-                      print('Submitted');
+                      // print('Submitted');
                       return null;
                     },
                   ),
