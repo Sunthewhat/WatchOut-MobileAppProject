@@ -8,16 +8,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-    String email = _emailController.text;
+    String username = _usernameController.text;
     String password = _passwordController.text;
 
-    email;
+    username;
     password;
-    // print('Email: $email');
+    // print('Username: $username');
     // print('Password: $password');
   }
 
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         TextField(
-                          controller: _emailController,
+                          controller: _usernameController,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),

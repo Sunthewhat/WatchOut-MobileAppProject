@@ -8,7 +8,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
@@ -21,7 +21,7 @@ class _SignupPageState extends State<SignupPage> {
   void signup() {
     String firstname = _firstnameController.text;
     String lastname = _lastnameController.text;
-    String email = _emailController.text;
+    String username = _usernameController.text;
     String password = _passwordController.text;
     String confirmpassword = _confirmPasswordController.text;
 
@@ -34,7 +34,7 @@ class _SignupPageState extends State<SignupPage> {
     // print('Data Policy Checked: $_dataPolicyChecked');
     firstname;
     lastname;
-    email;
+    username;
     password;
     confirmpassword;
   }
@@ -211,7 +211,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                           TextField(
-                            controller: _emailController,
+                            controller: _usernameController,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0),
