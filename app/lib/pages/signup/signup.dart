@@ -120,9 +120,6 @@ class _SignupPageState extends State<SignupPage> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ), // Add spacing between the text and the text field
                                         TextField(
                                           controller: _firstnameController,
                                           decoration: InputDecoration(
@@ -166,9 +163,6 @@ class _SignupPageState extends State<SignupPage> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ), // Add spacing between the text and the text field
                                         TextField(
                                           controller: _lastnameController,
                                           decoration: InputDecoration(
@@ -246,9 +240,6 @@ class _SignupPageState extends State<SignupPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10.0,
-                                  ), // Add spacing between the text and the text field
                                   TextField(
                                     controller: _passwordController,
                                     obscureText: true,
@@ -290,9 +281,6 @@ class _SignupPageState extends State<SignupPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10.0,
-                                  ), // Add spacing between the text and the text field
                                   TextField(
                                     controller: _confirmPasswordController,
                                     obscureText: true,

@@ -1,3 +1,5 @@
+import 'package:app/pages/signup/signup.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,6 +23,11 @@ class _LoginPageState extends State<LoginPage> {
     // print('Password: $password');
   }
 
+  void _navigateToSignupPage(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignupPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,19 +37,19 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(
-              width: 200, // Set width of the image
-              height: 200, // Set height of the image
+              width: 200,
+              height: 200,
               child: Image.asset('assets/images/logo.png'),
             ),
             Expanded(
               child: Center(
                 child: FractionallySizedBox(
-                  widthFactor: 1, // 40% of the screen width
-                  heightFactor: 1, // 80% of the screen height
+                  widthFactor: 1,
+                  heightFactor: 1,
                   child: Container(
                     padding: const EdgeInsets.all(40.0),
                     decoration: BoxDecoration(
-                      color: Colors.white, // Set box color to white
+                      color: Colors.white,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(80.0),
                       ),
@@ -52,8 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                               .withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 8,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -114,9 +120,6 @@ class _LoginPageState extends State<LoginPage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(
-                                    height:
-                                        10.0), // Add spacing between the text and the text field
                                 TextField(
                                   controller: _passwordController,
                                   obscureText: true,
@@ -166,33 +169,32 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 30.0,
-                          ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0), // Add padding on top
                           child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Don’t have any account?',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Don’t have any account? ',
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.black,
                                 ),
-                                SizedBox(
-                                    width:
-                                        5), // Add some spacing between the texts
-                                Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFFFF5833),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Sign Up',
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFFF5833),
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        _navigateToSignupPage(context);
+                                      },
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
