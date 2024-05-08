@@ -1,4 +1,4 @@
-import 'package:app/pages/login/login.dart';
+import 'package:app/pages/auth/login/login.dart';
 import 'package:app/services/auth/register.dart';
 import 'package:flutter/material.dart';
 

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:app/constant/environment.dart';
 import 'package:app/pages/home/home.dart';
 import 'package:app/pages/intro/intro.dart';
-import 'package:app/pages/login/login.dart';
+import 'package:app/pages/auth/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

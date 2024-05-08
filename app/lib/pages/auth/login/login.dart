@@ -1,4 +1,4 @@
-import 'package:app/pages/signup/signup.dart';
+import 'package:app/pages/auth/signup/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
