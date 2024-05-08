@@ -1,3 +1,4 @@
+import 'package:app/services/auth/register.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
