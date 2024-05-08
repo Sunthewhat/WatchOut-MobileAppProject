@@ -38,7 +38,10 @@ class _ReportPageState extends State<ReportWithPhotoPage> {
           color: Colors.white,
         ),
       ),
-      body: Container(
+      body: SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           color: Color(0xFFFFE2DB),
           borderRadius: BorderRadius.only(
@@ -52,24 +55,31 @@ class _ReportPageState extends State<ReportWithPhotoPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const AddPictureBox(),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Topic Name',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+              const SizedBox(height: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 2.0),
+                child: Text(
+                  'Topic Name',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
               TopicTextField(controller: _topicController),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Type',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+              const SizedBox(height: 1.0),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 2.0),
+                child: Text(
+                  'Type',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
               const ButtonType(),
+              const SizedBox(height: 5.0),
               const Text(
                 'Location',
                 style: TextStyle(
@@ -78,6 +88,7 @@ class _ReportPageState extends State<ReportWithPhotoPage> {
                 ),
               ),
               const MapBox(),
+              const SizedBox(height: 5.0),
               const Text(
                 'Description',
                 style: TextStyle(
@@ -86,7 +97,7 @@ class _ReportPageState extends State<ReportWithPhotoPage> {
                 ),
               ),
               DescriptionTextField(controller: _reportController),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 0.0),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -111,6 +122,7 @@ class _ReportPageState extends State<ReportWithPhotoPage> {
             ],
           ),
         ),
+      ),
       ),
     );
   }
@@ -144,6 +156,7 @@ class TopicTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(color: Color(0xFFFF5833), width: 2.0),
@@ -249,7 +262,6 @@ class DescriptionTextField extends StatelessWidget {
           controller: controller,
           maxLines: null,
           decoration: const InputDecoration(
-            hintText: 'Enter description',
             border: InputBorder.none,
           ),
         ),

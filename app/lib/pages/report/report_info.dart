@@ -32,14 +32,17 @@ class _ReportPageState extends State<ReportInfoPage> {
           color: Colors.white,
         ),
       ),
-      body: Container(
+      body: SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           color: Color(0xFFFFE2DB),
           borderRadius: BorderRadius.only(
             topLeft:
-                Radius.circular(45.0), 
-            topRight: Radius.circular(
-                45.0),
+                Radius.circular(20.0), 
+            topRight: 
+                Radius.circular(20.0),
           ),
         ),
         child: Padding(
@@ -48,15 +51,19 @@ class _ReportPageState extends State<ReportInfoPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const AddPictureBox(),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Space Dragon Fire',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+              const SizedBox(height: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 2.0),
+                child: Text(
+                  'Space Dragon Fire',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
               const ButtonType(),
+              const SizedBox(height: 5.0),
               const Text(
                 'Location',
                 style: TextStyle(
@@ -65,6 +72,7 @@ class _ReportPageState extends State<ReportInfoPage> {
                 ),
               ),
               const MapBox(),
+              const SizedBox(height: 5.0),
               const Text(
                 'Description',
                 style: TextStyle(
@@ -73,31 +81,32 @@ class _ReportPageState extends State<ReportInfoPage> {
                 ),
               ),
               DescriptionTextField(controller: _reportController),
-              const SizedBox(height: 20.0),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SlideAction(
-                    borderRadius: 30,
-                    elevation: 0,
-                    innerColor: const Color(0xFFFF5833),
-                    outerColor: const Color(0xFFFFA590),
-                    sliderButtonIcon: const Icon(Icons.arrow_forward, color: Color(0xFFFF5833)),
-                    text: 'Slide to submit',
-                    textStyle: const TextStyle(
-                      color: Color(0xFFFFA590),
-                      fontSize: 20.0,
-                    ),
-                    onSubmit: () {
-                      // print('Submitted');
-                      return null;
-                    },
-                  ),
-                ),
-              ),
+              const SizedBox(height: 0.0),
+              // Center(
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: SlideAction(
+              //       borderRadius: 30,
+              //       elevation: 0,
+              //       innerColor: const Color(0xFFFF5833),
+              //       outerColor: const Color(0xFFFFA590),
+              //       sliderButtonIcon: const Icon(Icons.arrow_forward, color: Color(0xFFFF5833)),
+              //       text: 'Slide to submit',
+              //       textStyle: const TextStyle(
+              //         color: Color(0xFFFFA590),
+              //         fontSize: 20.0,
+              //       ),
+              //       onSubmit: () {
+              //         // print('Submitted');
+              //         return null;
+              //       },
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
+      ),
       ),
     );
   }
@@ -223,8 +232,8 @@ class DescriptionTextField extends StatelessWidget {
 
 
 
-void main() {
-  runApp(const MaterialApp(
-    home: ReportInfoPage(),
-  ));
-}
+// void main() {
+//   runApp(const MaterialApp(
+//     home: ReportInfoPage(),
+//   ));
+// }
