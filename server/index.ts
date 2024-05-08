@@ -10,7 +10,13 @@ ValidateENV();
 const app = new Hono({ strict: false });
 
 app.use(logger());
-app.get('/', (c) => c.text('Hello!'));
+app.get('/', (c) =>
+	c.json({
+		success: true,
+		payload: null,
+		message: 'Welcome to Hono',
+	})
+);
 
 app.route('/auth', auth);
 

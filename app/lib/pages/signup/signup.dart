@@ -1,3 +1,4 @@
+import 'package:app/services/auth/register.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -25,18 +26,12 @@ class _SignupPageState extends State<SignupPage> {
     String password = _passwordController.text;
     String confirmpassword = _confirmPasswordController.text;
 
-    // print('First name: $firstname');
-    // print('Last name: $lastname');
-    // print('Confirm Password: $confirmpassword');
-    // print('Email: $email');
-    // print('Password: $password');
-    // print('Policy Checked: $_policyChecked');
-    // print('Data Policy Checked: $_dataPolicyChecked');
-    firstname;
-    lastname;
-    username;
-    password;
-    confirmpassword;
+    if (password != confirmpassword) {
+      return;
+    }
+
+    Register.register(firstname, lastname, username, password)
+        .then((value) => /*print(value.message)*/ value);
   }
 
   @override
