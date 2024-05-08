@@ -1,0 +1,12 @@
+services:
+  server:
+    image: watchout
+    container_name: watchout_server
+    networks:
+      reverseproxy:
+        ipv4_address: 192.168.0.4
+
+networks:
+  reverseproxy:
+    external: true
+    name: reverseproxy

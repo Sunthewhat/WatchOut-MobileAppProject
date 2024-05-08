@@ -1,5 +1,6 @@
 import 'package:app/pages/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class ReportInfoPage extends StatefulWidget {
   final Report report;
@@ -23,7 +24,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFB5432A),
-        toolbarHeight: 100.0,
+        toolbarHeight: 60.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

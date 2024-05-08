@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:app/constant/environment.dart';
 import 'package:app/pages/home/home.dart';
 import 'package:app/pages/intro/intro.dart';
+import 'package:app/pages/auth/login/login.dart';
+import 'package:app/services/auth/verify.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,15 +26,31 @@ class _OnboardingState extends State<OnboardingPage> {
     );
   }
 
+  void handleLoginPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
+
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.clear();
-    bool seen = (prefs.getBool('seen') ?? false);
+    bool seen = (prefs.getBool(EnvironmentConstant.isFirstTime) ?? false);
+    String token = (prefs.getString(EnvironmentConstant.userToken) ?? 'none');
 
     if (seen) {
-      handleHomePage();
+      if (token.isEmpty) {
+        handleLoginPage();
+      }
+      bool isVerified =
+          await Verify.verify(token).then((value) => value.success);
+      if (isVerified) {
+        handleHomePage();
+      } else {
+        handleLoginPage();
+      }
     } else {
-      await prefs.setBool('seen', true);
+      await prefs.setBool(EnvironmentConstant.isFirstTime, true);
       await Future.delayed(const Duration(seconds: 1));
       handleStartPage();
     }
