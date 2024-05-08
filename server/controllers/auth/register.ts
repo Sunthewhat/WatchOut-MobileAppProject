@@ -10,7 +10,9 @@ const register = async (c: Context) => {
 		return c.json(
 			{
 				success: false,
-				payload: null,
+				payload: {
+					code: 1,
+				},
 				message: 'Missing required fields',
 			},
 			200
@@ -21,7 +23,9 @@ const register = async (c: Context) => {
 		return c.json(
 			{
 				success: false,
-				payload: null,
+				payload: {
+					code: 2,
+				},
 				message: 'Username already exists',
 			},
 			200
@@ -40,7 +44,9 @@ const register = async (c: Context) => {
 		return c.json(
 			{
 				success: false,
-				payload: null,
+				payload: {
+					code: 3,
+				},
 				message: 'Failed to register user',
 			},
 			200
@@ -50,7 +56,9 @@ const register = async (c: Context) => {
 	return c.json(
 		{
 			success: true,
-			payload: null,
+			payload: {
+				code: 0,
+			},
 			message: 'User registered successfully',
 		},
 		200

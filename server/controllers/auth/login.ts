@@ -9,7 +9,10 @@ const Login = async (c: Context) => {
 		return c.json(
 			{
 				success: false,
-				payload: null,
+				payload: {
+					code: 1,
+					token: null,
+				},
 				message: 'Missing required fields',
 			},
 			200
@@ -20,7 +23,10 @@ const Login = async (c: Context) => {
 		return c.json(
 			{
 				success: false,
-				payload: null,
+				payload: {
+					code: 2,
+					token: null,
+				},
 				message: 'User not found',
 			},
 			200
@@ -29,7 +35,10 @@ const Login = async (c: Context) => {
 		return c.json(
 			{
 				success: false,
-				payload: null,
+				payload: {
+					code: 3,
+					token: null,
+				},
 				message: 'Incorrect password',
 			},
 			200
@@ -42,7 +51,10 @@ const Login = async (c: Context) => {
 	return c.json(
 		{
 			success: true,
-			payload: { token },
+			payload: {
+				code: 0,
+				token,
+			},
 			message: 'User logged in successfully',
 		},
 		200

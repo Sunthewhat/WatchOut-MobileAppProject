@@ -14,6 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isObscure = true;
 
+  double textFieldHeight = 50.0;
+
   void _toggleObscure() {
     setState(() {
       _isObscure = !_isObscure; // Toggle password visibility
@@ -46,10 +48,13 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
-                width: 200,
-                height: 283,
-                child: Image.asset('assets/images/logo.png'),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0),
+                child: SizedBox(
+                  width: 200,
+                  height: 283,
+                  child: Image.asset('assets/images/logo.png'),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -93,19 +98,22 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide: const BorderSide(
-                                color: Color(0xFFFFA590), width: 2.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide: const BorderSide(
-                              color: Color(0xFFFF5833),
-                              width: 2.0,
+                      SizedBox(
+                        height: textFieldHeight,
+                        child: TextField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: const BorderSide(
+                                  color: Color(0xFFFFA590), width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: const BorderSide(
+                                color: Color(0xFFFF5833),
+                                width: 2.0,
+                              ),
                             ),
                           ),
                         ),
@@ -127,23 +135,23 @@ class _LoginPageState extends State<LoginPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              TextField(
-                                controller: _passwordController,
-                                obscureText: _isObscure,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFFFA590), width: 2.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFFF5833), width: 2.0),
-                                  ),
-                                  suffixIcon: Container(
-                                    margin: const EdgeInsets.all(10.0),
-                                    child: IconButton(
+                              SizedBox(
+                                height: textFieldHeight,
+                                child: TextField(
+                                  controller: _passwordController,
+                                  obscureText: _isObscure,
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFFFA590), width: 2.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFFF5833), width: 2.0),
+                                    ),
+                                    suffixIcon: IconButton(
                                       icon: Icon(
                                         _isObscure
                                             ? Icons.visibility_off
@@ -188,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            top: 10.0), // Add padding on top
+                            top: 30.0), // Add padding on top
                         child: Center(
                           child: RichText(
                             text: TextSpan(
