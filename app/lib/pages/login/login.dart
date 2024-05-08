@@ -195,8 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            top: 30.0), // Add padding on top
+                        padding: const EdgeInsets.only(top: 30.0),
                         child: Center(
                           child: RichText(
                             text: TextSpan(
@@ -219,6 +218,10 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                 ),
                               ],
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  _navigateToSignupPage(context);
+                                },
                             ),
                           ),
                         ),
