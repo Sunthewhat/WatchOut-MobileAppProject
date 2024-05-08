@@ -1,16 +1,17 @@
+import 'package:app/pages/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 class ReportInfoPage extends StatefulWidget {
-  const ReportInfoPage({super.key});
+  final Report report;
+
+  const ReportInfoPage({super.key, required this.report});
 
   @override
-  State<ReportInfoPage> createState() => _ReportPageState();
+  State<ReportInfoPage> createState() => _ReportInfoPageState();
 }
 
-class _ReportPageState extends State<ReportInfoPage> {
-  // final TextEditingController _topicController = TextEditingController();
-  final TextEditingController _reportController = TextEditingController();
+class _ReportInfoPageState extends State<ReportInfoPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class _ReportPageState extends State<ReportInfoPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Define the action when the back button is pressed
+            Navigator.pop(context); // Go back to the previous screen
           },
           color: Colors.white,
         ),
@@ -36,10 +37,8 @@ class _ReportPageState extends State<ReportInfoPage> {
         decoration: const BoxDecoration(
           color: Color(0xFFFFE2DB),
           borderRadius: BorderRadius.only(
-            topLeft:
-                Radius.circular(45.0), 
-            topRight: Radius.circular(
-                45.0),
+            topLeft: Radius.circular(45.0),
+            topRight: Radius.circular(45.0),
           ),
         ),
         child: Padding(
@@ -47,24 +46,41 @@ class _ReportPageState extends State<ReportInfoPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const AddPictureBox(),
+              ClipRRect(
+                borderRadius:
+                    BorderRadius.circular(45.0), // Adjust the radius as needed
+                child: Image.asset(
+                  widget.report.imageUrl,
+                  width: 331.0,
+                  height: 195.0,
+                  fit: BoxFit.cover,
+                  // Add any additional properties as needed
+                ),
+              ),
               const SizedBox(height: 20.0),
-              const Text(
-                'Space Dragon Fire',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
+              Row(
+                children: [
+                  Text(
+                    widget.report.incidentType,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    widget.report.location,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
               ),
-              const ButtonType(),
-              const Text(
-                'Location',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-              const MapBox(),
+              
+
+              Image.asset('assets/images/map.png'), 
               const Text(
                 'Description',
                 style: TextStyle(
@@ -72,26 +88,22 @@ class _ReportPageState extends State<ReportInfoPage> {
                   fontSize: 16.0,
                 ),
               ),
-              DescriptionTextField(controller: _reportController),
-              const SizedBox(height: 20.0),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SlideAction(
-                    borderRadius: 30,
-                    elevation: 0,
-                    innerColor: const Color(0xFFFF5833),
-                    outerColor: const Color(0xFFFFA590),
-                    sliderButtonIcon: const Icon(Icons.arrow_forward, color: Color(0xFFFF5833)),
-                    text: 'Slide to submit',
-                    textStyle: const TextStyle(
-                      color: Color(0xFFFFA590),
-                      fontSize: 20.0,
-                    ),
-                    onSubmit: () {
-                      // print('Submitted');
-                      return null;
-                    },
+              Container(
+                width: 300,
+                height: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey, 
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      10.0),
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  widget.report.reportDescription,
+                  style: const TextStyle(
+                    fontSize: 16.0,
                   ),
                 ),
               ),
@@ -103,128 +115,8 @@ class _ReportPageState extends State<ReportInfoPage> {
   }
 }
 
-class AddPictureBox extends StatelessWidget {
-  const AddPictureBox({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 331.0,
-      height: 195.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(
-          color: Colors.black,
-        ),
-      ),
-    );
-  }
-}
-
-class ButtonType extends StatelessWidget {
-  const ButtonType({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor:
-                const Color(0xFFFF5833), 
-          ),
-          child: const Text(
-            'Fire🔥',
-            style: TextStyle(
-              color: Colors.white, 
-            ),
-          ),
-        ),
-        // ElevatedButton(
-        //   onPressed: () {},
-        //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: Color(0xFF2960AE),
-        //   ),
-        //   child: Text(
-        //     'Car Crash 🚗',
-        //     style: TextStyle(
-        //       color: Colors.white,
-        //     ),
-        //   ),
-        // ),
-        // ElevatedButton(
-        //   onPressed: () {},
-        //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: Color(0xFF35A5F6),
-        //   ),
-        //   child: Text(
-        //     'Flood🌊',
-        //     style: TextStyle(
-        //       color: Colors.white,
-        //     ),
-        //   ),
-        // ),
-      ],
-    );
-  }
-}
-
-class MapBox extends StatelessWidget {
-  final double width;
-  final double height;
-  final Color color;
-
-  const MapBox({
-    super.key,
-    this.width = 200,
-    this.height = 200,
-    this.color = Colors.grey,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20.0), 
-      ),
-    );
-  }
-}
-
-class DescriptionTextField extends StatelessWidget {
-  final TextEditingController controller;
-
-  const DescriptionTextField({super.key, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(color: const Color(0xFFFF5833), width: 2.0),
-        ),
-        child: Text(
-          controller.text,
-          style: const TextStyle(
-            fontSize: 16.0,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-
-void main() {
-  runApp(const MaterialApp(
-    home: ReportInfoPage(),
-  ));
-}
+// void main() {
+//   runApp(const MaterialApp(
+//     home: ReportInfoPage(),
+//   ));
+// }
