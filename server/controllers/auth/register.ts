@@ -1,9 +1,9 @@
-import { compareSync, genSalt, hash } from 'bcrypt';
+import { genSalt, hash } from 'bcrypt';
 import { Context } from 'hono';
 import CreateUser from '../../services/auth/createUser';
 import IsUsernameExist from '../../services/auth/checkUsername';
 
-const register = async (c: Context) => {
+const Register = async (c: Context) => {
 	const { firstname, lastname, username, password } = await c.req.json();
 
 	if (!firstname || !lastname || !username || !password) {
@@ -65,4 +65,4 @@ const register = async (c: Context) => {
 	);
 };
 
-export default register;
+export default Register;

@@ -3,12 +3,18 @@ import { logger } from 'hono/logger';
 import { config } from 'dotenv';
 import ValidateENV from './services/validateENV';
 import auth from './routes/auth.routes';
+import { cors } from 'hono/cors';
 
 config();
 ValidateENV();
 
 const app = new Hono({ strict: false });
 
+app.use(
+	cors({
+		origin: '*',
+	})
+);
 app.use(logger());
 app.get('/', (c) =>
 	c.json({

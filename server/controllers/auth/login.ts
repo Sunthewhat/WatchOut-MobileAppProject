@@ -11,7 +11,7 @@ const Login = async (c: Context) => {
 				success: false,
 				payload: {
 					code: 1,
-					token: null,
+					token: '',
 				},
 				message: 'Missing required fields',
 			},
@@ -25,7 +25,7 @@ const Login = async (c: Context) => {
 				success: false,
 				payload: {
 					code: 2,
-					token: null,
+					token: '',
 				},
 				message: 'User not found',
 			},
@@ -37,7 +37,7 @@ const Login = async (c: Context) => {
 				success: false,
 				payload: {
 					code: 3,
-					token: null,
+					token: '',
 				},
 				message: 'Incorrect password',
 			},
