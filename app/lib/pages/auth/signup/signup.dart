@@ -16,9 +16,16 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  bool _isObscure = true;
 
   bool _policyChecked = false;
   double textFieldHeight = 50.0;
+
+  void toggleObscure() {
+    setState(() {
+      _isObscure = !_isObscure; // Toggle password visibility
+    });
+  }
 
   void signup() {
     String firstname = _firstnameController.text;
@@ -362,8 +369,19 @@ class _SignupPageState extends State<SignupPage> {
                                   height: textFieldHeight,
                                   child: TextField(
                                     controller: _passwordController,
-                                    obscureText: true,
+                                    obscureText: _isObscure,
                                     decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _isObscure
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: const Color(
+                                              0xFFFF5833), // Icon color
+                                        ),
+                                        onPressed:
+                                            toggleObscure, // Toggle password visibility
+                                      ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(5.0),
@@ -406,8 +424,19 @@ class _SignupPageState extends State<SignupPage> {
                                   height: textFieldHeight,
                                   child: TextField(
                                     controller: _confirmPasswordController,
-                                    obscureText: true,
+                                    obscureText: _isObscure,
                                     decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _isObscure
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: const Color(
+                                              0xFFFF5833), // Icon color
+                                        ),
+                                        onPressed:
+                                            toggleObscure, // Toggle password visibility
+                                      ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(5.0),

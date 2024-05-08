@@ -10,8 +10,8 @@ class Login {
       Response res = await Dio().post(
         '${EnvironmentConstant.baseurl}/auth/login',
         data: {
-          username,
-          password,
+          'username': username,
+          'password': password,
         },
       );
       var response = BaseResponse<LoginResponse>.fromJson(

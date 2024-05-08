@@ -1,4 +1,6 @@
 import 'package:app/pages/auth/signup/signup.dart';
+import 'package:app/pages/home/home.dart';
+import 'package:app/services/auth/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -16,20 +18,68 @@ class _LoginPageState extends State<LoginPage> {
 
   double textFieldHeight = 50.0;
 
-  void _toggleObscure() {
+  void toggleObscure() {
     setState(() {
       _isObscure = !_isObscure; // Toggle password visibility
     });
   }
 
-  void _login() {
+  void login() {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    username;
-    password;
-    // print('Username: $username');
-    // print('Password: $password');
+    if (username == '' || password == '') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Empty Fields"),
+            content:
+                const Text("Please fill in all fields to proceed with login."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // ปิด dialog
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    Login.login(username, password).then((value) => {
+          if (value.success)
+            {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              ),
+            }
+          else
+            {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Login Failed"),
+                    content: Text(value.message),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context); // ปิด dialog
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            }
+        });
   }
 
   void _navigateToSignupPage(BuildContext context) {
@@ -160,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                                             0xFFFF5833), // Icon color
                                       ),
                                       onPressed:
-                                          _toggleObscure, // Toggle password visibility
+                                          toggleObscure, // Toggle password visibility
                                     ),
                                   ),
                                 ),
@@ -175,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                             top: 30.0), // Add padding on top
                         child: Center(
                           child: ElevatedButton(
-                            onPressed: _login,
+                            onPressed: login,
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: const Color(0xFFFF5833),
