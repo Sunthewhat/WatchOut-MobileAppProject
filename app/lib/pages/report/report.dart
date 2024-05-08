@@ -38,7 +38,10 @@ class _ReportPageState extends State<ReportPage> {
           color: Colors.white,
         ),
       ),
-      body: Container(
+      body: SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           color: Color(0xFFFFE2DB),
           borderRadius: BorderRadius.only(
@@ -52,9 +55,9 @@ class _ReportPageState extends State<ReportPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const AddPictureButton(),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 5.0),
               const Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 2.0),
                 child: Text(
                   'Topic Name',
                   style: TextStyle(
@@ -64,9 +67,9 @@ class _ReportPageState extends State<ReportPage> {
                 ),
               ),
               TopicTextField(controller: _topicController),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 1.0),
               const Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 2.0),
                 child: Text(
                   'Type',
                   style: TextStyle(
@@ -76,6 +79,7 @@ class _ReportPageState extends State<ReportPage> {
                 ),
               ),
               const ButtonType(),
+              const SizedBox(height: 5.0),
               const Text(
                 'Location',
                 style: TextStyle(
@@ -84,6 +88,7 @@ class _ReportPageState extends State<ReportPage> {
                 ),
               ),
               const MapBox(),
+              const SizedBox(height: 5.0),
               const Text(
                 'Description',
                 style: TextStyle(
@@ -92,7 +97,7 @@ class _ReportPageState extends State<ReportPage> {
                 ),
               ),
               DescriptionTextField(controller: _reportController),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 0.0),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -117,6 +122,7 @@ class _ReportPageState extends State<ReportPage> {
             ],
           ),
         ),
+      ),
       ),
     );
   }
@@ -153,6 +159,7 @@ class TopicTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(color: Color(0xFFFF5833), width: 2.0),
@@ -251,6 +258,7 @@ class DescriptionTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
+        height: 200.0,
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -268,8 +276,9 @@ class DescriptionTextField extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(const MaterialApp(
-    home: ReportPage(),
-  ));
-}
+
+// void main() {
+//   runApp(const MaterialApp(
+//     home: ReportPage(),
+//   ));
+// }

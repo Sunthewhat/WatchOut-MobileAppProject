@@ -1,6 +1,5 @@
 import 'package:app/pages/home/home.dart';
 import 'package:flutter/material.dart';
-import 'package:slide_to_act/slide_to_act.dart';
 
 class ReportInfoPage extends StatefulWidget {
   final Report report;
@@ -33,12 +32,17 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
           color: Colors.white,
         ),
       ),
-      body: Container(
+      body: SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           color: Color(0xFFFFE2DB),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(45.0),
-            topRight: Radius.circular(45.0),
+            topLeft:
+                Radius.circular(20.0), 
+            topRight: 
+                Radius.circular(20.0),
           ),
         ),
         child: Padding(
@@ -46,6 +50,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+
               ClipRRect(
                 borderRadius:
                     BorderRadius.circular(45.0), // Adjust the radius as needed
@@ -88,6 +93,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                   fontSize: 16.0,
                 ),
               ),
+
               Container(
                 width: 300,
                 height: 100,
@@ -111,10 +117,10 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
           ),
         ),
       ),
+      ),
     );
   }
 }
-
 // void main() {
 //   runApp(const MaterialApp(
 //     home: ReportInfoPage(),
