@@ -426,17 +426,6 @@ class _SignupPageState extends State<SignupPage> {
                                     controller: _confirmPasswordController,
                                     obscureText: _isObscure,
                                     decoration: InputDecoration(
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          _isObscure
-                                              ? Icons.visibility_off
-                                              : Icons.visibility,
-                                          color: const Color(
-                                              0xFFFF5833), // Icon color
-                                        ),
-                                        onPressed:
-                                            toggleObscure, // Toggle password visibility
-                                      ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(5.0),
