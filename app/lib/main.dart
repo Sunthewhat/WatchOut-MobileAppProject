@@ -1,4 +1,3 @@
-import 'package:app/pages/auth/login/login.dart';
 import 'package:app/pages/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const OnboardingPage(),
     );
   }
 }
