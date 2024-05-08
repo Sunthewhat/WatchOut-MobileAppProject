@@ -10,10 +10,10 @@ class Register {
       Response res = await Dio().post(
         '${EnvironmentConstant.baseurl}/auth/register',
         data: {
-          'firstname': firstname,
-          'lastname': lastname,
-          'username': username,
-          'password': password,
+          firstname,
+          lastname,
+          username,
+          password,
         },
       );
       var response = BaseResponse<RegisterResponse>.fromJson(
