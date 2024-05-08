@@ -40,6 +40,8 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           color: const Color(0xFFB5432A),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -17,7 +17,6 @@ class _SignupPageState extends State<SignupPage> {
       TextEditingController();
 
   bool _policyChecked = false;
-  bool _dataPolicyChecked = false;
 
   void signup() {
     String firstname = _firstnameController.text;
@@ -26,12 +25,40 @@ class _SignupPageState extends State<SignupPage> {
     String password = _passwordController.text;
     String confirmpassword = _confirmPasswordController.text;
 
-    if (password != confirmpassword) {
-      return;
+    if (_policyChecked) {
+      // ทำการ signup
+      // print('First name: $firstname');
+      // print('Last name: $lastname');
+      // print('Confirm Password: $confirmpassword');
+      // print('Email: $email');
+      // print('Password: $password');
+      // print('Policy Checked: $_policyChecked');
+      // print('Data Policy Checked: $_dataPolicyChecked');
+      firstname;
+      lastname;
+      username;
+      password;
+      confirmpassword;
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Policy Agreement"),
+            content: const Text(
+                "Please agree to the policy to proceed with signup."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // ปิด dialog
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
     }
-
-    Register.register(firstname, lastname, username, password)
-        .then((value) => /*print(value.message)*/ value);
   }
 
   @override
@@ -62,17 +89,22 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           color: const Color(0xFFB5432A),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.all(20.0), // Add padding around the form
+                padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 40), // Add padding around the form
                 child: FractionallySizedBox(
                   widthFactor: 1, // 100% of the screen width
                   child: Container(
                     padding: const EdgeInsets.all(40.0),
+                    // Add padding inside the form
                     decoration: BoxDecoration(
                       color: Colors.white, // Set box color to white
                       borderRadius: const BorderRadius.only(
@@ -314,25 +346,6 @@ class _SignupPageState extends State<SignupPage> {
                                   'Policy',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: _dataPolicyChecked,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _dataPolicyChecked = value!;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'Data Policy',
-                                  style: TextStyle(
-                                    color: Color(0xFF000000),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
