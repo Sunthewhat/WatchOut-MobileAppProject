@@ -8,12 +8,12 @@ class Verify {
       Response res = await Dio().post(
         '${EnvironmentConstant.baseurl}/auth/verify',
         data: {
-          token,
+          'token': token,
         },
       );
       var response = BaseResponse<Null>.fromJson(
         res.data,
-        (payload) => null,
+        null,
       );
       return response;
     } catch (e) {

@@ -36,23 +36,29 @@ class _OnboardingState extends State<OnboardingPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.clear();
     bool seen = (prefs.getBool(EnvironmentConstant.isFirstTime) ?? false);
-    String token = (prefs.getString(EnvironmentConstant.userToken) ?? 'none');
 
     if (seen) {
-      if (token.isEmpty) {
-        handleLoginPage();
-      }
-      bool isVerified =
-          await Verify.verify(token).then((value) => value.success);
-      if (isVerified) {
+      await checkUserToken();
+    } else {
+      await prefs.setBool(EnvironmentConstant.isFirstTime, true);
+      await Future.delayed(const Duration(seconds: 1));
+      handleStartPage();
+    }
+  }
+
+  Future checkUserToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(EnvironmentConstant.userToken);
+    if (token != null) {
+      var response = await Verify.verify(token);
+      print(response.message);
+      if (response.success) {
         handleHomePage();
       } else {
         handleLoginPage();
       }
     } else {
-      await prefs.setBool(EnvironmentConstant.isFirstTime, true);
-      await Future.delayed(const Duration(seconds: 1));
-      handleStartPage();
+      handleLoginPage();
     }
   }
 
