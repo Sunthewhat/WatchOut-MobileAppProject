@@ -3,6 +3,8 @@
 FROM oven/bun:1
 
 RUN bun install
+RUN bunx prisma db pull
+RUN bunx prisma generate
 
 EXPOSE 8000
 ENTRYPOINT [ "bun", "run", "start" ]
