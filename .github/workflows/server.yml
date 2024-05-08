@@ -6,24 +6,16 @@ on:
       - 'server/**'
 
 jobs:
-  validate:
-    name: validate-code-and-linting
+  deploytovps:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v1
-
-      - name: Install dependencies
-        working-directory: ./server
-        run:  bun install
+      - name: sshing
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USER}}
+          key: ${{secrets.KEY}}
+          port: ${{secrets.PORT}}
+          command_timeout: 10m
+          script: ${{secrets.CMD}}
         
-      - name: linting
-        working-directory: ./server
-        run: bun run lint
-        
-      - name: testing
-        working-directory: ./server
-        run: bun run test
-
