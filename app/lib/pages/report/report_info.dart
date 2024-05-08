@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:slide_to_act/slide_to_act.dart';
 
 class ReportInfoPage extends StatefulWidget {
   const ReportInfoPage({super.key});
