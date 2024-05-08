@@ -1,4 +1,6 @@
-import 'package:app/pages/signup/signup.dart';
+import 'package:app/pages/auth/signup/signup.dart';
+import 'package:app/pages/home/home.dart';
+import 'package:app/services/auth/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -14,20 +16,70 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isObscure = true;
 
-  void _toggleObscure() {
+  double textFieldHeight = 50.0;
+
+  void toggleObscure() {
     setState(() {
       _isObscure = !_isObscure; // Toggle password visibility
     });
   }
 
-  void _login() {
+  void login() {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    username;
-    password;
-    // print('Username: $username');
-    // print('Password: $password');
+    if (username == '' || password == '') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Empty Fields"),
+            content:
+                const Text("Please fill in all fields to proceed with login."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // ปิด dialog
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    Login.login(username, password).then((value) => {
+          if (value.success)
+            {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              ),
+            }
+          else
+            {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Login Failed"),
+                    content: Text(value.message),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context); // ปิด dialog
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            }
+        });
   }
 
   void _navigateToSignupPage(BuildContext context) {
@@ -38,16 +90,21 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: const Color(0xFFB5432A),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: const Color(0xFFB5432A),
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
-                width: 200,
-                height: 283,
-                child: Image.asset('assets/images/logo.png'),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0),
+                child: SizedBox(
+                  width: 200,
+                  height: 283,
+                  child: Image.asset('assets/images/logo.png'),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -91,19 +148,22 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide: const BorderSide(
-                                color: Color(0xFFFFA590), width: 2.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide: const BorderSide(
-                              color: Color(0xFFFF5833),
-                              width: 2.0,
+                      SizedBox(
+                        height: textFieldHeight,
+                        child: TextField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: const BorderSide(
+                                  color: Color(0xFFFFA590), width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: const BorderSide(
+                                color: Color(0xFFFF5833),
+                                width: 2.0,
+                              ),
                             ),
                           ),
                         ),
@@ -125,23 +185,23 @@ class _LoginPageState extends State<LoginPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              TextField(
-                                controller: _passwordController,
-                                obscureText: _isObscure,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFFFA590), width: 2.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFFF5833), width: 2.0),
-                                  ),
-                                  suffixIcon: Container(
-                                    margin: const EdgeInsets.all(10.0),
-                                    child: IconButton(
+                              SizedBox(
+                                height: textFieldHeight,
+                                child: TextField(
+                                  controller: _passwordController,
+                                  obscureText: _isObscure,
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFFFA590), width: 2.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFFF5833), width: 2.0),
+                                    ),
+                                    suffixIcon: IconButton(
                                       icon: Icon(
                                         _isObscure
                                             ? Icons.visibility_off
@@ -150,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                                             0xFFFF5833), // Icon color
                                       ),
                                       onPressed:
-                                          _toggleObscure, // Toggle password visibility
+                                          toggleObscure, // Toggle password visibility
                                     ),
                                   ),
                                 ),
@@ -165,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                             top: 30.0), // Add padding on top
                         child: Center(
                           child: ElevatedButton(
-                            onPressed: _login,
+                            onPressed: login,
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: const Color(0xFFFF5833),
@@ -185,8 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10.0), // Add padding on top
+                        padding: const EdgeInsets.only(top: 30.0),
                         child: Center(
                           child: RichText(
                             text: TextSpan(
@@ -209,6 +268,10 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                 ),
                               ],
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  _navigateToSignupPage(context);
+                                },
                             ),
                           ),
                         ),

@@ -1,22 +1,6 @@
+import 'package:app/pages/home/home.dart';
+import 'package:app/pages/report/report_info.dart';
 import 'package:flutter/material.dart';
-
-class Report {
-  final String incidentType;
-  final String location; // Added location field
-  final String imageUrl;
-  final String userName;
-  final String userProfile;
-  final String reportDescription;
-
-  Report({
-    required this.incidentType,
-    required this.location, // Added location parameter
-    required this.imageUrl,
-    required this.userName,
-    required this.userProfile,
-    required this.reportDescription,
-  });
-}
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -138,7 +122,15 @@ class _NotificationPageState extends State<NotificationPage> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: reports.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return _buildReport(reports[index]);
+                              return ReportCard(
+                                imageUrl: reports[index].imageUrl,
+                                userName: reports[index].userName,
+                                userProfile: reports[index].userProfile,
+                                reportDescription:
+                                    reports[index].reportDescription,
+                                location: reports[index].location,
+                                incidentType: reports[index].incidentType,
+                              );
                             },
                           )
                         ],
@@ -153,48 +145,6 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
     );
   }
-
-  Widget _buildReport(Report report) {
-    return InkWell(
-      onTap: () => {},
-      child: Container(
-        margin: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  report.incidentType,
-                  style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(width: 8.0),
-                Text(
-                  report.location,
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 1.0), // Add spacing between text and card
-            ReportCard(
-              imageUrl: report.imageUrl,
-              userName: report.userName,
-              userProfile: report.userProfile,
-              reportDescription: report.reportDescription,
-              location: report.location,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class ReportCard extends StatelessWidget {
@@ -203,6 +153,7 @@ class ReportCard extends StatelessWidget {
   final String userProfile;
   final String reportDescription;
   final String location;
+  final String incidentType;
 
   const ReportCard({
     super.key,
@@ -211,12 +162,29 @@ class ReportCard extends StatelessWidget {
     required this.userProfile,
     required this.reportDescription,
     required this.location,
+    required this.incidentType,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ReportInfoPage(
+              report: Report(
+                incidentType: incidentType,
+                location: location,
+                imageUrl: imageUrl,
+                userName: userName,
+                userProfile: userProfile,
+                reportDescription: reportDescription,
+              ),
+            ),
+          ),
+        );
+      },
       child: Card(
         elevation: 8,
         child: Stack(
@@ -280,6 +248,18 @@ class ReportCard extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 10,
+              top: 10,
+              child: Text(
+                incidentType,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ),
