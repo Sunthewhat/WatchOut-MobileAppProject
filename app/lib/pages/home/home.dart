@@ -1,10 +1,8 @@
-import 'package:app/constant/environment.dart';
 import 'package:app/pages/Notification/notification.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:app/pages/report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/report/report_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Report {
   final String incidentType;

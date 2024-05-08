@@ -51,7 +51,6 @@ class _OnboardingState extends State<OnboardingPage> {
     String? token = prefs.getString(EnvironmentConstant.userToken);
     if (token != null) {
       var response = await Verify.verify(token);
-      print(response.message);
       if (response.success) {
         handleHomePage();
       } else {

@@ -39,90 +39,91 @@ class _ReportPageState extends State<ReportWithPhotoPage> {
         ),
       ),
       body: SingleChildScrollView(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Color(0xFFFFE2DB),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFE2DB),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const AddPictureBox(),
-              const SizedBox(height: 5.0),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 2.0),
-                child: Text(
-                  'Topic Name',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
-                ),
-              ),
-              TopicTextField(controller: _topicController),
-              const SizedBox(height: 1.0),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 2.0),
-                child: Text(
-                  'Type',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
-                ),
-              ),
-              const ButtonType(),
-              const SizedBox(height: 5.0),
-              const Text(
-                'Location',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-              const MapBox(),
-              const SizedBox(height: 5.0),
-              const Text(
-                'Description',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-              DescriptionTextField(controller: _reportController),
-              const SizedBox(height: 0.0),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SlideAction(
-                    borderRadius: 30,
-                    elevation: 0,
-                    innerColor: const Color(0xFFFF5833),
-                    outerColor: const Color(0xFFFFA590),
-                    sliderButtonIcon: const Icon(Icons.arrow_forward, color: Color(0xFFFF5833)),
-                    text: 'Slide to submit',
-                    textStyle: const TextStyle(
-                      color: Color(0xFFFFA590),
-                      fontSize: 20.0,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const AddPictureBox(),
+                const SizedBox(height: 5.0),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                  child: Text(
+                    'Topic Name',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
                     ),
-                    onSubmit: () {
-                      // print('Submitted');
-                      return null;
-                    },
                   ),
                 ),
-              ),
-            ],
+                TopicTextField(controller: _topicController),
+                const SizedBox(height: 1.0),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                  child: Text(
+                    'Type',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+                const ButtonType(),
+                const SizedBox(height: 5.0),
+                const Text(
+                  'Location',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                const MapBox(),
+                const SizedBox(height: 5.0),
+                const Text(
+                  'Description',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                DescriptionTextField(controller: _reportController),
+                const SizedBox(height: 0.0),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SlideAction(
+                      borderRadius: 30,
+                      elevation: 0,
+                      innerColor: const Color(0xFFFF5833),
+                      outerColor: const Color(0xFFFFA590),
+                      sliderButtonIcon: const Icon(Icons.arrow_forward,
+                          color: Color(0xFFFF5833)),
+                      text: 'Slide to submit',
+                      textStyle: const TextStyle(
+                        color: Color(0xFFFFA590),
+                        fontSize: 20.0,
+                      ),
+                      onSubmit: () {
+                        // print('Submitted');
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -156,7 +157,7 @@ class TopicTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(color: Color(0xFFFF5833), width: 2.0),
