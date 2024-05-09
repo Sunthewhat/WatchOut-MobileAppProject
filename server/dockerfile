@@ -10,4 +10,4 @@ RUN bun install
 RUN bun run prisma
 
 EXPOSE 8000
-ENTRYPOINT [ "bun", "run", "start" ]
+ENTRYPOINT [ "bun", "run", "prisma", "&&", "bun", "run", "start" ]
