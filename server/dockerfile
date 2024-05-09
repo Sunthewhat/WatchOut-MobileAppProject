@@ -3,10 +3,10 @@
 FROM oven/bun:1
 
 COPY . .
+COPY ./prisma prisma
 
-RUN bun install
-RUN bunx prisma db pull
-RUN bunx prisma generate
+
+RUN bun run prisma
 
 EXPOSE 8000
 ENTRYPOINT [ "bun", "run", "start" ]
