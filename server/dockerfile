@@ -1,8 +1,11 @@
 FROM node:alpine as build
 
-COPY . .
+COPY package.json .
 
 RUN npm install
+
+COPY . .
+
 RUN npm run buildnode
 
 FROM build as production
