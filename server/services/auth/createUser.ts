@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../index';
 
 const CreateUser = async (
 	firstname: string,
@@ -6,7 +6,6 @@ const CreateUser = async (
 	username: string,
 	password: string
 ) => {
-	const prisma = new PrismaClient();
 	const user = await prisma.user.create({
 		data: {
 			name: firstname + ' ' + lastname,

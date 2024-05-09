@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../index';
 
 const GetUser = (username: string) => {
 	return prisma.user.findFirst({

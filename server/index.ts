@@ -4,11 +4,13 @@ import { config } from 'dotenv';
 import ValidateENV from './services/validateENV';
 import auth from './routes/auth.routes';
 import { cors } from 'hono/cors';
+import { PrismaClient } from '@prisma/client';
 
 config();
 ValidateENV();
 
 const app = new Hono({ strict: false });
+export const prisma = new PrismaClient();
 
 app.use(
 	cors({

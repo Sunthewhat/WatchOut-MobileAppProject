@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../index';
 
 const IsUsernameExist = async (username: string): Promise<boolean> => {
-	const prisma = new PrismaClient();
 	const user = await prisma.user.findFirst({
 		where: { username },
 	});
