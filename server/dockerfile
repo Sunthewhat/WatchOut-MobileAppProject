@@ -1,12 +1,14 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM node:alpine
+FROM oven/bun:latest
 
 COPY . .
 
-RUN npm i -omit=dev
+# RUN npm i -omit=dev
+RUN bun install
 
-RUN npx prisma generate
+# RUN npx prisma generate
+RUN bunx prisma generate
 
 EXPOSE 8000
-ENTRYPOINT [ "node", "index.js" ]
+ENTRYPOINT [ "bun", "run", "index.ts" ]
