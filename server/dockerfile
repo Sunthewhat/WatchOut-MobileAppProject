@@ -4,7 +4,7 @@ COPY package.json .
 
 RUN npm install
 
-FROM install as build
+FROM oven/bun as build
 
 COPY . .
 
@@ -12,10 +12,12 @@ COPY --from=install node_modules node_modules
 
 RUN npm run buildnode
 
-FROM build as production
+FROM install as production
 
 COPY --from=build ./build/node/index.js .
+
 COPY --from=install node_modules .
+
 COPY prisma ./prisma
 
 RUN npx prisma generate
