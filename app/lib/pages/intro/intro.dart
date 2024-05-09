@@ -1,5 +1,9 @@
+import 'package:app/constant/environment.dart';
+import 'package:app/pages/auth/login/login.dart';
+import 'package:app/services/auth/verify.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -39,17 +43,44 @@ class _StartPageState extends State<StartPage> {
     double descriptionBoxSize = MediaQuery.of(context).size.height * 0.2;
     const double dotSize = 15.0;
 
+    void handleHomePage() {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    }
+
+    void handleLoginPage() {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+      );
+    }
+
+    Future checkUserToken() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString(EnvironmentConstant.userToken);
+      if (token != null) {
+        var response = await Verify.verify(token);
+        if (response.success) {
+          handleHomePage();
+        } else {
+          handleLoginPage();
+        }
+      } else {
+        handleLoginPage();
+      }
+    }
+
     void handleNext() {
       if (index < 3) {
         setState(() {
           index++;
         });
       } else {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
+        checkUserToken();
       }
     }
 

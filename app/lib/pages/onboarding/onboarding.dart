@@ -34,7 +34,7 @@ class _OnboardingState extends State<OnboardingPage> {
 
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.clear();
+    prefs.clear();
     bool seen = (prefs.getBool(EnvironmentConstant.isFirstTime) ?? false);
 
     if (seen) {
