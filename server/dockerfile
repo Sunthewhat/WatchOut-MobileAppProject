@@ -10,7 +10,7 @@ COPY . .
 
 COPY --from=install node_modules node_modules
 
-RUN npm run buildnode
+RUN bun run buildnode
 
 FROM install as production
 
