@@ -1,18 +1,22 @@
-FROM node:alpine as build
+FROM node:alpine as install
 
 COPY package.json .
 
 RUN npm install
 
+FROM install as build
+
 COPY . .
+
+COPY --from=install node_modules node_modules
 
 RUN npm run buildnode
 
 FROM build as production
 
-COPY ./build/node/index.js .
-COPY node_modules .
-COPY prisma .
+COPY --from=build ./build/node/index.js .
+COPY --from=install node_modules .
+COPY prisma ./prisma
 
 RUN npx prisma generate
 
