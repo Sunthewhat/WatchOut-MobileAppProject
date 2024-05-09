@@ -19,13 +19,10 @@
     "typescript": "^5.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
     "@types/bcrypt": "^5.0.0",
     "@types/bun": "latest",
     "@types/jsonwebtoken": "^9.0.6",
-    "eslint": "^9.2.0",
-    "globals": "^15.1.0",
-    "typescript-eslint": "^7.8.0"
+    "globals": "^15.1.0"
   },
   "name": "server",
   "module": "index.ts",
