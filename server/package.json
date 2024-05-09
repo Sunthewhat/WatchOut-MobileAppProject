@@ -4,17 +4,23 @@
     "prisma": "bunx prisma generate",
     "start": "bun run index.ts",
     "lint": "bunx eslint . --fix",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "buildnode": "bun build ./index.ts --outdir ./build/node --target node",
+    "build": "bun build ./index.ts --outdir ./build/bun --target bun"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.572.0",
     "@hono-storage/core": "^0.0.9",
     "@hono-storage/s3": "^0.0.8",
-    "@prisma/client": "5.13.0",
+    "@prisma/client": "^5.13.0",
+    "aws-sdk": "^2.1617.0",
     "bcrypt": "^5.1.1",
+    "child_process": "^1.0.2",
     "dotenv": "^16.4.5",
     "hono": "^4.3.0",
     "jsonwebtoken": "^9.0.2",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.5.4",
     "prisma": "^5.13.0",
     "typescript": "^5.0.0"
   },

@@ -1,10 +1,17 @@
-FROM oven/bun:1.1.7
+FROM node:14 as build
 
 COPY . .
 
-RUN bun install
-RUN bunx prisma db pull
-RUN bunx prisma generate
+RUN npm install
+RUN npm run buildnode
+
+FROM build as production
+
+COPY ./build/node/index.js .
+COPY node_modules .
+COPY prisma .
+
+RUN npx prisma generate
 
 EXPOSE 8000
-ENTRYPOINT [ "bun", "run", "start" ]
+ENTRYPOINT [ "node", "index.js" ]
