@@ -1,11 +1,13 @@
-# use the official Bun image
-# see all versions at https://hub.docker.com/r/oven/bun/tags
 FROM oven/bun:latest
 
-COPY . .
+COPY ./package.json .
 
 RUN bun install
 
+COPY . .
+
+RUN bunx prisma db pull
+RUN bunx prisma generate
 
 EXPOSE 8000
-ENTRYPOINT [ "bash", "run.sh" ]
+ENTRYPOINT [ "bun", "run", "start" ]
