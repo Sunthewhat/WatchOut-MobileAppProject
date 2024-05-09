@@ -14,7 +14,7 @@ RUN bun run buildnode
 
 FROM install as production
 
-COPY --from=build ./build/node/index.js .
+COPY --from=build build/node/index.js .
 
 COPY --from=install node_modules .
 
