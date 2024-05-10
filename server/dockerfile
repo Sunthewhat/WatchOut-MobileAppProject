@@ -1,13 +1,8 @@
 FROM oven/bun:latest as install
 
-COPY package*.json .
-COPY bun.lockb .
-RUN bun install
-
-FROM install as runner
-
 COPY . .
-COPY --from=install node_modules node_modules
+
+RUN bun install
 
 RUN bun prisma
 
