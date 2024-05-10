@@ -2,6 +2,7 @@ services:
   server:
     image: watchout
     container_name: watchout_server
+    restart: unless-stopped
     networks:
       reverseproxy:
         ipv4_address: 192.168.0.4
