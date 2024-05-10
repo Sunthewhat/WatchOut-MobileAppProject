@@ -1,0 +1,17 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "client"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique(map: "User_pk") @db.VarChar(100)
+  name     String @db.VarChar(255)
+  password String @db.Text
+}
