@@ -4,7 +4,7 @@ import { config } from 'dotenv';
 import ValidateENV from './services/validateENV';
 import auth from './routes/auth.routes';
 import { cors } from 'hono/cors';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './prisma/client';
 
 config();
 ValidateENV();

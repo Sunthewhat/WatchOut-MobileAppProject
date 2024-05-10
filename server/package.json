@@ -3,8 +3,6 @@
     "dev": "bun run --hot index.ts",
     "prisma": "bunx prisma db pull && bunx prisma generate",
     "start": "bun run index.ts",
-    "lint": "bunx eslint . --fix",
-    "test": "echo \"Error: no test specified\" && exit 0",
     "buildnode": "bun build ./index.ts --outdir . --target node",
     "build": "bun build ./index.ts --outdir . --target bun"
   },
