@@ -1,4 +1,4 @@
-import 'package:app/pages/home/home.dart';
+import 'package:app/components/reports.dart';
 import 'package:flutter/material.dart';
 
 class ReportInfoPage extends StatefulWidget {
@@ -11,7 +11,6 @@ class ReportInfoPage extends StatefulWidget {
 }
 
 class _ReportInfoPageState extends State<ReportInfoPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +76,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                   ),
                 ],
               ),
-              
-
-              Image.asset('assets/images/map.png'), 
+              Image.asset('assets/images/map.png'),
               const Text(
                 'Description',
                 style: TextStyle(
@@ -92,11 +89,10 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                 height: 100,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.grey, 
+                    color: Colors.grey,
                     width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(
-                      10.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 padding: const EdgeInsets.all(10.0),
                 child: Text(

@@ -1,6 +1,6 @@
-import 'package:app/pages/home/home.dart';
-import 'package:app/pages/report/report_info.dart';
+import 'package:app/components/report_card.dart';
 import 'package:flutter/material.dart';
+import 'package:app/components/reports.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
@@ -11,8 +11,9 @@ class ProfilePage extends StatelessWidget {
       location: 'Ang thong, Bangkok',
       imageUrl: 'assets/images/wildfire.jpg',
       userName: 'John Doe',
-      userProfile: 'assets/images/jerrymeme.jpg',
       reportDescription: 'Wild fire near my house',
+      range: 5.0,
+      reportTime: '2 hours ago',
     ),
   ];
 
@@ -30,11 +31,9 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Blue background
           Container(
-            color: const Color(0xFF2960AE),
+            color: const Color(0xFFFF6947),
           ),
-          // Profile label
           Positioned(
             top: MediaQuery.of(context).padding.top,
             left: 0,
@@ -42,7 +41,7 @@ class ProfilePage extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(top: 35),
               padding: const EdgeInsets.symmetric(vertical: 8),
-              color: const Color(0xFF2960AE),
+              color: const Color(0xFFFF6947),
               child: Center(
                 child: Text(
                   'Profile',
@@ -61,7 +60,6 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          // White box overlay
           Positioned(
             top: spaceAtTop,
             left: 0,
@@ -71,15 +69,15 @@ class ProfilePage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFEBF4FF),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(45), // Add top left border radius
-                  topRight: Radius.circular(45), // Add top right border radius
+                  topLeft: Radius.circular(45),
+                  topRight: Radius.circular(45),
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: const Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -90,7 +88,6 @@ class ProfilePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // This is where you could add a back button or any other appbar actions
                       IconButton(
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () {
@@ -103,7 +100,6 @@ class ProfilePage extends StatelessWidget {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          // Navigate to settings page
                         },
                       ),
                     ],
@@ -113,7 +109,6 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // User Profile
                           const Row(
                             children: [
                               CircleAvatar(
@@ -132,8 +127,6 @@ class ProfilePage extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 20),
-
-                          // User Reports
                           const Text(
                             'Your Reports',
                             style: TextStyle(
@@ -147,14 +140,14 @@ class ProfilePage extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: reports.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return ReportCard(
+                              return CustomReportCard(
+                                title: reports[index].incidentType,
                                 imageUrl: reports[index].imageUrl,
-                                userName: reports[index].userName,
-                                userProfile: reports[index].userProfile,
-                                reportDescription:
-                                    reports[index].reportDescription,
+                                description: reports[index].reportDescription,
+                                reporterName: reports[index].userName,
                                 location: reports[index].location,
-                                incidentType: reports[index].incidentType,
+                                range: reports[index].range,
+                                reportTime: reports[index].reportTime,
                               );
                             },
                           )
@@ -167,129 +160,6 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ReportCard extends StatelessWidget {
-  final String imageUrl;
-  final String userName;
-  final String userProfile;
-  final String reportDescription;
-  final String location;
-  final String incidentType;
-
-  const ReportCard({
-    super.key,
-    required this.imageUrl,
-    required this.userName,
-    required this.userProfile,
-    required this.reportDescription,
-    required this.location,
-    required this.incidentType,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ReportInfoPage(
-              report: Report(
-                incidentType: incidentType,
-                location: location,
-                imageUrl: imageUrl,
-                userName: userName,
-                userProfile: userProfile,
-                reportDescription: reportDescription,
-              ),
-            ),
-          ),
-        );
-      },
-      child: Card(
-        elevation: 8,
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(16.0)),
-                  child: Image.asset(
-                    imageUrl,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: 200.0,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                              offset: const Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(userProfile),
-                        ),
-                      ),
-                      const SizedBox(width: 8.0),
-                      Text(
-                        userName,
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              top: 150,
-              left: 10,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.black.withOpacity(0.5),
-                child: Text(
-                  reportDescription,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 10,
-              top: 10,
-              child: Text(
-                incidentType,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
