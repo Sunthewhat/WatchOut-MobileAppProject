@@ -65,11 +65,12 @@ class _HomePageState extends State<HomePage> {
             right: 0,
             child: Container(
               margin: const EdgeInsets.only(top: 35),
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
               color: const Color(0xFFFF6947),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  const SizedBox(width: 60),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                     child: const CircleAvatar(
                       backgroundImage:
                           AssetImage('assets/images/jerrymeme.jpg'),
-                      radius: 20,
+                      radius: 30,
                     ),
                   )
                 ],
