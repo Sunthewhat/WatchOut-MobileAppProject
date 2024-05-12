@@ -5,6 +5,7 @@ import ValidateENV from './services/validateENV';
 import auth from './routes/auth.routes';
 import { cors } from 'hono/cors';
 import { PrismaClient } from './prisma/client';
+import image from './routes/image.routes';
 
 config();
 ValidateENV();
@@ -27,6 +28,7 @@ app.get('/', (c) =>
 );
 
 app.route('/auth', auth);
+app.route('/image', image);
 
 export default {
 	port: Bun.env.PORT || 8000,
