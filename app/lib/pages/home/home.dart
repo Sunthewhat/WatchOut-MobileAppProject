@@ -27,7 +27,7 @@ List<Report> reports = [
     imageUrl: 'assets/images/flood.jpg',
     userName: 'Jack Sparrow',
     reportDescription: 'flood at the village',
-    range: 5.0,
+    range: 3.0,
     reportTime: '2 hours ago',
   ),
   Report(
@@ -36,14 +36,18 @@ List<Report> reports = [
     imageUrl: 'assets/images/earthquake.jpg',
     userName: 'Segun adebayo',
     reportDescription: 'Big earthquake in the city',
-    range: 5.0,
+    range: 1.0,
     reportTime: '2 hours ago',
   ),
 ];
 
 class _HomePageState extends State<HomePage> {
+  String _sortBy = 'Range';
   @override
   Widget build(BuildContext context) {
+    if (_sortBy == 'Range') {
+      reports.sort((a, b) => a.range.compareTo(b.range));
+    }
     // Get the screen height
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -134,6 +138,29 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        DropdownButton<String>(
+                          value: _sortBy,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _sortBy = newValue!;
+                            });
+                            // Implement sorting logic here
+                          },
+                          items: <String>['Range', 'Time'].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
