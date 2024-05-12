@@ -42,21 +42,63 @@ class ProfilePage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 35),
               padding: const EdgeInsets.symmetric(vertical: 8),
               color: const Color(0xFFFF6947),
-              child: Center(
-                child: Text(
-                  'Profile',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 5,
-                          offset: const Offset(1, 5),
-                        ),
-                      ]),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    color: Colors.white,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Text(
+                    'Profile',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.5),
+                            blurRadius: 5,
+                            offset: const Offset(1, 5),
+                          ),
+                        ]),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.logout),
+                    color: Colors.white,
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Logout"),
+                            content: const Text("Do you want to logout?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  // Perform logout action here
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                                child: const Text('Yes'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                                child: const Text('No'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  )
+                ],
               ),
             ),
           ),
@@ -85,25 +127,7 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.settings,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                        },
-                      ),
-                    ],
-                  ),
+                  const SizedBox(height: 20),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
