@@ -9,21 +9,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       Int       @id @default(autoincrement())
-  username String    @unique(map: "User_pk") @db.VarChar(100)
-  name     String    @db.VarChar(255)
-  password String    @db.Text
-  Reports  Reports[]
-}
-
-model images {
-  id      Int       @id @default(autoincrement())
-  key     String    @db.VarChar(255)
-  type    String    @db.VarChar(20)
-  Reports Reports[]
-}
-
 model Reports {
   id          Int      @id @default(autoincrement())
   imageId     Int
@@ -34,9 +19,24 @@ model Reports {
   time        DateTime @db.DateTime(0)
   latitude    Decimal  @db.Decimal(9, 6)
   longitude   Decimal  @db.Decimal(9, 6)
-  User        User     @relation(fields: [userId], references: [id], onUpdate: Restrict, map: "Reports_User_id_fk")
-  images      images   @relation(fields: [imageId], references: [id], onUpdate: Restrict, map: "Reports_images_id_fk")
+  User        Users    @relation(fields: [userId], references: [id], onUpdate: Restrict, map: "Reports_User_id_fk")
+  images      Images   @relation(fields: [imageId], references: [id], onUpdate: Restrict, map: "Reports_images_id_fk")
 
   @@index([userId], map: "Reports_User_id_fk")
   @@index([imageId], map: "Reports_images_id_fk")
+}
+
+model Images {
+  id      Int       @id @default(autoincrement())
+  key     String    @db.VarChar(255)
+  type    String    @db.VarChar(20)
+  Reports Reports[]
+}
+
+model Users {
+  id       Int       @id @default(autoincrement())
+  username String    @unique(map: "User_pk") @db.VarChar(100)
+  name     String    @db.VarChar(255)
+  password String    @db.Text
+  Reports  Reports[]
 }

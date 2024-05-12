@@ -1,7 +1,7 @@
 import { prisma } from '../../index';
 
 const GetUser = (username: string) => {
-	return prisma.user.findFirst({
+	return prisma.users.findFirst({
 		where: { username },
 	});
 };
