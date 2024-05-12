@@ -132,6 +132,18 @@ exports.Prisma.ImagesScalarFieldEnum = {
   type: 'type'
 };
 
+exports.Prisma.ReportsScalarFieldEnum = {
+  id: 'id',
+  imageId: 'imageId',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  type: 'type',
+  time: 'time',
+  latitude: 'latitude',
+  longitude: 'longitude'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -140,7 +152,8 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  images: 'images'
+  images: 'images',
+  Reports: 'Reports'
 };
 
 /**
