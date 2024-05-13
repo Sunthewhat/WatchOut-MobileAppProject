@@ -1,6 +1,7 @@
 import 'package:app/components/report_card.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:app/pages/report/report.dart';
+import 'package:app/services/report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/reports.dart';
 
@@ -56,6 +57,17 @@ class _HomePageState extends State<HomePage> {
 
     // Calculate the space left at the top of the page
     double spaceAtTop = screenHeight - whiteBoxHeight;
+
+    void getReports() {
+      ReportService.getAllReports().then((value) => {
+            if (value.success)
+              {print(value.payload?.reports[0].description)}
+            else
+              {print(value.message)}
+          });
+    }
+
+    getReports();
 
     return Scaffold(
       body: Stack(

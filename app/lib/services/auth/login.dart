@@ -24,7 +24,6 @@ class Login {
       }
       return response;
     } catch (e) {
-      print(e);
       return BaseResponse<LoginResponse>(
         success: false,
         message: 'Internal Server Error',
