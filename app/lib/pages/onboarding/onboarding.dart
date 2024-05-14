@@ -5,6 +5,7 @@ import 'package:app/pages/home/home.dart';
 import 'package:app/pages/intro/intro.dart';
 import 'package:app/pages/auth/login/login.dart';
 import 'package:app/services/auth/verify.dart';
+import 'package:app/services/location.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,10 +33,16 @@ class _OnboardingState extends State<OnboardingPage> {
     );
   }
 
+  Future handleLocationPermission() async {
+    await LocationHandler.getCurrentPosition();
+  }
+
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.clear();
     bool seen = (prefs.getBool(EnvironmentConstant.isFirstTime) ?? false);
+
+    await handleLocationPermission();
 
     if (seen) {
       await checkUserToken();
