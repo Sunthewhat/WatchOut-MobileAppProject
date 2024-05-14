@@ -1,16 +1,16 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:app/services/auth/profile_image.dart';
+import 'package:app/services/auth/user.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/components/report_card.dart';
 import 'package:app/components/reports.dart';
 
-Future<Uint8List?> pickImage(ImageSource source) async {
+Future pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
-  XFile? file = await imagePicker.pickImage(source: source);
+  var file = await imagePicker.pickImage(source: source);
   if (file != null) {
-    return await file.readAsBytes();
+    return file;
   }
   print('No Images Selected');
   return null;
@@ -24,28 +24,45 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  Uint8List? _image;
+  // Uint8List? _image;
+  String? userImg;
+
+  void getUserData() async {
+    var user = await User.getUser();
+    setState(() {
+      if (user.payload != null) {
+        userImg = user.payload!.image;
+      }
+    });
+  }
 
   void selectImage() async {
-    Uint8List? img = await pickImage(ImageSource.gallery);
-    File newImg = File.fromRawPath(img!);
+    XFile? img = await pickImage(ImageSource.gallery);
+    File newImg = File(img!.path);
     await ProfileImage.changeProfileImage(newImg);
+    var newUserData = await User.getUser();
     setState(() {
-      _image = img;
+      userImg = newUserData.payload!.image;
     });
-    }
+  }
 
   final List<Report> reports = [
-    Report(
-      incidentType: 'Wildfire',
-      location: 'Ang thong, Bangkok',
-      imageUrl: 'assets/images/wildfire.jpg',
-      userName: 'John Doe',
-      reportDescription: 'Wild fire near my house',
-      range: 5.0,
-      reportTime: '2 hours ago',
-    ),
+    // Report(
+    //   incidentType: 'Wildfire',
+    //   location: 'Ang thong, Bangkok',
+    //   imageUrl: 'assets/images/wildfire.jpg',
+    //   userName: 'John Doe',
+    //   reportDescription: 'Wild fire near my house',
+    //   range: 5.0,
+    //   reportTime: '2 hours ago',
+    // ),
   ];
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,11 +185,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               Stack(
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage: _image != null
-                                        ? MemoryImage(_image!)
-                                        : const AssetImage('assets/images/jerrymeme.jpg')
-                                            as ImageProvider,
+                                    foregroundImage: userImg != null
+                                        ? NetworkImage(userImg!)
+                                        : null,
                                     radius: 40,
+                                    // child: const Icon(
+                                    //     Icons.account_circle_rounded),
                                   ),
                                   Positioned(
                                     bottom: 0,
