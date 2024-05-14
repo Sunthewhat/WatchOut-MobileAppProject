@@ -31,7 +31,6 @@ class _HomePageState extends State<HomePage> {
   List<Report> reports = [];
   bool isLoading = true;
 
-
   Future<void> _fetchReports() async {
     final response = await ReportService.getAllReports();
     if (response.success && response.payload != null) {
@@ -69,7 +68,6 @@ class _HomePageState extends State<HomePage> {
     } else if (_sortBy == 'Time') {
       reports.sort((a, b) => b.reportTime.compareTo(a.reportTime));
     }
-
 
     double screenHeight = MediaQuery.of(context).size.height;
     double whiteBoxHeight = screenHeight * 0.85;
@@ -121,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                        MaterialPageRoute(builder: (context) => const ProfilePage()),
                       );
                     },
                     child: const CircleAvatar(
@@ -237,33 +235,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-List<Report> reports = [
-  Report(
-    incidentType: 'Wildfire',
-    location: 'Ang thong, Bangkok',
-    imageUrl: 'assets/images/wildfire.jpg',
-    userName: 'John Doe',
-    reportDescription: 'Wild fire near my house',
-    range: 5.0,
-    reportTime: '2 hours ago',
-  ),
-  Report(
-    incidentType: 'Flood',
-    location: 'Orlando, Florida',
-    imageUrl: 'assets/images/flood.jpg',
-    userName: 'Jack Sparrow',
-    reportDescription: 'Flood at the village',
-    range: 3.0,
-    reportTime: '2 hours ago',
-  ),
-  Report(
-    incidentType: 'Earthquake',
-    location: 'Tokyo, Japan',
-    imageUrl: 'assets/images/earthquake.jpg',
-    userName: 'Segun Adebayo',
-    reportDescription: 'Big earthquake in the city',
-    range: 1.0,
-    reportTime: '2 hours ago',
-  ),
-];

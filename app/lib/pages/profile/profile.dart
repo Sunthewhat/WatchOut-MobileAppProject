@@ -12,7 +12,6 @@ Future pickImage(ImageSource source) async {
   if (file != null) {
     return file;
   }
-  print('No Images Selected');
   return null;
 }
 
@@ -55,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
       reportDescription: 'Wild fire near my house',
       range: 5.0,
       reportTime: '2 hours ago',
-      title:'fire burn me',
+      title: 'fire burn me',
     ),
   ];
 
