@@ -58,8 +58,7 @@ class _HomePageState extends State<HomePage> {
     if (_sortBy == 'Range') {
       reports.sort((a, b) => a.range.compareTo(b.range));
     } else if (_sortBy == 'Time') {
-      reports.sort((a, b) =>
-          DateTime.parse(a.reportTime).compareTo(DateTime.parse(b.reportTime)));
+      reports.sort((a, b) => b.reportTime.compareTo(a.reportTime));
     }
 
     // Get the screen height
