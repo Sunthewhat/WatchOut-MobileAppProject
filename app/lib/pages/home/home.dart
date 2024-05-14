@@ -4,6 +4,7 @@ import 'package:app/pages/report/report.dart';
 import 'package:app/services/report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/reports.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,43 +13,55 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-List<Report> reports = [
-  Report(
-    incidentType: 'Wildfire',
-    location: 'Ang thong, Bangkok',
-    imageUrl: 'assets/images/wildfire.jpg',
-    userName: 'John Doe',
-    reportDescription: 'Wild fire near my house ',
-    range: 5.0,
-    reportTime: '2 hours ago',
-  ),
-  Report(
-    incidentType: 'Flood',
-    location: 'Orlando, Florida',
-    imageUrl: 'assets/images/flood.jpg',
-    userName: 'Jack Sparrow',
-    reportDescription: 'flood at the village',
-    range: 3.0,
-    reportTime: '2 hours ago',
-  ),
-  Report(
-    incidentType: 'Earthquake',
-    location: 'Tokyo, Japan',
-    imageUrl: 'assets/images/earthquake.jpg',
-    userName: 'Segun adebayo',
-    reportDescription: 'Big earthquake in the city',
-    range: 1.0,
-    reportTime: '2 hours ago',
-  ),
-];
-
 class _HomePageState extends State<HomePage> {
   String _sortBy = 'Range';
+  List<Report> reports = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchReports();
+  }
+
+  Future<void> _fetchReports() async {
+    final response = await ReportService.getAllReports();
+    if (response.success && response.payload != null) {
+      setState(() {
+        reports = response.payload!.reports
+            .map((r) => Report(
+                  incidentType: r.type,
+                  location: r.user,
+                  imageUrl: r.image,
+                  userName: r.user,
+                  reportDescription: r.title,
+                  range: r.latitude,
+                  reportTime: r.time.toString(),
+                ))
+            .toList();
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      (response.message);
+    }
+  }
+
+  String _formatTimeAgo(DateTime dateTime) {
+    return timeago.format(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_sortBy == 'Range') {
       reports.sort((a, b) => a.range.compareTo(b.range));
+    } else if (_sortBy == 'Time') {
+      reports.sort((a, b) =>
+          DateTime.parse(a.reportTime).compareTo(DateTime.parse(b.reportTime)));
     }
+
     // Get the screen height
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -57,17 +70,6 @@ class _HomePageState extends State<HomePage> {
 
     // Calculate the space left at the top of the page
     double spaceAtTop = screenHeight - whiteBoxHeight;
-
-    void getReports() {
-      ReportService.getAllReports().then((value) => {
-            if (value.success)
-              {print(value.payload?.reports[0].description)}
-            else
-              {print(value.message)}
-          });
-    }
-
-    getReports();
 
     return Scaffold(
       body: Stack(
@@ -81,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             right: 0,
             child: Container(
               margin: const EdgeInsets.only(top: 35),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               color: const Color(0xFFFF6947),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,7 +163,6 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               _sortBy = newValue!;
                             });
-                            // Implement sorting logic here
                           },
                           items: <String>['Range', 'Time'].map((String value) {
                             return DropdownMenuItem<String>(
@@ -173,31 +174,38 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: reports.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CustomReportCard(
-                                title: reports[index].incidentType,
-                                imageUrl: reports[index].imageUrl,
-                                description: reports[index].reportDescription,
-                                reporterName: reports[index].userName,
-                                location: reports[index].location,
-                                range: reports[index].range,
-                                reportTime: reports[index].reportTime,
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: reports.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    DateTime reportDateTime = DateTime.parse(
+                                        reports[index].reportTime);
+                                    return CustomReportCard(
+                                      title: reports[index].incidentType,
+                                      imageUrl: reports[index].imageUrl,
+                                      description:
+                                          reports[index].reportDescription,
+                                      reporterName: reports[index].userName,
+                                      location: reports[index].location,
+                                      range: reports[index].range,
+                                      reportTime:
+                                          _formatTimeAgo(reportDateTime),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),
