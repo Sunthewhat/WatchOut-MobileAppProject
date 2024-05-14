@@ -14,6 +14,7 @@ class ProfilePage extends StatelessWidget {
       reportDescription: 'Wild fire near my house',
       range: 5.0,
       reportTime: '2 hours ago',
+      title:'fire burn me',
     ),
   ];
 
@@ -165,13 +166,14 @@ class ProfilePage extends StatelessWidget {
                             itemCount: reports.length,
                             itemBuilder: (BuildContext context, int index) {
                               return CustomReportCard(
-                                title: reports[index].incidentType,
+                                title: reports[index].title,
                                 imageUrl: reports[index].imageUrl,
                                 description: reports[index].reportDescription,
                                 reporterName: reports[index].userName,
                                 location: reports[index].location,
                                 range: reports[index].range,
                                 reportTime: reports[index].reportTime,
+                                type: reports[index].incidentType,
                               );
                             },
                           )
