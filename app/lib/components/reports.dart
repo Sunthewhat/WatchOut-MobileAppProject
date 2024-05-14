@@ -6,6 +6,7 @@ class Report {
   final String reportDescription;
   final double range;
   final String reportTime;
+  final String title;
 
   Report({
     required this.incidentType,
@@ -15,5 +16,6 @@ class Report {
     required this.reportDescription,
     required this.range,
     required this.reportTime,
+    required this.title,
   });
 }

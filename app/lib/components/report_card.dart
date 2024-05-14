@@ -10,6 +10,7 @@ class CustomReportCard extends StatelessWidget {
   final String location;
   final double range;
   final String reportTime;
+  final String type;
 
   const CustomReportCard({
     super.key,
@@ -20,6 +21,7 @@ class CustomReportCard extends StatelessWidget {
     required this.location,
     required this.range,
     required this.reportTime,
+    required this.type,
   });
 
   @override
@@ -31,13 +33,14 @@ class CustomReportCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ReportInfoPage(
               report: Report(
-                incidentType: title,
+                incidentType: type,
                 location: location,
                 imageUrl: imageUrl,
                 userName: reporterName,
                 reportDescription: description,
                 range: range,
                 reportTime: reportTime,
+                title: title,
               ),
             ),
           ),
@@ -87,7 +90,7 @@ class CustomReportCard extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     color: Colors.black.withOpacity(0.5),
                     child: Text(
-                      title,
+                      type,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -102,7 +105,7 @@ class CustomReportCard extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               color: const Color(0xFFFF6947),
               child: Text(
-                description,
+                title,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13.0,

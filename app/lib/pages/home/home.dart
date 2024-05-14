@@ -34,9 +34,10 @@ class _HomePageState extends State<HomePage> {
                   location: r.user,
                   imageUrl: r.image,
                   userName: r.user,
-                  reportDescription: r.title,
+                  reportDescription: r.description,
                   range: r.latitude,
                   reportTime: r.time.toString(),
+                  title: r.title,
                 ))
             .toList();
         isLoading = false;
@@ -77,12 +78,14 @@ class _HomePageState extends State<HomePage> {
             color: const Color(0xFFFF6947),
           ),
           Positioned(
-            top: MediaQuery.of(context).padding.top,
+            // top: MediaQuery.of(context).padding.top,
             left: 0,
             right: 0,
             child: Container(
-              margin: const EdgeInsets.only(top: 35),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              // margin: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
               color: const Color(0xFFFF6947),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -189,7 +192,8 @@ class _HomePageState extends State<HomePage> {
                                     DateTime reportDateTime = DateTime.parse(
                                         reports[index].reportTime);
                                     return CustomReportCard(
-                                      title: reports[index].incidentType,
+                                      title: reports[index].title,
+                                      type: reports[index].incidentType,
                                       imageUrl: reports[index].imageUrl,
                                       description:
                                           reports[index].reportDescription,
