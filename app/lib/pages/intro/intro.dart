@@ -30,7 +30,7 @@ class _StartPageState extends State<StartPage> {
   final List<Image> images = [
     const Image(image: AssetImage('assets/images/incidentReport.png')),
     const Image(image: AssetImage('assets/images/verificationSystem.png')),
-    const Image(image: AssetImage('assets/images/realTimeAlerts.png')),
+    const Image(image: AssetImage('assets/images/realtimeAlerts.png')),
     const Image(image: AssetImage('assets/images/postReportGuidance.png')),
   ];
 
