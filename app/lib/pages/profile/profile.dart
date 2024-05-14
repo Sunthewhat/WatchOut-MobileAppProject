@@ -1,25 +1,26 @@
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/services/auth/profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/components/report_card.dart';
 import 'package:app/components/reports.dart';
-import 'package:app/utils.dart';
 
 Future<Uint8List?> pickImage(ImageSource source) async {
-  final ImagePicker _imagePicker = ImagePicker();
-  XFile? _file = await _imagePicker.pickImage(source: source);
-  if (_file != null) {
-    return await _file.readAsBytes();
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? file = await imagePicker.pickImage(source: source);
+  if (file != null) {
+    return await file.readAsBytes();
   }
   print('No Images Selected');
   return null;
 }
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -27,12 +28,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void selectImage() async {
     Uint8List? img = await pickImage(ImageSource.gallery);
-    if (img != null) {
-      setState(() {
-        _image = img;
-      });
+    File newImg = File.fromRawPath(img!);
+    await ProfileImage.changeProfileImage(newImg);
+    setState(() {
+      _image = img;
+    });
     }
-  }
 
   final List<Report> reports = [
     Report(
@@ -179,8 +180,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: Container(
                                       width: 30,
                                       height: 30,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFFF6947),
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFFFF6947),
                                         shape: BoxShape.circle,
                                       ),
                                       child: IconButton(
