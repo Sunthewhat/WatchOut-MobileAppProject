@@ -1,17 +1,17 @@
 class GetAllReportResponse {
-  final List<GetAllReportResponseType> reports;
+  final List<GetReportResponseType> reports;
 
   GetAllReportResponse({required this.reports});
 
   factory GetAllReportResponse.fromJson(List<dynamic> json) {
-    List<GetAllReportResponseType> reports = json
-        .map((reportJson) => GetAllReportResponseType.fromJson(reportJson))
+    List<GetReportResponseType> reports = json
+        .map((reportJson) => GetReportResponseType.fromJson(reportJson))
         .toList();
     return GetAllReportResponse(reports: reports);
   }
 }
 
-class GetAllReportResponseType {
+class GetReportResponseType {
   int id;
   String title;
   String description;
@@ -23,7 +23,7 @@ class GetAllReportResponseType {
   String user;
   String userImage;
 
-  GetAllReportResponseType({
+  GetReportResponseType({
     required this.id,
     required this.title,
     required this.description,
@@ -36,8 +36,8 @@ class GetAllReportResponseType {
     required this.userImage,
   });
 
-  factory GetAllReportResponseType.fromJson(Map<String, dynamic> json) {
-    return GetAllReportResponseType(
+  factory GetReportResponseType.fromJson(Map<String, dynamic> json) {
+    return GetReportResponseType(
       id: json['id'],
       title: json['title'],
       description: json['description'],
