@@ -47,15 +47,16 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   final List<Report> reports = [
-    // Report(
-    //   incidentType: 'Wildfire',
-    //   location: 'Ang thong, Bangkok',
-    //   imageUrl: 'assets/images/wildfire.jpg',
-    //   userName: 'John Doe',
-    //   reportDescription: 'Wild fire near my house',
-    //   range: 5.0,
-    //   reportTime: '2 hours ago',
-    // ),
+    Report(
+      incidentType: 'Wildfire',
+      location: 'Ang thong, Bangkok',
+      imageUrl: 'assets/images/wildfire.jpg',
+      userName: 'John Doe',
+      reportDescription: 'Wild fire near my house',
+      range: 5.0,
+      reportTime: '2 hours ago',
+      title:'fire burn me',
+    ),
   ];
 
   @override
@@ -239,13 +240,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             itemCount: reports.length,
                             itemBuilder: (BuildContext context, int index) {
                               return CustomReportCard(
-                                title: reports[index].incidentType,
+                                title: reports[index].title,
                                 imageUrl: reports[index].imageUrl,
                                 description: reports[index].reportDescription,
                                 reporterName: reports[index].userName,
                                 location: reports[index].location,
                                 range: reports[index].range,
                                 reportTime: reports[index].reportTime,
+                                type: reports[index].incidentType,
                               );
                             },
                           )
