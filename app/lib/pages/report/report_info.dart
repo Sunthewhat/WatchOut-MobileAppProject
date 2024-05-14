@@ -51,7 +51,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(
                       45.0), // Adjust the radius as needed
-                  child: Image.asset(
+                  child: Image.network(
                     widget.report.imageUrl,
                     width: 331.0,
                     height: 195.0,

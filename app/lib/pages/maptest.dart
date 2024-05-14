@@ -1,4 +1,6 @@
+import 'package:app/services/location.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapDisplay extends StatefulWidget {
@@ -10,22 +12,39 @@ class MapDisplay extends StatefulWidget {
 
 class _MapDisplayState extends State<MapDisplay> {
   late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  LatLng currentPosition = const LatLng(0, 0);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
+  Widget map = const Center(
+    child: CircularProgressIndicator(),
+  );
+
+  void getCurrentPosition() async {
+    LatLng pos = await LocationHandler.getCurrentPosition();
+    setState(() {
+      map = GoogleMap(
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(
+          target: pos,
+          zoom: 17.0,
+        ),
+        myLocationButtonEnabled: false,
+        myLocationEnabled: true,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(
-        target: _center,
-        zoom: 11.0,
-      ),
-      myLocationButtonEnabled: false,
-    );
+    return map;
+  }
+
+  @override
+  void initState() {
+    getCurrentPosition();
+    super.initState();
   }
 }

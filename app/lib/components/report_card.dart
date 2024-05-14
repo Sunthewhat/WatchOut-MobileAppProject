@@ -48,7 +48,7 @@ class CustomReportCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
-        margin: const EdgeInsets.only(top: 20.0, bottom: 20),
+        margin: const EdgeInsets.only(bottom: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -74,7 +74,7 @@ class CustomReportCard extends StatelessWidget {
             ),
             Stack(
               children: [
-                Image.asset(
+                Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
                   height: 200.0,
@@ -122,13 +122,13 @@ class CustomReportCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    location,
-                    style: const TextStyle(
-                      fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  // Text(
+                  //   location,
+                  //   style: const TextStyle(
+                  //     fontSize: 10.0,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
