@@ -190,14 +190,14 @@ class _SignupPageState extends State<SignupPage> {
                 padding: const EdgeInsets.only(
                     left: 20,
                     right: 20,
-                    top: 40), // Add padding around the form
+                    top: 40),
                 child: FractionallySizedBox(
-                  widthFactor: 1, // 100% of the screen width
+                  widthFactor: 1,
                   child: Container(
                     padding: const EdgeInsets.all(40.0),
                     // Add padding inside the form
                     decoration: BoxDecoration(
-                      color: Colors.white, // Set box color to white
+                      color: Colors.white,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(80.0),
                       ),
@@ -207,7 +207,7 @@ class _SignupPageState extends State<SignupPage> {
                           spreadRadius: 2,
                           blurRadius: 8,
                           offset:
-                              const Offset(0, 3), // changes position of shadow
+                              const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -217,13 +217,12 @@ class _SignupPageState extends State<SignupPage> {
                       children: <Widget>[
                         const SizedBox(height: 10.0),
                         Row(
-                          // Use Row to arrange the text fields on the same row
                           children: [
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     right:
-                                        10.0), // Add spacing between the text and the text field
+                                        10.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
@@ -269,7 +268,7 @@ class _SignupPageState extends State<SignupPage> {
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     left:
-                                        10.0), // Add spacing between the text and the text field
+                                        10.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
@@ -317,7 +316,7 @@ class _SignupPageState extends State<SignupPage> {
                           alignment: Alignment.centerLeft,
                           child: Padding(
                             padding: EdgeInsets.only(
-                                top: 30.0), // Add padding on top
+                                top: 30.0),
                             child: Text(
                               'Username',
                               style: TextStyle(
@@ -353,7 +352,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              top: 20.0), // Add padding on top
+                              top: 20.0),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Column(
@@ -377,10 +376,10 @@ class _SignupPageState extends State<SignupPage> {
                                               ? Icons.visibility_off
                                               : Icons.visibility,
                                           color: const Color(
-                                              0xFFFF5833), // Icon color
+                                              0xFFFF5833),
                                         ),
                                         onPressed:
-                                            toggleObscure, // Toggle password visibility
+                                            toggleObscure,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius:

@@ -1,6 +1,6 @@
 import { Context } from 'hono';
-import { PrismaClient } from '../../prisma/client';
 import DecodeToken from '../../services/auth/decodeToken';
+import CreateReportService from '../../services/report/createReport';
 
 const CreateReport = async (c: Context) => {
 	try {
@@ -13,34 +13,44 @@ const CreateReport = async (c: Context) => {
 			latitude,
 			longitude,
 		} = await c.req.json();
-		const prisma = new PrismaClient();
 		const userId = await DecodeToken(token);
-		const report = await prisma.reports.create({
-			data: {
-				title: title,
-				description: description,
-				type: type,
-				latitude: latitude,
-				longitude: longitude,
-				time: new Date(),
-				imageId: imageId,
-				userId: userId,
+		const report = await CreateReportService(
+			title,
+			description,
+			type,
+			latitude,
+			longitude,
+			imageId,
+			userId
+		);
+		return c.json(
+			{
+				success: true,
+				payload: report,
+				message: 'Report created successfully',
 			},
-		});
-		return c.json({
-			success: true,
-			payload: {
-				report,
-			},
-			message: 'Report created successfully',
-		});
+			200
+		);
 	} catch (e) {
 		console.error(e);
-		return c.json({
-			success: false,
-			payload: null,
-			message: e,
-		});
+		return c.json(
+			{
+				success: false,
+				payload: {
+					id: 0,
+					imageId: 0,
+					userId: 0,
+					title: '',
+					description: '',
+					type: '',
+					time: new Date(),
+					latitude: 0,
+					longitude: 0,
+				},
+				message: e,
+			},
+			200
+		);
 	}
 };
 

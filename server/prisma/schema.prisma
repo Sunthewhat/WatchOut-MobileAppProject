@@ -31,12 +31,17 @@ model Images {
   key     String    @db.VarChar(255)
   type    String    @db.VarChar(20)
   Reports Reports[]
+  Users   Users[]
 }
 
 model Users {
   id       Int       @id @default(autoincrement())
   username String    @unique(map: "User_pk") @db.VarChar(100)
   name     String    @db.VarChar(255)
+  imageId  Int
   password String    @db.Text
   Reports  Reports[]
+  Images   Images    @relation(fields: [imageId], references: [id], onUpdate: Restrict, map: "Users_Images_id_fk")
+
+  @@index([imageId], map: "Users_Images_id_fk")
 }

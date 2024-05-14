@@ -6,7 +6,7 @@ const DecodeToken = async (token: string) => {
 		process.env.JWT_SECRET!
 	) as JwtPayload;
 	const { id } = decoded;
-	return id;
+	return id as number;
 };
 
 export default DecodeToken;
