@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
@@ -113,21 +114,29 @@ class _ReportPageState extends State<ReportPage> {
                 ),
                 const ButtonType(),
                 const SizedBox(height: 5.0),
-                const Row(
-                  children: [
-                    Text(
-                      'Time',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                const SizedBox(
+                  height: 20.0,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Time',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 10),
-                const Expanded(
+                const SizedBox(
+                  width: 10,
+                  height: 5,
+                ),
+                const SizedBox(
+                  height: 40.0,
                   child: TimePicker(),
                 ),
+                const SizedBox(height: 5.0),
                 const Text(
                   'Location',
                   style: TextStyle(
@@ -150,6 +159,7 @@ class _ReportPageState extends State<ReportPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SlideAction(
+                      height: 70,
                       borderRadius: 30,
                       elevation: 0,
                       innerColor: const Color(0xFFFF5833),
@@ -199,7 +209,7 @@ class AddPictureButton extends StatelessWidget {
       },
       child: Container(
         width: 331.0,
-        height: 195.0,
+        height: 164.0,
         decoration: BoxDecoration(
           color: const Color(0xFFFF5833),
           borderRadius: BorderRadius.circular(20.0),
@@ -254,48 +264,54 @@ class ButtonType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFF5833),
-          ),
-          child: const Text(
-            'Fire🔥',
-            style: TextStyle(
-              color: Colors.white,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFFF5833),
+              minimumSize: const Size(50, 35),
+            ),
+            child: const Text(
+              'Fire🔥',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-        const SizedBox(width: 10),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF2960AE),
-          ),
-          child: const Text(
-            'Car Crash 🚗',
-            style: TextStyle(
-              color: Colors.white,
+          const SizedBox(width: 10),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF2960AE),
+              minimumSize: const Size(50, 35),
+            ),
+            child: const Text(
+              'Car Crash 🚗',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-        const SizedBox(width: 10),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF35A5F6),
-          ),
-          child: const Text(
-            'Flood🌊',
-            style: TextStyle(
-              color: Colors.white,
+          const SizedBox(width: 10),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF35A5F6),
+              minimumSize: const Size(50, 35),
+            ),
+            child: const Text(
+              'Flood🌊',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -327,8 +343,8 @@ class _TimePickerState extends State<TimePicker> {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFF5833),
-          ),
+              backgroundColor: const Color(0xFFFF5833),
+              minimumSize: const Size(50, 35)),
           child: const Text(
             'Select Time',
             style: TextStyle(
@@ -360,7 +376,7 @@ class MapBox extends StatelessWidget {
   const MapBox({
     super.key,
     this.width = 200,
-    this.height = 200,
+    this.height = 165,
     this.color = Colors.grey,
   });
 

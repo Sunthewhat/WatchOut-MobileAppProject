@@ -41,7 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-<<<<<<< HEAD
   cross_file:
     dependency: transitive
     description:
@@ -50,7 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4+1"
-=======
   csslib:
     dependency: transitive
     description:
@@ -59,7 +57,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
->>>>>>> 4e784e3 (add map to app)
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -171,16 +168,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
-  http:
-    dependency: transitive
-    description:
-      name: http
-      sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
-=======
   google_maps:
     dependency: transitive
     description:
@@ -237,7 +224,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.4"
->>>>>>> 4e784e3 (add map to app)
+  http:
+    dependency: transitive
+    description:
+      name: http
+      sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   http_parser:
     dependency: transitive
     description:
@@ -246,7 +240,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-<<<<<<< HEAD
   image_picker:
     dependency: "direct main"
     description:
@@ -275,10 +268,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_ios
-      sha256: cb0db0ec0d3e2cd49674f2e6053be25ccdb959832607c1cbd215dd6cf10fb0dd
+      sha256: f3285238eb1474ee42946f557ad7df17aa6a2cf4106c2f41bdc948cd71c8b5e5
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.11"
+    version: "0.8.11+1"
   image_picker_linux:
     dependency: transitive
     description:
@@ -311,7 +304,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
-=======
   js:
     dependency: transitive
     description:
@@ -328,7 +320,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
->>>>>>> 4e784e3 (add map to app)
   leak_tracker:
     dependency: transitive
     description:
@@ -469,10 +460,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_foundation
-      sha256: "7708d83064f38060c7b39db12aefe449cb8cdc031d6062280087bc4cdb988f5c"
+      sha256: "0a8a893bf4fd1152f93fec03a415d11c27c74454d96e2318a7ac38dd18683ab7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.5"
+    version: "2.4.0"
   shared_preferences_linux:
     dependency: transitive
     description:
