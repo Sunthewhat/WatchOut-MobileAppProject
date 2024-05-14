@@ -1038,10 +1038,12 @@ export namespace Prisma {
 
   export type ImagesCountOutputType = {
     Reports: number
+    Users: number
   }
 
   export type ImagesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Reports?: boolean | ImagesCountOutputTypeCountReportsArgs
+    Users?: boolean | ImagesCountOutputTypeCountUsersArgs
   }
 
   // Custom InputTypes
@@ -1060,6 +1062,13 @@ export namespace Prisma {
    */
   export type ImagesCountOutputTypeCountReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReportsWhereInput
+  }
+
+  /**
+   * ImagesCountOutputType without action
+   */
+  export type ImagesCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsersWhereInput
   }
 
 
@@ -2285,6 +2294,7 @@ export namespace Prisma {
     key?: boolean
     type?: boolean
     Reports?: boolean | Images$ReportsArgs<ExtArgs>
+    Users?: boolean | Images$UsersArgs<ExtArgs>
     _count?: boolean | ImagesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["images"]>
 
@@ -2297,6 +2307,7 @@ export namespace Prisma {
 
   export type ImagesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Reports?: boolean | Images$ReportsArgs<ExtArgs>
+    Users?: boolean | Images$UsersArgs<ExtArgs>
     _count?: boolean | ImagesCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2305,6 +2316,7 @@ export namespace Prisma {
     name: "Images"
     objects: {
       Reports: Prisma.$ReportsPayload<ExtArgs>[]
+      Users: Prisma.$UsersPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2677,6 +2689,8 @@ export namespace Prisma {
 
     Reports<T extends Images$ReportsArgs<ExtArgs> = {}>(args?: Subset<T, Images$ReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportsPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    Users<T extends Images$UsersArgs<ExtArgs> = {}>(args?: Subset<T, Images$UsersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3027,6 +3041,26 @@ export namespace Prisma {
   }
 
   /**
+   * Images.Users
+   */
+  export type Images$UsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Users
+     */
+    select?: UsersSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsersInclude<ExtArgs> | null
+    where?: UsersWhereInput
+    orderBy?: UsersOrderByWithRelationInput | UsersOrderByWithRelationInput[]
+    cursor?: UsersWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
+  }
+
+  /**
    * Images without action
    */
   export type ImagesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3055,16 +3089,19 @@ export namespace Prisma {
 
   export type UsersAvgAggregateOutputType = {
     id: number | null
+    imageId: number | null
   }
 
   export type UsersSumAggregateOutputType = {
     id: number | null
+    imageId: number | null
   }
 
   export type UsersMinAggregateOutputType = {
     id: number | null
     username: string | null
     name: string | null
+    imageId: number | null
     password: string | null
   }
 
@@ -3072,6 +3109,7 @@ export namespace Prisma {
     id: number | null
     username: string | null
     name: string | null
+    imageId: number | null
     password: string | null
   }
 
@@ -3079,6 +3117,7 @@ export namespace Prisma {
     id: number
     username: number
     name: number
+    imageId: number
     password: number
     _all: number
   }
@@ -3086,16 +3125,19 @@ export namespace Prisma {
 
   export type UsersAvgAggregateInputType = {
     id?: true
+    imageId?: true
   }
 
   export type UsersSumAggregateInputType = {
     id?: true
+    imageId?: true
   }
 
   export type UsersMinAggregateInputType = {
     id?: true
     username?: true
     name?: true
+    imageId?: true
     password?: true
   }
 
@@ -3103,6 +3145,7 @@ export namespace Prisma {
     id?: true
     username?: true
     name?: true
+    imageId?: true
     password?: true
   }
 
@@ -3110,6 +3153,7 @@ export namespace Prisma {
     id?: true
     username?: true
     name?: true
+    imageId?: true
     password?: true
     _all?: true
   }
@@ -3204,6 +3248,7 @@ export namespace Prisma {
     id: number
     username: string
     name: string
+    imageId: number
     password: string
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
@@ -3230,8 +3275,10 @@ export namespace Prisma {
     id?: boolean
     username?: boolean
     name?: boolean
+    imageId?: boolean
     password?: boolean
     Reports?: boolean | Users$ReportsArgs<ExtArgs>
+    Images?: boolean | ImagesDefaultArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
@@ -3239,12 +3286,14 @@ export namespace Prisma {
     id?: boolean
     username?: boolean
     name?: boolean
+    imageId?: boolean
     password?: boolean
   }
 
 
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Reports?: boolean | Users$ReportsArgs<ExtArgs>
+    Images?: boolean | ImagesDefaultArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3253,11 +3302,13 @@ export namespace Prisma {
     name: "Users"
     objects: {
       Reports: Prisma.$ReportsPayload<ExtArgs>[]
+      Images: Prisma.$ImagesPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       username: string
       name: string
+      imageId: number
       password: string
     }, ExtArgs["result"]["users"]>
     composites: {}
@@ -3626,6 +3677,8 @@ export namespace Prisma {
 
     Reports<T extends Users$ReportsArgs<ExtArgs> = {}>(args?: Subset<T, Users$ReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportsPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    Images<T extends ImagesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ImagesDefaultArgs<ExtArgs>>): Prisma__ImagesClient<$Result.GetResult<Prisma.$ImagesPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3657,6 +3710,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Users", 'Int'>
     readonly username: FieldRef<"Users", 'String'>
     readonly name: FieldRef<"Users", 'String'>
+    readonly imageId: FieldRef<"Users", 'Int'>
     readonly password: FieldRef<"Users", 'String'>
   }
     
@@ -4033,6 +4087,7 @@ export namespace Prisma {
     id: 'id',
     username: 'username',
     name: 'name',
+    imageId: 'imageId',
     password: 'password'
   };
 
@@ -4178,6 +4233,7 @@ export namespace Prisma {
     key?: StringFilter<"Images"> | string
     type?: StringFilter<"Images"> | string
     Reports?: ReportsListRelationFilter
+    Users?: UsersListRelationFilter
   }
 
   export type ImagesOrderByWithRelationInput = {
@@ -4185,6 +4241,7 @@ export namespace Prisma {
     key?: SortOrder
     type?: SortOrder
     Reports?: ReportsOrderByRelationAggregateInput
+    Users?: UsersOrderByRelationAggregateInput
   }
 
   export type ImagesWhereUniqueInput = Prisma.AtLeast<{
@@ -4195,6 +4252,7 @@ export namespace Prisma {
     key?: StringFilter<"Images"> | string
     type?: StringFilter<"Images"> | string
     Reports?: ReportsListRelationFilter
+    Users?: UsersListRelationFilter
   }, "id">
 
   export type ImagesOrderByWithAggregationInput = {
@@ -4224,16 +4282,20 @@ export namespace Prisma {
     id?: IntFilter<"Users"> | number
     username?: StringFilter<"Users"> | string
     name?: StringFilter<"Users"> | string
+    imageId?: IntFilter<"Users"> | number
     password?: StringFilter<"Users"> | string
     Reports?: ReportsListRelationFilter
+    Images?: XOR<ImagesRelationFilter, ImagesWhereInput>
   }
 
   export type UsersOrderByWithRelationInput = {
     id?: SortOrder
     username?: SortOrder
     name?: SortOrder
+    imageId?: SortOrder
     password?: SortOrder
     Reports?: ReportsOrderByRelationAggregateInput
+    Images?: ImagesOrderByWithRelationInput
   }
 
   export type UsersWhereUniqueInput = Prisma.AtLeast<{
@@ -4243,14 +4305,17 @@ export namespace Prisma {
     OR?: UsersWhereInput[]
     NOT?: UsersWhereInput | UsersWhereInput[]
     name?: StringFilter<"Users"> | string
+    imageId?: IntFilter<"Users"> | number
     password?: StringFilter<"Users"> | string
     Reports?: ReportsListRelationFilter
+    Images?: XOR<ImagesRelationFilter, ImagesWhereInput>
   }, "id" | "username">
 
   export type UsersOrderByWithAggregationInput = {
     id?: SortOrder
     username?: SortOrder
     name?: SortOrder
+    imageId?: SortOrder
     password?: SortOrder
     _count?: UsersCountOrderByAggregateInput
     _avg?: UsersAvgOrderByAggregateInput
@@ -4266,6 +4331,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Users"> | number
     username?: StringWithAggregatesFilter<"Users"> | string
     name?: StringWithAggregatesFilter<"Users"> | string
+    imageId?: IntWithAggregatesFilter<"Users"> | number
     password?: StringWithAggregatesFilter<"Users"> | string
   }
 
@@ -4352,6 +4418,7 @@ export namespace Prisma {
     key: string
     type: string
     Reports?: ReportsCreateNestedManyWithoutImagesInput
+    Users?: UsersCreateNestedManyWithoutImagesInput
   }
 
   export type ImagesUncheckedCreateInput = {
@@ -4359,12 +4426,14 @@ export namespace Prisma {
     key: string
     type: string
     Reports?: ReportsUncheckedCreateNestedManyWithoutImagesInput
+    Users?: UsersUncheckedCreateNestedManyWithoutImagesInput
   }
 
   export type ImagesUpdateInput = {
     key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     Reports?: ReportsUpdateManyWithoutImagesNestedInput
+    Users?: UsersUpdateManyWithoutImagesNestedInput
   }
 
   export type ImagesUncheckedUpdateInput = {
@@ -4372,6 +4441,7 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     Reports?: ReportsUncheckedUpdateManyWithoutImagesNestedInput
+    Users?: UsersUncheckedUpdateManyWithoutImagesNestedInput
   }
 
   export type ImagesCreateManyInput = {
@@ -4396,12 +4466,14 @@ export namespace Prisma {
     name: string
     password: string
     Reports?: ReportsCreateNestedManyWithoutUserInput
+    Images: ImagesCreateNestedOneWithoutUsersInput
   }
 
   export type UsersUncheckedCreateInput = {
     id?: number
     username: string
     name: string
+    imageId: number
     password: string
     Reports?: ReportsUncheckedCreateNestedManyWithoutUserInput
   }
@@ -4411,12 +4483,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     Reports?: ReportsUpdateManyWithoutUserNestedInput
+    Images?: ImagesUpdateOneRequiredWithoutUsersNestedInput
   }
 
   export type UsersUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    imageId?: IntFieldUpdateOperationsInput | number
     password?: StringFieldUpdateOperationsInput | string
     Reports?: ReportsUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -4425,6 +4499,7 @@ export namespace Prisma {
     id?: number
     username: string
     name: string
+    imageId: number
     password: string
   }
 
@@ -4438,6 +4513,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    imageId?: IntFieldUpdateOperationsInput | number
     password?: StringFieldUpdateOperationsInput | string
   }
 
@@ -4619,7 +4695,17 @@ export namespace Prisma {
     none?: ReportsWhereInput
   }
 
+  export type UsersListRelationFilter = {
+    every?: UsersWhereInput
+    some?: UsersWhereInput
+    none?: UsersWhereInput
+  }
+
   export type ReportsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UsersOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4653,17 +4739,20 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     name?: SortOrder
+    imageId?: SortOrder
     password?: SortOrder
   }
 
   export type UsersAvgOrderByAggregateInput = {
     id?: SortOrder
+    imageId?: SortOrder
   }
 
   export type UsersMaxOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
     name?: SortOrder
+    imageId?: SortOrder
     password?: SortOrder
   }
 
@@ -4671,11 +4760,13 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     name?: SortOrder
+    imageId?: SortOrder
     password?: SortOrder
   }
 
   export type UsersSumOrderByAggregateInput = {
     id?: SortOrder
+    imageId?: SortOrder
   }
 
   export type UsersCreateNestedOneWithoutReportsInput = {
@@ -4737,11 +4828,25 @@ export namespace Prisma {
     connect?: ReportsWhereUniqueInput | ReportsWhereUniqueInput[]
   }
 
+  export type UsersCreateNestedManyWithoutImagesInput = {
+    create?: XOR<UsersCreateWithoutImagesInput, UsersUncheckedCreateWithoutImagesInput> | UsersCreateWithoutImagesInput[] | UsersUncheckedCreateWithoutImagesInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutImagesInput | UsersCreateOrConnectWithoutImagesInput[]
+    createMany?: UsersCreateManyImagesInputEnvelope
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+  }
+
   export type ReportsUncheckedCreateNestedManyWithoutImagesInput = {
     create?: XOR<ReportsCreateWithoutImagesInput, ReportsUncheckedCreateWithoutImagesInput> | ReportsCreateWithoutImagesInput[] | ReportsUncheckedCreateWithoutImagesInput[]
     connectOrCreate?: ReportsCreateOrConnectWithoutImagesInput | ReportsCreateOrConnectWithoutImagesInput[]
     createMany?: ReportsCreateManyImagesInputEnvelope
     connect?: ReportsWhereUniqueInput | ReportsWhereUniqueInput[]
+  }
+
+  export type UsersUncheckedCreateNestedManyWithoutImagesInput = {
+    create?: XOR<UsersCreateWithoutImagesInput, UsersUncheckedCreateWithoutImagesInput> | UsersCreateWithoutImagesInput[] | UsersUncheckedCreateWithoutImagesInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutImagesInput | UsersCreateOrConnectWithoutImagesInput[]
+    createMany?: UsersCreateManyImagesInputEnvelope
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
   }
 
   export type ReportsUpdateManyWithoutImagesNestedInput = {
@@ -4758,6 +4863,20 @@ export namespace Prisma {
     deleteMany?: ReportsScalarWhereInput | ReportsScalarWhereInput[]
   }
 
+  export type UsersUpdateManyWithoutImagesNestedInput = {
+    create?: XOR<UsersCreateWithoutImagesInput, UsersUncheckedCreateWithoutImagesInput> | UsersCreateWithoutImagesInput[] | UsersUncheckedCreateWithoutImagesInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutImagesInput | UsersCreateOrConnectWithoutImagesInput[]
+    upsert?: UsersUpsertWithWhereUniqueWithoutImagesInput | UsersUpsertWithWhereUniqueWithoutImagesInput[]
+    createMany?: UsersCreateManyImagesInputEnvelope
+    set?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    disconnect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    delete?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    update?: UsersUpdateWithWhereUniqueWithoutImagesInput | UsersUpdateWithWhereUniqueWithoutImagesInput[]
+    updateMany?: UsersUpdateManyWithWhereWithoutImagesInput | UsersUpdateManyWithWhereWithoutImagesInput[]
+    deleteMany?: UsersScalarWhereInput | UsersScalarWhereInput[]
+  }
+
   export type ReportsUncheckedUpdateManyWithoutImagesNestedInput = {
     create?: XOR<ReportsCreateWithoutImagesInput, ReportsUncheckedCreateWithoutImagesInput> | ReportsCreateWithoutImagesInput[] | ReportsUncheckedCreateWithoutImagesInput[]
     connectOrCreate?: ReportsCreateOrConnectWithoutImagesInput | ReportsCreateOrConnectWithoutImagesInput[]
@@ -4772,11 +4891,31 @@ export namespace Prisma {
     deleteMany?: ReportsScalarWhereInput | ReportsScalarWhereInput[]
   }
 
+  export type UsersUncheckedUpdateManyWithoutImagesNestedInput = {
+    create?: XOR<UsersCreateWithoutImagesInput, UsersUncheckedCreateWithoutImagesInput> | UsersCreateWithoutImagesInput[] | UsersUncheckedCreateWithoutImagesInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutImagesInput | UsersCreateOrConnectWithoutImagesInput[]
+    upsert?: UsersUpsertWithWhereUniqueWithoutImagesInput | UsersUpsertWithWhereUniqueWithoutImagesInput[]
+    createMany?: UsersCreateManyImagesInputEnvelope
+    set?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    disconnect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    delete?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    update?: UsersUpdateWithWhereUniqueWithoutImagesInput | UsersUpdateWithWhereUniqueWithoutImagesInput[]
+    updateMany?: UsersUpdateManyWithWhereWithoutImagesInput | UsersUpdateManyWithWhereWithoutImagesInput[]
+    deleteMany?: UsersScalarWhereInput | UsersScalarWhereInput[]
+  }
+
   export type ReportsCreateNestedManyWithoutUserInput = {
     create?: XOR<ReportsCreateWithoutUserInput, ReportsUncheckedCreateWithoutUserInput> | ReportsCreateWithoutUserInput[] | ReportsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ReportsCreateOrConnectWithoutUserInput | ReportsCreateOrConnectWithoutUserInput[]
     createMany?: ReportsCreateManyUserInputEnvelope
     connect?: ReportsWhereUniqueInput | ReportsWhereUniqueInput[]
+  }
+
+  export type ImagesCreateNestedOneWithoutUsersInput = {
+    create?: XOR<ImagesCreateWithoutUsersInput, ImagesUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ImagesCreateOrConnectWithoutUsersInput
+    connect?: ImagesWhereUniqueInput
   }
 
   export type ReportsUncheckedCreateNestedManyWithoutUserInput = {
@@ -4798,6 +4937,14 @@ export namespace Prisma {
     update?: ReportsUpdateWithWhereUniqueWithoutUserInput | ReportsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ReportsUpdateManyWithWhereWithoutUserInput | ReportsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ReportsScalarWhereInput | ReportsScalarWhereInput[]
+  }
+
+  export type ImagesUpdateOneRequiredWithoutUsersNestedInput = {
+    create?: XOR<ImagesCreateWithoutUsersInput, ImagesUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ImagesCreateOrConnectWithoutUsersInput
+    upsert?: ImagesUpsertWithoutUsersInput
+    connect?: ImagesWhereUniqueInput
+    update?: XOR<XOR<ImagesUpdateToOneWithWhereWithoutUsersInput, ImagesUpdateWithoutUsersInput>, ImagesUncheckedUpdateWithoutUsersInput>
   }
 
   export type ReportsUncheckedUpdateManyWithoutUserNestedInput = {
@@ -4939,12 +5086,14 @@ export namespace Prisma {
     username: string
     name: string
     password: string
+    Images: ImagesCreateNestedOneWithoutUsersInput
   }
 
   export type UsersUncheckedCreateWithoutReportsInput = {
     id?: number
     username: string
     name: string
+    imageId: number
     password: string
   }
 
@@ -4956,12 +5105,14 @@ export namespace Prisma {
   export type ImagesCreateWithoutReportsInput = {
     key: string
     type: string
+    Users?: UsersCreateNestedManyWithoutImagesInput
   }
 
   export type ImagesUncheckedCreateWithoutReportsInput = {
     id?: number
     key: string
     type: string
+    Users?: UsersUncheckedCreateNestedManyWithoutImagesInput
   }
 
   export type ImagesCreateOrConnectWithoutReportsInput = {
@@ -4984,12 +5135,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    Images?: ImagesUpdateOneRequiredWithoutUsersNestedInput
   }
 
   export type UsersUncheckedUpdateWithoutReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    imageId?: IntFieldUpdateOperationsInput | number
     password?: StringFieldUpdateOperationsInput | string
   }
 
@@ -5007,12 +5160,14 @@ export namespace Prisma {
   export type ImagesUpdateWithoutReportsInput = {
     key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    Users?: UsersUpdateManyWithoutImagesNestedInput
   }
 
   export type ImagesUncheckedUpdateWithoutReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
     key?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+    Users?: UsersUncheckedUpdateManyWithoutImagesNestedInput
   }
 
   export type ReportsCreateWithoutImagesInput = {
@@ -5043,6 +5198,31 @@ export namespace Prisma {
 
   export type ReportsCreateManyImagesInputEnvelope = {
     data: ReportsCreateManyImagesInput | ReportsCreateManyImagesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UsersCreateWithoutImagesInput = {
+    username: string
+    name: string
+    password: string
+    Reports?: ReportsCreateNestedManyWithoutUserInput
+  }
+
+  export type UsersUncheckedCreateWithoutImagesInput = {
+    id?: number
+    username: string
+    name: string
+    password: string
+    Reports?: ReportsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UsersCreateOrConnectWithoutImagesInput = {
+    where: UsersWhereUniqueInput
+    create: XOR<UsersCreateWithoutImagesInput, UsersUncheckedCreateWithoutImagesInput>
+  }
+
+  export type UsersCreateManyImagesInputEnvelope = {
+    data: UsersCreateManyImagesInput | UsersCreateManyImagesInput[]
     skipDuplicates?: boolean
   }
 
@@ -5077,6 +5257,33 @@ export namespace Prisma {
     longitude?: DecimalFilter<"Reports"> | Decimal | DecimalJsLike | number | string
   }
 
+  export type UsersUpsertWithWhereUniqueWithoutImagesInput = {
+    where: UsersWhereUniqueInput
+    update: XOR<UsersUpdateWithoutImagesInput, UsersUncheckedUpdateWithoutImagesInput>
+    create: XOR<UsersCreateWithoutImagesInput, UsersUncheckedCreateWithoutImagesInput>
+  }
+
+  export type UsersUpdateWithWhereUniqueWithoutImagesInput = {
+    where: UsersWhereUniqueInput
+    data: XOR<UsersUpdateWithoutImagesInput, UsersUncheckedUpdateWithoutImagesInput>
+  }
+
+  export type UsersUpdateManyWithWhereWithoutImagesInput = {
+    where: UsersScalarWhereInput
+    data: XOR<UsersUpdateManyMutationInput, UsersUncheckedUpdateManyWithoutImagesInput>
+  }
+
+  export type UsersScalarWhereInput = {
+    AND?: UsersScalarWhereInput | UsersScalarWhereInput[]
+    OR?: UsersScalarWhereInput[]
+    NOT?: UsersScalarWhereInput | UsersScalarWhereInput[]
+    id?: IntFilter<"Users"> | number
+    username?: StringFilter<"Users"> | string
+    name?: StringFilter<"Users"> | string
+    imageId?: IntFilter<"Users"> | number
+    password?: StringFilter<"Users"> | string
+  }
+
   export type ReportsCreateWithoutUserInput = {
     title: string
     description: string
@@ -5108,6 +5315,24 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ImagesCreateWithoutUsersInput = {
+    key: string
+    type: string
+    Reports?: ReportsCreateNestedManyWithoutImagesInput
+  }
+
+  export type ImagesUncheckedCreateWithoutUsersInput = {
+    id?: number
+    key: string
+    type: string
+    Reports?: ReportsUncheckedCreateNestedManyWithoutImagesInput
+  }
+
+  export type ImagesCreateOrConnectWithoutUsersInput = {
+    where: ImagesWhereUniqueInput
+    create: XOR<ImagesCreateWithoutUsersInput, ImagesUncheckedCreateWithoutUsersInput>
+  }
+
   export type ReportsUpsertWithWhereUniqueWithoutUserInput = {
     where: ReportsWhereUniqueInput
     update: XOR<ReportsUpdateWithoutUserInput, ReportsUncheckedUpdateWithoutUserInput>
@@ -5124,6 +5349,30 @@ export namespace Prisma {
     data: XOR<ReportsUpdateManyMutationInput, ReportsUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type ImagesUpsertWithoutUsersInput = {
+    update: XOR<ImagesUpdateWithoutUsersInput, ImagesUncheckedUpdateWithoutUsersInput>
+    create: XOR<ImagesCreateWithoutUsersInput, ImagesUncheckedCreateWithoutUsersInput>
+    where?: ImagesWhereInput
+  }
+
+  export type ImagesUpdateToOneWithWhereWithoutUsersInput = {
+    where?: ImagesWhereInput
+    data: XOR<ImagesUpdateWithoutUsersInput, ImagesUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type ImagesUpdateWithoutUsersInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    Reports?: ReportsUpdateManyWithoutImagesNestedInput
+  }
+
+  export type ImagesUncheckedUpdateWithoutUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    Reports?: ReportsUncheckedUpdateManyWithoutImagesNestedInput
+  }
+
   export type ReportsCreateManyImagesInput = {
     id?: number
     userId: number
@@ -5133,6 +5382,13 @@ export namespace Prisma {
     time: Date | string
     latitude: Decimal | DecimalJsLike | number | string
     longitude: Decimal | DecimalJsLike | number | string
+  }
+
+  export type UsersCreateManyImagesInput = {
+    id?: number
+    username: string
+    name: string
+    password: string
   }
 
   export type ReportsUpdateWithoutImagesInput = {
@@ -5165,6 +5421,28 @@ export namespace Prisma {
     time?: DateTimeFieldUpdateOperationsInput | Date | string
     latitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     longitude?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type UsersUpdateWithoutImagesInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    Reports?: ReportsUpdateManyWithoutUserNestedInput
+  }
+
+  export type UsersUncheckedUpdateWithoutImagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    Reports?: ReportsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UsersUncheckedUpdateManyWithoutImagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type ReportsCreateManyUserInput = {
