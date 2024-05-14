@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 class ReportPage extends StatefulWidget {
@@ -11,15 +13,26 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _reportController = TextEditingController();
+  XFile? _imageFile;
+
+  Future<void> _getImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+
+    setState(() {
+      _imageFile = pickedFile;
+    });
+
+    if (pickedFile == null) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No image selected')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    String topicName = _topicController.text;
-    String report = _reportController.text;
-
-    topicName;
-    report;
-
     return Scaffold(
       backgroundColor: const Color(0xFFB5432A),
       appBar: AppBar(
@@ -39,136 +52,199 @@ class _ReportPageState extends State<ReportPage> {
         ),
       ),
       body: SingleChildScrollView(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Color(0xFFFFE2DB),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFE2DB),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const AddPictureButton(),
-              const SizedBox(height: 5.0),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 2.0),
-                child: Text(
-                  'Topic Name',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AddPictureButton(
+                  imageFile: _imageFile,
+                  onImageSelected: (source) {
+                    _getImage(source);
+                  },
                 ),
-              ),
-              TopicTextField(controller: _topicController),
-              const SizedBox(height: 1.0),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 2.0),
-                child: Text(
-                  'Type',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
-                ),
-              ),
-              const ButtonType(),
-              const SizedBox(height: 5.0),
-              const Text(
-                'Location',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-              const MapBox(),
-              const SizedBox(height: 5.0),
-              const Text(
-                'Description',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-              DescriptionTextField(controller: _reportController),
-              const SizedBox(height: 0.0),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SlideAction(
-                    borderRadius: 30,
-                    elevation: 0,
-                    innerColor: const Color(0xFFFF5833),
-                    outerColor: const Color(0xFFFFA590),
-                    sliderButtonIcon: const Icon(Icons.arrow_forward, color: Color(0xFFFF5833)),
-                    text: 'Slide to submit',
-                    textStyle: const TextStyle(
-                      color: Color(0xFFFFA590),
-                      fontSize: 20.0,
+                const SizedBox(height: 5.0),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                  child: Text(
+                    'Topic Name',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
                     ),
-                    onSubmit: () {
-                      // print('Submitted');
-                      return null;
-                    },
                   ),
                 ),
-              ),
-            ],
+                TextField(
+                  controller: _topicController,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(10),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(
+                          color: Color(0xFFFF5833), width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: const BorderSide(
+                          color: Color(0xFFFF5833), width: 2.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 1.0),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                  child: Text(
+                    'Type',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+                const ButtonType(),
+                const SizedBox(height: 5.0),
+                const Row(
+                  children: [
+                    Text(
+                      'Time',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 10),
+                const Expanded(
+                  child: TimePicker(),
+                ),
+                const Text(
+                  'Location',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                const MapBox(),
+                const SizedBox(height: 5.0),
+                const Text(
+                  'Description',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                DescriptionTextField(controller: _reportController),
+                const SizedBox(height: 0.0),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SlideAction(
+                      borderRadius: 30,
+                      elevation: 0,
+                      innerColor: const Color(0xFFFF5833),
+                      outerColor: const Color(0xFFFFA590),
+                      sliderButtonIcon: const Icon(Icons.arrow_forward,
+                          color: Color(0xFFFF5833)),
+                      text: 'Slide to submit',
+                      textStyle: const TextStyle(
+                        color: Color(0xFFFFA590),
+                        fontSize: 20.0,
+                      ),
+                      onSubmit: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Report submitted successfully'),
+                          ),
+                        );
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
 }
 
 class AddPictureButton extends StatelessWidget {
-  const AddPictureButton({super.key});
+  final XFile? imageFile;
+  final Function(ImageSource) onImageSelected;
+
+  const AddPictureButton({
+    super.key,
+    required this.imageFile,
+    required this.onImageSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 331.0,
-      height: 195.0,
-      decoration: BoxDecoration(
-        color: const Color(0xFFFF5833),
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.add, color: Colors.white),
-        iconSize: 100.0,
+    return GestureDetector(
+      onTap: () {
+        _showImageSource(context);
+      },
+      child: Container(
+        width: 331.0,
+        height: 195.0,
+        decoration: BoxDecoration(
+          color: const Color(0xFFFF5833),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: imageFile == null
+            ? const Icon(Icons.add, color: Colors.white, size: 100.0)
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.file(
+                  File(imageFile!.path),
+                  fit: BoxFit.cover,
+                ),
+              ),
       ),
     );
   }
-}
 
-class TopicTextField extends StatelessWidget {
-  final TextEditingController controller;
-
-  const TopicTextField({super.key, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(10),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: Color(0xFFFF5833), width: 2.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: Color(0xFFFF5833), width: 2.0),
-        ),
-      ),
+  void _showImageSource(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take a picture'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  onImageSelected(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.image),
+                title: const Text('Choose from gallery'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  onImageSelected(ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -219,6 +295,58 @@ class ButtonType extends StatelessWidget {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class TimePicker extends StatefulWidget {
+  const TimePicker({super.key});
+
+  @override
+  State<TimePicker> createState() => _TimePickerState();
+}
+
+class _TimePickerState extends State<TimePicker> {
+  TimeOfDay selectedTime = TimeOfDay.now();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: () async {
+            final TimeOfDay? timeOfDay = await showTimePicker(
+              context: context,
+              initialTime: selectedTime,
+              initialEntryMode: TimePickerEntryMode.dial,
+            );
+            if (timeOfDay != null) {
+              setState(() {
+                selectedTime = timeOfDay;
+              });
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFFF5833),
+          ),
+          child: const Text(
+            'Select Time',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0), // Add left margin
+          child: Text(
+            selectedTime.format(context),
+            style: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
       ],
     );
   }
@@ -275,10 +403,3 @@ class DescriptionTextField extends StatelessWidget {
     );
   }
 }
-
-
-// void main() {
-//   runApp(const MaterialApp(
-//     home: ReportPage(),
-//   ));
-// }
