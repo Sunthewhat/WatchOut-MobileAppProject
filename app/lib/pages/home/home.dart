@@ -2,6 +2,7 @@ import 'package:app/components/report_card.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:app/pages/report/report.dart';
 import 'package:app/services/report/report.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/reports.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -15,14 +16,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _sortBy = 'Range';
-  List<Report> reports = [];
-  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _fetchReports();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
+
+  List<Report> reports = [];
+  bool isLoading = true;
+
 
   Future<void> _fetchReports() async {
     final response = await ReportService.getAllReports();
@@ -62,13 +70,9 @@ class _HomePageState extends State<HomePage> {
       reports.sort((a, b) => b.reportTime.compareTo(a.reportTime));
     }
 
-    // Get the screen height
+
     double screenHeight = MediaQuery.of(context).size.height;
-
-    // Calculate the height of the white box to cover 70% of the screen vertically
     double whiteBoxHeight = screenHeight * 0.85;
-
-    // Calculate the space left at the top of the page
     double spaceAtTop = screenHeight - whiteBoxHeight;
 
     return Scaffold(
@@ -233,3 +237,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+List<Report> reports = [
+  Report(
+    incidentType: 'Wildfire',
+    location: 'Ang thong, Bangkok',
+    imageUrl: 'assets/images/wildfire.jpg',
+    userName: 'John Doe',
+    reportDescription: 'Wild fire near my house',
+    range: 5.0,
+    reportTime: '2 hours ago',
+  ),
+  Report(
+    incidentType: 'Flood',
+    location: 'Orlando, Florida',
+    imageUrl: 'assets/images/flood.jpg',
+    userName: 'Jack Sparrow',
+    reportDescription: 'Flood at the village',
+    range: 3.0,
+    reportTime: '2 hours ago',
+  ),
+  Report(
+    incidentType: 'Earthquake',
+    location: 'Tokyo, Japan',
+    imageUrl: 'assets/images/earthquake.jpg',
+    userName: 'Segun Adebayo',
+    reportDescription: 'Big earthquake in the city',
+    range: 1.0,
+    reportTime: '2 hours ago',
+  ),
+];
