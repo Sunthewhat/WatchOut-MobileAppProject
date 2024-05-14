@@ -1,9 +1,38 @@
-import 'package:app/components/report_card.dart';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:app/components/report_card.dart';
 import 'package:app/components/reports.dart';
+import 'package:app/utils.dart';
 
-class ProfilePage extends StatelessWidget {
+Future<Uint8List?> pickImage(ImageSource source) async {
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? _file = await _imagePicker.pickImage(source: source);
+  if (_file != null) {
+    return await _file.readAsBytes();
+  }
+  print('No Images Selected');
+  return null;
+}
+
+class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  Uint8List? _image;
+
+  void selectImage() async {
+    Uint8List? img = await pickImage(ImageSource.gallery);
+    if (img != null) {
+      setState(() {
+        _image = img;
+      });
+    }
+  }
 
   final List<Report> reports = [
     Report(
@@ -133,15 +162,41 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('assets/images/jerrymeme.jpg'),
-                                radius: 40,
+                              Stack(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: _image != null
+                                        ? MemoryImage(_image!)
+                                        : const AssetImage('assets/images/jerrymeme.jpg')
+                                            as ImageProvider,
+                                    radius: 40,
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFF6947),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: IconButton(
+                                        onPressed: selectImage,
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                          size: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 20),
-                              Text(
+                              const SizedBox(width: 20),
+                              const Text(
                                 'John Doe',
                                 style: TextStyle(
                                   fontSize: 24,
