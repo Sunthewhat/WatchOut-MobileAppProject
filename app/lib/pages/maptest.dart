@@ -25,6 +25,7 @@ class _MapDisplayState extends State<MapDisplay> {
         target: _center,
         zoom: 11.0,
       ),
+      myLocationButtonEnabled: false,
     );
   }
 }
