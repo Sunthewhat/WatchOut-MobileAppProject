@@ -34,10 +34,10 @@ class _MapDisplayState extends State<MapDisplay> {
         isLoading = false;
       });
     } catch (e) {
-      setState(() {
-        isError = true;
-        isLoading = false;
-      });
+      // setState(() {
+      //   isError = true;
+      //   isLoading = false;
+      // });
     }
   }
 
@@ -100,10 +100,10 @@ class _MapDisplayState extends State<MapDisplay> {
           myLocationButtonEnabled: false,
           myLocationEnabled: true,
           scrollGesturesEnabled: true, // Enable scrolling
-          zoomGesturesEnabled: false,   // Disable zooming
+          zoomGesturesEnabled: false, // Disable zooming
           rotateGesturesEnabled: true, // Enable rotation
-          tiltGesturesEnabled: false,   // Disable tilt
-          zoomControlsEnabled: true,   // Enable zoom controls
+          tiltGesturesEnabled: false, // Disable tilt
+          zoomControlsEnabled: true, // Enable zoom controls
 
           markers: centerMarker != null ? {centerMarker!} : {},
           onCameraMove: _onCameraMove, // Update marker position on camera move
