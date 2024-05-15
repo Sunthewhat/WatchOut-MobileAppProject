@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'package:app/pages/maptest.dart';
 import 'package:app/pages/report/components/add_picture.dart';
 import 'package:app/pages/report/components/button_type.dart';
 import 'package:app/pages/report/components/description_text_field.dart';
-import 'package:app/pages/report/components/map_box.dart';
 import 'package:app/pages/report/components/time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
