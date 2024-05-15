@@ -69,11 +69,15 @@ class _ReportPageState extends State<ReportPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AddPictureButton(
-                  imageFile: _imageFile,
-                  onImageSelected: (source) {
-                    _getImage(source);
-                  },
+                // Added a Container to set the height of AddPictureButton equal to MapDisplay
+                SizedBox(
+                  height: 230.0,
+                  child: AddPictureButton(
+                    imageFile: _imageFile,
+                    onImageSelected: (source) {
+                      _getImage(source);
+                    },
+                  ),
                 ),
                 const SizedBox(height: 5.0),
                 const Padding(
@@ -145,11 +149,12 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.0,
                   ),
                 ),
+                const SizedBox(height: 5.0),
                 const SizedBox(
                   height: 230.0,
                   child: MapDisplay(),
                 ),
-                const SizedBox(height: 5.0),
+                const SizedBox(height: 8.0),
                 const Text(
                   'Description',
                   style: TextStyle(
@@ -157,6 +162,7 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.0,
                   ),
                 ),
+                const SizedBox(height: 5.0),
                 LayoutBuilder(
                   builder: (context, constraints) {
                     return Column(
@@ -168,7 +174,7 @@ class _ReportPageState extends State<ReportPage> {
                             controller: _reportController,
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 15),
                         SizedBox(
                           width: constraints.maxWidth,
                           child: SlideAction(
