@@ -1,8 +1,13 @@
 import 'package:app/components/reports.dart';
+import 'package:app/model/report/report.dart';
 import 'package:app/pages/report/report_info.dart';
+import 'package:app/services/location.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class CustomReportCard extends StatelessWidget {
+
+class CustomReportCard extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String description;
@@ -11,8 +16,10 @@ class CustomReportCard extends StatelessWidget {
   final double range;
   final String reportTime;
   final String type;
+  final double latitude;
+  final double longitude;
 
-  const CustomReportCard({
+  CustomReportCard({
     super.key,
     required this.title,
     required this.imageUrl,
@@ -22,7 +29,34 @@ class CustomReportCard extends StatelessWidget {
     required this.range,
     required this.reportTime,
     required this.type,
+    required this.latitude,
+    required this.longitude,
   });
+
+  @override
+  State<CustomReportCard> createState() => _CustomReportCardState();
+}
+
+class _CustomReportCardState extends State<CustomReportCard> {
+  double? distance;
+  @override
+  void initState() {
+    super.initState();
+    _calculateDistance();
+  }
+
+  Future<void> _calculateDistance() async {
+    LatLng currentPosition = await LocationHandler.getCurrentPosition();
+    setState(() {
+      distance = Geolocator.distanceBetween(
+            currentPosition.latitude,
+            currentPosition.longitude,
+            widget.latitude,
+            widget.longitude,
+          ) /
+          1000; // Convert to kilometers
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +67,16 @@ class CustomReportCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ReportInfoPage(
               report: Report(
-                incidentType: type,
-                location: location,
-                imageUrl: imageUrl,
-                userName: reporterName,
-                reportDescription: description,
-                range: range,
-                reportTime: reportTime,
-                title: title,
+                incidentType: widget.type,
+                location: widget.location,
+                imageUrl: widget.imageUrl,
+                userName: widget.reporterName,
+                reportDescription: widget.description,
+                range: widget.range,
+                reportTime: widget.reportTime,
+                title: widget.title,
+                latitude: widget.latitude,
+                longitude: widget.longitude,
               ),
             ),
           ),
@@ -60,13 +96,16 @@ class CustomReportCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(reportTime,
+                  Text(widget.reportTime,
                       style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 13.0,
                       )),
-                  Text('$range km',
+                  Text(
+                      distance != null
+                          ? '${distance!.toStringAsFixed(2)} km'
+                          : 'Calculating...',
                       style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -78,7 +117,7 @@ class CustomReportCard extends StatelessWidget {
             Stack(
               children: [
                 Image.network(
-                  imageUrl,
+                  widget.imageUrl,
                   fit: BoxFit.cover,
                   height: 200.0,
                   width: double.infinity,
@@ -90,7 +129,7 @@ class CustomReportCard extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     color: Colors.black.withOpacity(0.5),
                     child: Text(
-                      type,
+                      widget.type,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -105,7 +144,7 @@ class CustomReportCard extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               color: const Color(0xFFFF6947),
               child: Text(
-                title,
+                widget.title,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13.0,
@@ -119,7 +158,7 @@ class CustomReportCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    reporterName,
+                    widget.reporterName,
                     style: const TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.bold,

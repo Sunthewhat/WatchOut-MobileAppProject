@@ -7,6 +7,8 @@ class Report {
   final double range;
   final String reportTime;
   final String title;
+  final double latitude;
+  final double longitude;
 
   Report({
     required this.incidentType,
@@ -17,5 +19,7 @@ class Report {
     required this.range,
     required this.reportTime,
     required this.title,
+    required this.latitude,
+    required this.longitude,
   });
 }

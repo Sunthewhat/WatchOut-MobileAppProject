@@ -1,10 +1,12 @@
 import 'package:app/components/report_card.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:app/pages/report/report.dart';
+import 'package:app/services/location.dart';
 import 'package:app/services/report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/reports.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,6 +40,8 @@ class _HomePageState extends State<HomePage> {
                   range: r.latitude,
                   reportTime: r.time.toString(),
                   title: r.title,
+                  latitude: r.latitude,
+                  longitude: r.longitude,
                 ))
             .toList();
         isLoading = false;
@@ -202,6 +206,8 @@ class _HomePageState extends State<HomePage> {
                                       range: reports[index].range,
                                       reportTime:
                                           _formatTimeAgo(reportDateTime),
+                                      latitude: reports[index].latitude,
+                                      longitude: reports[index].longitude,
                                     );
                                   },
                                 )

@@ -15,6 +15,8 @@ class ProfilePage extends StatelessWidget {
       range: 5.0,
       reportTime: '2 hours ago',
       title:'fire burn me',
+      latitude: 13.5224,
+      longitude: 100.573,
     ),
   ];
 
@@ -174,6 +176,8 @@ class ProfilePage extends StatelessWidget {
                                 range: reports[index].range,
                                 reportTime: reports[index].reportTime,
                                 type: reports[index].incidentType,
+                                latitude: reports[index].latitude,
+                                longitude: reports[index].longitude,
                               );
                             },
                           )
