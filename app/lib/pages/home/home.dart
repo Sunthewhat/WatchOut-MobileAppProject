@@ -2,7 +2,7 @@ import 'package:app/components/report_card.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:app/pages/report/report.dart';
 import 'package:app/services/report/report.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:app/components/reports.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -21,11 +21,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _fetchReports();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
+    // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    //   if (!isAllowed) {
+    //     AwesomeNotifications().requestPermissionToSendNotifications();
+    //   }
+    // });
   }
 
   List<Report> reports = [];
@@ -119,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => const ProfilePage()),
                       );
                     },
                     child: const CircleAvatar(
