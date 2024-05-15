@@ -57,8 +57,8 @@ class _ReportPageState extends State<ReportPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          // height: MediaQuery.of(context).size.height * 1.5,
+          // width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
             color: Color(0xFFFFE2DB),
             borderRadius: BorderRadius.only(
@@ -160,7 +160,12 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.0,
                   ),
                 ),
-                DescriptionTextField(controller: _reportController),
+                SizedBox(
+                  height: 100,
+                  child: DescriptionTextField(
+                    controller: _reportController,
+                  ),
+                ),
                 const SizedBox(height: 0.0),
                 Center(
                   child: Padding(
