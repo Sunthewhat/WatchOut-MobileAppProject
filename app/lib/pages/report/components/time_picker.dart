@@ -9,6 +9,7 @@ class TimePicker extends StatefulWidget {
 
 class _TimePickerState extends State<TimePicker> {
   TimeOfDay selectedTime = TimeOfDay.now();
+  bool isFirstTime = true;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,6 +23,7 @@ class _TimePickerState extends State<TimePicker> {
             );
             if (timeOfDay != null) {
               setState(() {
+                isFirstTime = false;
                 selectedTime = timeOfDay;
               });
             }
@@ -29,24 +31,13 @@ class _TimePickerState extends State<TimePicker> {
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFFF5833),
               minimumSize: const Size(50, 35)),
-          child: const Text(
-            'Select Time',
-            style: TextStyle(
+          child: Text(
+            isFirstTime ? 'Select Time' : selectedTime.format(context),
+            style: const TextStyle(
               color: Colors.white,
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0), // Add left margin
-          child: Text(
-            selectedTime.format(context),
-            style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
       ],
     );
   }

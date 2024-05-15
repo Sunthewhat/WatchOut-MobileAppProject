@@ -84,7 +84,11 @@ class _MapDisplayState extends State<MapDisplay> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(
+          child: Container(
+        color: const Color(0xFFFFFFFF),
+        child: const CircularProgressIndicator(),
+      ));
     } else if (isError) {
       return const Center(child: Text('Could not fetch location'));
     } else {

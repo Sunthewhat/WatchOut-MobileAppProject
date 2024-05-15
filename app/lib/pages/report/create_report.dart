@@ -107,40 +107,53 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                 ),
                 const SizedBox(height: 1.0),
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 2.0),
-                  child: Text(
-                    'Type',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                ),
-                const ButtonType(),
-                const SizedBox(height: 5.0),
-                const SizedBox(
-                  height: 20.0,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Time',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 2.0),
+                          child: Text(
+                            'Type',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        ButtonType(),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 20.0,
+                          child: Row(
+                            children: [
+                              Text(
+                                'Time',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                          height: 5,
+                        ),
+                        SizedBox(
+                          height: 40.0,
+                          child: TimePicker(),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  width: 10,
-                  height: 5,
-                ),
-                const SizedBox(
-                  height: 40.0,
-                  child: TimePicker(),
-                ),
+
                 const SizedBox(height: 5.0),
                 const Text(
                   'Location',
