@@ -28,7 +28,7 @@ class _MapDisplayState extends State<MapDisplay> {
       setState(() {
         currentPosition = pos;
         centerMarker = Marker(
-          markerId: MarkerId("center_marker"),
+          markerId: const MarkerId("center_marker"),
           position: currentPosition,
         );
         isLoading = false;
