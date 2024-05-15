@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:app/pages/maptest.dart';
 import 'package:app/pages/report/components/add_picture.dart';
 import 'package:app/pages/report/components/button_type.dart';
 import 'package:app/pages/report/components/description_text_field.dart';
@@ -147,7 +149,11 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.0,
                   ),
                 ),
-                const MapBox(),
+                const SizedBox(
+                  height: 230.0,
+                  child: MapDisplay(),
+                ),
+                // const MapBox(),
                 const SizedBox(height: 5.0),
                 const Text(
                   'Description',
