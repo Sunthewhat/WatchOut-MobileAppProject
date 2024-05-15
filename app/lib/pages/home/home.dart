@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
             color: const Color(0xFFFF6947),
           ),
           Positioned(
-            // top: MediaQuery.of(context).padding.top,
+            top: MediaQuery.of(context).padding.top,
             left: 0,
             right: 0,
             child: Container(

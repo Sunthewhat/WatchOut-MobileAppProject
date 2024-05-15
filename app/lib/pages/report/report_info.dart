@@ -49,17 +49,24 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ClipRRect(
+                Material(
+                  elevation:
+                      10.0, // Set the elevation value to achieve the desired shadow effect
                   borderRadius: BorderRadius.circular(
-                      15.0), // Adjust the radius as needed
-                  child: Image.network(
-                    widget.report.imageUrl,
-                    width: 331.0,
-                    height: 195.0,
-                    fit: BoxFit.cover,
-                    // Add any additional properties as needed
+                      15.0), // Ensure the border radius matches
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        15.0), // Adjust the radius as needed
+                    child: Image.network(
+                      widget.report.imageUrl,
+                      width: 331.0,
+                      height: 195.0,
+                      fit: BoxFit.cover,
+                      // Add any additional properties as needed
+                    ),
                   ),
                 ),
+
                 const SizedBox(height: 20.0),
                 Row(
                   children: [
@@ -91,12 +98,12 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                         BoxShadow(
                           color: Colors.black.withOpacity(0.5),
                           spreadRadius: 1,
-                          blurRadius: 5, 
+                          blurRadius: 5,
                           offset: Offset(0, 3),
                         ),
                       ],
-                      borderRadius: const BorderRadius.all(Radius.circular(
-                          50.0)), 
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(50.0)),
                     ),
                     child: Chip(
                       shape: const RoundedRectangleBorder(
