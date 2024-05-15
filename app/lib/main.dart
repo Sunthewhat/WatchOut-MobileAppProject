@@ -1,5 +1,4 @@
 import 'package:app/pages/onboarding/onboarding.dart';
-import 'package:app/pages/report/create_report.dart';
 // import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ReportPage(),
+      home: const OnboardingPage(),
     );
   }
 }
