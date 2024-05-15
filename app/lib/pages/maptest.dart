@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class MapDisplay extends StatefulWidget {
-  const MapDisplay({Key? key}) : super(key: key);
+  const MapDisplay({super.key});
 
   @override
   State<MapDisplay> createState() => _MapDisplayState();
