@@ -5,8 +5,8 @@ import 'package:app/pages/home/home.dart';
 import 'package:app/pages/intro/intro.dart';
 import 'package:app/pages/auth/login/login.dart';
 import 'package:app/services/auth/verify.dart';
-import 'package:app/services/location.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -33,8 +33,26 @@ class _OnboardingState extends State<OnboardingPage> {
     );
   }
 
-  Future handleLocationPermission() async {
-    await LocationHandler.getCurrentPosition();
+  Future<void> handlePermissions() async {
+    if (await Permission.location.isDenied) {
+      Permission.location.request();
+    }
+    if (await Permission.camera.isDenied) {
+      Permission.camera.request();
+    }
+    if (await Permission.storage.isDenied) {
+      Permission.storage.request();
+    }
+    if (await Permission.microphone.isDenied) {
+      Permission.microphone.request();
+    }
+    if (await Permission.notification.isDenied) {
+      Permission.notification.request();
+    }
+    if (await Permission.photos.isDenied) {
+      Permission.photos.request();
+    }
+    return;
   }
 
   Future checkFirstSeen() async {
@@ -42,7 +60,7 @@ class _OnboardingState extends State<OnboardingPage> {
     // prefs.clear();
     bool seen = (prefs.getBool(EnvironmentConstant.isFirstTime) ?? false);
 
-    await handleLocationPermission();
+    handlePermissions();
 
     if (seen) {
       await checkUserToken();

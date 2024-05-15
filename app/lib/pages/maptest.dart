@@ -89,7 +89,8 @@ class _MapDisplayState extends State<MapDisplay> {
       return const Center(child: Text('Could not fetch location'));
     } else {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+        borderRadius:
+            BorderRadius.circular(20), // Adjust the border radius as needed
         child: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
@@ -103,6 +104,7 @@ class _MapDisplayState extends State<MapDisplay> {
           rotateGesturesEnabled: true, // Enable rotation
           tiltGesturesEnabled: false,   // Disable tilt
           zoomControlsEnabled: true,   // Enable zoom controls
+
           markers: centerMarker != null ? {centerMarker!} : {},
           onCameraMove: _onCameraMove, // Update marker position on camera move
         ),
