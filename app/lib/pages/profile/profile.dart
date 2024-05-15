@@ -69,7 +69,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void selectImage() async {
     XFile? img = await pickImage(ImageSource.gallery);
-    File newImg = File(img!.path);
+    if (img == null) {
+      return;
+    }
+
+    File newImg = File(img.path);
     await ProfileImage.changeProfileImage(newImg);
     var newUserData = await User.getUser();
     setState(() {
@@ -106,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
             left: 0,
             right: 0,
             child: Container(
-              margin: const EdgeInsets.only(top: 35),
+              margin: const EdgeInsets.only(top:5),
               padding: const EdgeInsets.symmetric(vertical: 8),
               color: const Color(0xFFFF6947),
               child: Row(
