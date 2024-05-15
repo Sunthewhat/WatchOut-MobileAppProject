@@ -57,8 +57,6 @@ class _ReportPageState extends State<ReportPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          // height: MediaQuery.of(context).size.height * 1.5,
-          // width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
             color: Color(0xFFFFE2DB),
             borderRadius: BorderRadius.only(
@@ -151,7 +149,6 @@ class _ReportPageState extends State<ReportPage> {
                   height: 230.0,
                   child: MapDisplay(),
                 ),
-                // const MapBox(),
                 const SizedBox(height: 5.0),
                 const Text(
                   'Description',
@@ -160,39 +157,46 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(
-                  height: 100,
-                  child: DescriptionTextField(
-                    controller: _reportController,
-                  ),
-                ),
-                const SizedBox(height: 0.0),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SlideAction(
-                      height: 70,
-                      borderRadius: 30,
-                      elevation: 0,
-                      innerColor: const Color(0xFFFF5833),
-                      outerColor: const Color(0xFFFFA590),
-                      sliderButtonIcon: const Icon(Icons.arrow_forward,
-                          color: Color(0xFFFF5833)),
-                      text: 'Slide to submit',
-                      textStyle: const TextStyle(
-                        color: Color(0xFFFFA590),
-                        fontSize: 20.0,
-                      ),
-                      onSubmit: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Report submitted successfully'),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 100,
+                          width: constraints.maxWidth,
+                          child: DescriptionTextField(
+                            controller: _reportController,
                           ),
-                        );
-                        return null;
-                      },
-                    ),
-                  ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: constraints.maxWidth,
+                          child: SlideAction(
+                            height: 70,
+                            borderRadius: 30,
+                            innerColor: const Color(0xFFFF5833),
+                            outerColor: const Color(0xFFFFA590),
+                            sliderButtonIcon: const Icon(Icons.arrow_forward,
+                                color: Color(0xFFFF5833)),
+                            text: 'Slide to submit',
+                            textStyle: const TextStyle(
+                              color: Color.fromARGB(143, 255, 255, 255),
+                              fontSize: 20.0,
+                            ),
+                            onSubmit: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Report submitted successfully'),
+                                ),
+                              );
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
