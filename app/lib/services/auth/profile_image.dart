@@ -10,7 +10,7 @@ class ProfileImage {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString(EnvironmentConstant.userToken);
       FormData data = FormData.fromMap({
-        'file': image,
+        'file': await MultipartFile.fromFile(image.path, filename: image.path.split('/').last),
         'token': token!,
       });
       Response res = await Dio().put(

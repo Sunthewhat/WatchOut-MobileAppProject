@@ -1,26 +1,39 @@
 import { Context } from 'hono';
 import DecodeToken from '../../services/auth/decodeToken';
 import CreateReportService from '../../services/report/createReport';
+import UploadImageService from '../../services/image/uploadImage';
 
 const CreateReport = async (c: Context) => {
 	try {
-		const {
-			token,
-			imageId,
-			title,
-			description,
-			type,
-			latitude,
-			longitude,
-		} = await c.req.json();
-		const userId = await DecodeToken(token);
+		const body = await c.req.parseBody();
+		const file = body['file'];
+		const token = body['token'].toString();
+		const title = body['title'].toString();
+		const description = body['description'].toString();
+		const type = body['type'].toString();
+		const latitude = body['latitude'].toString();
+		const longitude = body['longitude'].toString();
+
+		if (
+			!file ||
+			!token ||
+			!title ||
+			!description ||
+			!type ||
+			!latitude ||
+			!longitude
+		)
+			throw 'Missing required fields';
+
+		const key = await UploadImageService(file as File, 'report');
+		const userId = await DecodeToken(token.toString());
 		const report = await CreateReportService(
 			title,
 			description,
 			type,
-			latitude,
-			longitude,
-			imageId,
+			Number(latitude),
+			Number(longitude),
+			key.imageId,
 			userId
 		);
 		return c.json(
