@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class MapDisplay extends StatefulWidget {
-  const MapDisplay({super.key});
+  const MapDisplay({Key? key}) : super(key: key);
 
   @override
   State<MapDisplay> createState() => _MapDisplayState();
@@ -72,6 +72,15 @@ class _MapDisplayState extends State<MapDisplay> {
     mapController = controller;
   }
 
+  void _onCameraMove(CameraPosition position) {
+    setState(() {
+      centerMarker = Marker(
+        markerId: const MarkerId("center_marker"),
+        position: position.target,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
@@ -90,12 +99,14 @@ class _MapDisplayState extends State<MapDisplay> {
           ),
           myLocationButtonEnabled: false,
           myLocationEnabled: true,
-          scrollGesturesEnabled: true, // Disable scrolling
-          zoomGesturesEnabled: false, // Disable zooming
-          rotateGesturesEnabled: true, // Disable rotation
-          tiltGesturesEnabled: false, // Disable tilt
-          zoomControlsEnabled: true, // Disable zoom controls
+          scrollGesturesEnabled: true, // Enable scrolling
+          zoomGesturesEnabled: false,   // Disable zooming
+          rotateGesturesEnabled: true, // Enable rotation
+          tiltGesturesEnabled: false,   // Disable tilt
+          zoomControlsEnabled: true,   // Enable zoom controls
+
           markers: centerMarker != null ? {centerMarker!} : {},
+          onCameraMove: _onCameraMove, // Update marker position on camera move
         ),
       );
     }
