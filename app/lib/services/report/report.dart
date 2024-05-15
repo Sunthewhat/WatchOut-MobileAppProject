@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:app/constant/environment.dart';
 import 'package:app/model/base_response.dart';
 import 'package:app/model/report/report.dart';
@@ -7,29 +8,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportService {
   static Future<BaseResponse<ReportResponse>> createReport(
-      int id,
-      int imageId,
-      int userId,
-      String title,
-      String description,
-      String type,
-      DateTime time,
-      double latitude,
-      double longitude) async {
+    File image,
+    String title,
+    String description,
+    String type,
+    double latitude,
+    double longitude,
+  ) async {
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString(EnvironmentConstant.userToken);
+      FormData data = FormData.fromMap({
+        'file': await MultipartFile.fromFile(image.path,
+            filename: image.path.split('/').last),
+        'token': token!,
+        'title': title,
+        'description': description,
+        'type': type,
+        'latitude': latitude,
+        'longitude': longitude,
+      });
       Response res = await Dio().post(
         '${EnvironmentConstant.baseurl}/report/create',
-        data: {
-          'id': id,
-          'imageId': imageId,
-          'userId': userId,
-          'title': title,
-          'description': description,
-          'type': type,
-          'time': time,
-          'latitude': latitude,
-          'longitude': longitude,
-        },
+        data: data,
       );
       var response = BaseResponse<ReportResponse>.fromJson(
         res.data,

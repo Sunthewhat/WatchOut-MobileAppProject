@@ -1,22 +1,88 @@
-import 'package:app/components/report_card.dart';
+import 'dart:io';
+import 'package:app/constant/environment.dart';
+import 'package:app/pages/auth/login/login.dart';
+import 'package:app/services/auth/profile_image.dart';
+import 'package:app/services/auth/user.dart';
+import 'package:app/services/report/report.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:app/components/report_card.dart';
 import 'package:app/components/reports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+Future pickImage(ImageSource source) async {
+  final ImagePicker imagePicker = ImagePicker();
+  var file = await imagePicker.pickImage(source: source);
+  if (file != null) {
+    return file;
+  }
+  return null;
+}
 
-  final List<Report> reports = [
-    Report(
-      incidentType: 'Wildfire',
-      location: 'Ang thong, Bangkok',
-      imageUrl: 'assets/images/wildfire.jpg',
-      userName: 'John Doe',
-      reportDescription: 'Wild fire near my house',
-      range: 5.0,
-      reportTime: '2 hours ago',
-      title:'fire burn me',
-    ),
-  ];
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String? userImg;
+  List<Report> reports = [];
+
+  void getUserData() async {
+    var user = await User.getUser();
+    setState(() {
+      if (user.payload != null) {
+        userImg = user.payload!.image;
+      }
+    });
+  }
+
+  void getUserReport() async {
+    var reports = await ReportService.getUserReports();
+    setState(() {
+      if (reports.payload != null) {
+        this.reports = reports.payload!.reports
+            .map((r) => Report(
+                  incidentType: r.type,
+                  location: r.user,
+                  imageUrl: r.image,
+                  userName: r.user,
+                  reportDescription: r.description,
+                  range: r.latitude,
+                  reportTime: r.time.toString(),
+                  title: r.title,
+                ))
+            .toList();
+      }
+    });
+  }
+
+  void logout() {
+    SharedPreferences.getInstance()
+        .then((pref) => pref.remove(EnvironmentConstant.userToken));
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+        (Route<dynamic> route) => false);
+  }
+
+  void selectImage() async {
+    XFile? img = await pickImage(ImageSource.gallery);
+    File newImg = File(img!.path);
+    await ProfileImage.changeProfileImage(newImg);
+    var newUserData = await User.getUser();
+    setState(() {
+      userImg = newUserData.payload!.image;
+    });
+  }
+
+  @override
+  void initState() {
+    getUserData();
+    getUserReport();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +147,7 @@ class ProfilePage extends StatelessWidget {
                               TextButton(
                                 onPressed: () {
                                   // Perform logout action here
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
+                                  logout();
                                 },
                                 child: const Text('Yes'),
                               ),
@@ -134,15 +199,42 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('assets/images/jerrymeme.jpg'),
-                                radius: 40,
+                              Stack(
+                                children: [
+                                  CircleAvatar(
+                                    foregroundImage: userImg != null
+                                        ? NetworkImage(userImg!)
+                                        : null,
+                                    radius: 40,
+                                    // child: const Icon(
+                                    //     Icons.account_circle_rounded),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFFFF6947),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: IconButton(
+                                        onPressed: selectImage,
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                          size: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 20),
-                              Text(
+                              const SizedBox(width: 20),
+                              const Text(
                                 'John Doe',
                                 style: TextStyle(
                                   fontSize: 24,

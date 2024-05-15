@@ -1,7 +1,6 @@
 import 'package:app/components/reports.dart';
 import 'package:app/pages/maptest.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ReportInfoPage extends StatefulWidget {
   final Report report;
@@ -99,7 +98,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                           color: Colors.black.withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 5,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                       borderRadius:
@@ -160,8 +159,3 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
     );
   }
 }
-// void main() {
-//   runApp(const MaterialApp(
-//     home: ReportInfoPage(),
-//   ));
-// }

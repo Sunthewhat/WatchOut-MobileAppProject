@@ -40,7 +40,6 @@ dependencies:
   shared_preferences: ^2.2.3
   dio: ^5.4.3+1
   flutter_dotenv: ^5.1.0
-
   slide_to_act: any
   image_picker: ^1.1.1
   google_maps_flutter: ^2.6.1
@@ -48,6 +47,7 @@ dependencies:
   geolocator: ^11.0.0
   geocoding: ^3.0.0
   location: ^6.0.2
+  permission_handler: ^11.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
