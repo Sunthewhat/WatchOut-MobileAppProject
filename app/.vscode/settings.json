@@ -1,9 +1,5 @@
 {
 	"java.compile.nullAnalysis.mode": "disabled",
-	"cSpell.words": [
-		"confirmpassword",
-		"firstname",
-		"lastname",
-		"Signup"
-	]
+	"cSpell.words": ["confirmpassword", "firstname", "lastname", "Signup"],
+	"java.configuration.updateBuildConfiguration": "interactive"
 }

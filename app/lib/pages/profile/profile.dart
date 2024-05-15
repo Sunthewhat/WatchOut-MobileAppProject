@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'package:app/constant/environment.dart';
+import 'package:app/pages/auth/login/login.dart';
 import 'package:app/services/auth/profile_image.dart';
 import 'package:app/services/auth/user.dart';
+import 'package:app/services/report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/components/report_card.dart';
 import 'package:app/components/reports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
@@ -23,8 +27,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // Uint8List? _image;
   String? userImg;
+  List<Report> reports = [];
 
   void getUserData() async {
     var user = await User.getUser();
@@ -33,6 +37,34 @@ class _ProfilePageState extends State<ProfilePage> {
         userImg = user.payload!.image;
       }
     });
+  }
+
+  void getUserReport() async {
+    var reports = await ReportService.getUserReports();
+    setState(() {
+      if (reports.payload != null) {
+        this.reports = reports.payload!.reports
+            .map((r) => Report(
+                  incidentType: r.type,
+                  location: r.user,
+                  imageUrl: r.image,
+                  userName: r.user,
+                  reportDescription: r.description,
+                  range: r.latitude,
+                  reportTime: r.time.toString(),
+                  title: r.title,
+                ))
+            .toList();
+      }
+    });
+  }
+
+  void logout() {
+    SharedPreferences.getInstance()
+        .then((pref) => pref.remove(EnvironmentConstant.userToken));
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+        (Route<dynamic> route) => false);
   }
 
   void selectImage() async {
@@ -45,22 +77,10 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  final List<Report> reports = [
-    Report(
-      incidentType: 'Wildfire',
-      location: 'Ang thong, Bangkok',
-      imageUrl: 'assets/images/wildfire.jpg',
-      userName: 'John Doe',
-      reportDescription: 'Wild fire near my house',
-      range: 5.0,
-      reportTime: '2 hours ago',
-      title: 'fire burn me',
-    ),
-  ];
-
   @override
   void initState() {
     getUserData();
+    getUserReport();
     super.initState();
   }
 
@@ -127,8 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               TextButton(
                                 onPressed: () {
                                   // Perform logout action here
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
+                                  logout();
                                 },
                                 child: const Text('Yes'),
                               ),
