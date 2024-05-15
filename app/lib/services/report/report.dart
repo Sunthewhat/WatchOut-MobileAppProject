@@ -43,14 +43,15 @@ class ReportService {
         message: e.toString(),
         payload: ReportResponse(
           id: 0,
-          imageId: 0,
-          userId: 0,
           title: '',
           description: '',
           type: '',
           time: DateTime.now(),
           latitude: 0,
           longitude: 0,
+          image: '',
+          user: '',
+          userImage: '',
         ),
       );
     }
