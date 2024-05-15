@@ -154,7 +154,7 @@ class _ReportPageState extends State<ReportPage> {
                   height: 230.0,
                   child: MapDisplay(),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 5.0),
                 const Text(
                   'Description',
                   style: TextStyle(
@@ -162,7 +162,6 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.0,
                   ),
                 ),
-                const SizedBox(height: 5.0),
                 LayoutBuilder(
                   builder: (context, constraints) {
                     return Column(
@@ -174,7 +173,7 @@ class _ReportPageState extends State<ReportPage> {
                             controller: _reportController,
                           ),
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 10),
                         SizedBox(
                           width: constraints.maxWidth,
                           child: SlideAction(
