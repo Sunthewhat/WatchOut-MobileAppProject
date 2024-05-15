@@ -152,8 +152,3 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
     );
   }
 }
-// void main() {
-//   runApp(const MaterialApp(
-//     home: ReportInfoPage(),
-//   ));
-// }
