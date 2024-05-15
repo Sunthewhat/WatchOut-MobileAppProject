@@ -44,28 +44,28 @@ class _MapDisplayState extends State<MapDisplay> {
   Future<LatLng> getCurrentPosition() async {
     Location location = Location();
 
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
         throw Exception("Location services are disabled.");
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         throw Exception("Location permissions are denied.");
       }
     }
 
-    _locationData = await location.getLocation();
-    return LatLng(_locationData.latitude!, _locationData.longitude!);
+    locationData = await location.getLocation();
+    return LatLng(locationData.latitude!, locationData.longitude!);
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -80,7 +80,8 @@ class _MapDisplayState extends State<MapDisplay> {
       return const Center(child: Text('Could not fetch location'));
     } else {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+        borderRadius:
+            BorderRadius.circular(20), // Adjust the border radius as needed
         child: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
@@ -89,11 +90,11 @@ class _MapDisplayState extends State<MapDisplay> {
           ),
           myLocationButtonEnabled: false,
           myLocationEnabled: true,
-          scrollGesturesEnabled: false, // Disable scrolling
-          zoomGesturesEnabled: false,   // Disable zooming
-          rotateGesturesEnabled: false, // Disable rotation
-          tiltGesturesEnabled: false,   // Disable tilt
-          zoomControlsEnabled: false,   // Disable zoom controls
+          scrollGesturesEnabled: true, // Disable scrolling
+          zoomGesturesEnabled: false, // Disable zooming
+          rotateGesturesEnabled: true, // Disable rotation
+          tiltGesturesEnabled: false, // Disable tilt
+          zoomControlsEnabled: true, // Disable zoom controls
           markers: centerMarker != null ? {centerMarker!} : {},
         ),
       );
