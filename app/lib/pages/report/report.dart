@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app/pages/maptest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
@@ -144,7 +145,11 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.0,
                   ),
                 ),
-                const MapBox(),
+                const SizedBox(
+                  height: 230.0,
+                  child: MapDisplay(),
+                ),
+                // const MapBox(),
                 const SizedBox(height: 5.0),
                 const Text(
                   'Description',
