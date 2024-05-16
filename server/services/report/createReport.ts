@@ -7,7 +7,8 @@ const CreateReportService = async (
 	latitude: number,
 	longitude: number,
 	imageId: number,
-	userId: number
+	userId: number,
+	date: string
 ) => {
 	const report = await prisma.reports.create({
 		data: {
@@ -16,7 +17,7 @@ const CreateReportService = async (
 			type: type,
 			latitude: latitude,
 			longitude: longitude,
-			time: new Date(),
+			time: new Date(date),
 			imageId: imageId,
 			userId: userId,
 		},

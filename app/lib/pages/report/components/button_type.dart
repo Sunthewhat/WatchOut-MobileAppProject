@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ButtonType extends StatefulWidget {
-  const ButtonType({super.key});
+  final Function(String) onSelected;
+  const ButtonType({super.key, required this.onSelected});
 
   @override
   State<ButtonType> createState() => _ButtonTypeState();
@@ -42,10 +43,42 @@ class _ButtonTypeState extends State<ButtonType> {
     }
   }
 
+  int _textColor(String type) {
+    switch (type) {
+      case 'Natural':
+        return 0xFF333333;
+      case 'Collaps':
+        return 0xFFFFFFFF;
+      case 'Crash':
+        return 0xFFFFFFFF;
+      case 'Fight':
+        return 0xFF212427;
+      case 'Forest Fire':
+        return 0xFFFFFFFF;
+      case 'Resident Fire':
+        return 0xFFFFFFFF;
+      case 'Shooting':
+        return 0xFFFFFFFF;
+      case 'Theif':
+        return 0xFFFFFFFF;
+      case 'Traffic':
+        return 0xFF333333;
+      case 'Vandalism':
+        return 0xFFFFFFFF;
+      case 'Suspicious':
+        return 0xFFFFFFFF;
+      case 'Danger':
+        return 0xFFFFFFFF;
+      default:
+        return 0xFFFFFFFF;
+    }
+  }
+
   void _selectType(String type) {
     setState(() {
       _selectedType = type;
       _selectedColor = _buttonColor(type);
+      widget.onSelected(type);
     });
   }
 
@@ -53,7 +86,14 @@ class _ButtonTypeState extends State<ButtonType> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        fixedSize: const Size(
+          150,
+          40,
+        ),
         backgroundColor: Color(_selectedColor),
+        foregroundColor: Color(
+          _textColor(_selectedType),
+        ),
       ),
       onPressed: () => showDialog(
         context: context,
@@ -72,7 +112,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Natural'))),
+                      backgroundColor: Color(
+                        _buttonColor('Natural'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Natural'),
+                      ),
+                    ),
                     child: const Text('Natural'),
                   ),
                   ElevatedButton(
@@ -81,7 +127,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Collaps'))),
+                      backgroundColor: Color(
+                        _buttonColor('Collaps'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Collaps'),
+                      ),
+                    ),
                     child: const Text('Collaps'),
                   ),
                 ],
@@ -95,7 +147,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Fight'))),
+                      backgroundColor: Color(
+                        _buttonColor('Fight'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Fight'),
+                      ),
+                    ),
                     child: const Text('Fight'),
                   ),
                   ElevatedButton(
@@ -104,7 +162,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Resident Fire'))),
+                      backgroundColor: Color(
+                        _buttonColor('Resident Fire'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Resident Fire'),
+                      ),
+                    ),
                     child: const Text('Resident Fire'),
                   ),
                 ],
@@ -118,7 +182,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Forest Fire'))),
+                      backgroundColor: Color(
+                        _buttonColor('Forest Fire'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Forest Fire'),
+                      ),
+                    ),
                     child: const Text('Forest Fire'),
                   ),
                   ElevatedButton(
@@ -127,7 +197,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Crash'))),
+                      backgroundColor: Color(
+                        _buttonColor('Crash'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Crash'),
+                      ),
+                    ),
                     child: const Text('Crash'),
                   ),
                 ],
@@ -141,7 +217,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Shooting'))),
+                      backgroundColor: Color(
+                        _buttonColor('Shooting'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Shooting'),
+                      ),
+                    ),
                     child: const Text('Shooting'),
                   ),
                   ElevatedButton(
@@ -150,7 +232,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Theif'))),
+                      backgroundColor: Color(
+                        _buttonColor('Theif'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Theif'),
+                      ),
+                    ),
                     child: const Text('Theif'),
                   ),
                 ],
@@ -164,7 +252,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Traffic'))),
+                      backgroundColor: Color(
+                        _buttonColor('Traffic'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Traffic'),
+                      ),
+                    ),
                     child: const Text('Traffic'),
                   ),
                   ElevatedButton(
@@ -173,7 +267,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Vandalism'))),
+                      backgroundColor: Color(
+                        _buttonColor('Vandalism'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Vandalism'),
+                      ),
+                    ),
                     child: const Text('Vandalism'),
                   ),
                 ],
@@ -187,7 +287,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Suspicious'))),
+                      backgroundColor: Color(
+                        _buttonColor('Suspicious'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Suspicious'),
+                      ),
+                    ),
                     child: const Text('Suspicious'),
                   ),
                   ElevatedButton(
@@ -196,7 +302,13 @@ class _ButtonTypeState extends State<ButtonType> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(_buttonColor('Danger'))),
+                      backgroundColor: Color(
+                        _buttonColor('Danger'),
+                      ),
+                      foregroundColor: Color(
+                        _textColor('Danger'),
+                      ),
+                    ),
                     child: const Text('Danger'),
                   ),
                 ],

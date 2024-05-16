@@ -8,13 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportService {
   static Future<BaseResponse<ReportResponse>> createReport(
-    File image,
-    String title,
-    String description,
-    String type,
-    double latitude,
-    double longitude,
-  ) async {
+      File image,
+      String title,
+      String description,
+      String type,
+      double latitude,
+      double longitude,
+      String date) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString(EnvironmentConstant.userToken);
@@ -27,6 +27,7 @@ class ReportService {
         'type': type,
         'latitude': latitude,
         'longitude': longitude,
+        'date': date,
       });
       Response res = await Dio().post(
         '${EnvironmentConstant.baseurl}/report/create',

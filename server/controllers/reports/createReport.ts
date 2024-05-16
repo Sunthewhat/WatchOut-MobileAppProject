@@ -13,6 +13,7 @@ const CreateReport = async (c: Context) => {
 		const type = body['type'].toString();
 		const latitude = body['latitude'].toString();
 		const longitude = body['longitude'].toString();
+		const date = body['date'].toString();
 
 		if (
 			!file ||
@@ -21,7 +22,8 @@ const CreateReport = async (c: Context) => {
 			!description ||
 			!type ||
 			!latitude ||
-			!longitude
+			!longitude ||
+			!date
 		)
 			throw 'Missing required fields';
 
@@ -34,7 +36,8 @@ const CreateReport = async (c: Context) => {
 			Number(latitude),
 			Number(longitude),
 			key.imageId,
-			userId
+			userId,
+			date
 		);
 		return c.json(
 			{

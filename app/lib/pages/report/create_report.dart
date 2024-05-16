@@ -1,9 +1,13 @@
-import 'package:app/pages/maptest.dart';
+import 'dart:io';
+
 import 'package:app/pages/report/components/add_picture.dart';
 import 'package:app/pages/report/components/button_type.dart';
 import 'package:app/pages/report/components/description_text_field.dart';
+import 'package:app/pages/report/components/map_report_create.dart';
 import 'package:app/pages/report/components/time_picker.dart';
+import 'package:app/services/report/report.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
@@ -16,8 +20,49 @@ class ReportPage extends StatefulWidget {
 
 class _ReportPageState extends State<ReportPage> {
   final TextEditingController _topicController = TextEditingController();
-  final TextEditingController _reportController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   XFile? _imageFile;
+  String? _selectedType;
+  int _selectedTime = 0;
+  LatLng? _location;
+
+  void _onTypeSelected(String type) {
+    setState(() {
+      _selectedType = type;
+    });
+  }
+
+  void _onTimeSelected(int time) {
+    setState(() {
+      _selectedTime = time;
+    });
+  }
+
+  void _onLocationChange(LatLng loc) {
+    setState(() {
+      _location = loc;
+    });
+  }
+
+  String _createDateString(int minutesAgo) {
+    final now = DateTime.now();
+    final date = now.subtract(Duration(minutes: minutesAgo));
+    // 2024-05-15T15:56:32.037Z
+    return '${date.year}-${date.month}-${date.day}T${date.hour}:${date.minute}:${date.second}.000Z';
+  }
+
+  Future<bool> createReport() async {
+    var res = await ReportService.createReport(
+        File(_imageFile!.path),
+        _topicController.text,
+        _descriptionController.text,
+        _selectedType!,
+        _location!.latitude,
+        _location!.longitude,
+        _createDateString(_selectedTime));
+
+    return res.success;
+  }
 
   Future<void> _getImage(ImageSource source) async {
     final picker = ImagePicker();
@@ -106,13 +151,13 @@ class _ReportPageState extends State<ReportPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 1.0),
-                const Row(
+                const SizedBox(height: 5.0),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(bottom: 2.0),
                           child: Text(
                             'Type',
@@ -122,12 +167,12 @@ class _ReportPageState extends State<ReportPage> {
                             ),
                           ),
                         ),
-                        ButtonType(),
+                        ButtonType(onSelected: _onTypeSelected),
                       ],
                     ),
                     Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 20.0,
                           child: Row(
                             children: [
@@ -141,13 +186,13 @@ class _ReportPageState extends State<ReportPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                           height: 5,
                         ),
                         SizedBox(
                           height: 40.0,
-                          child: TimePicker(),
+                          child: TimePicker(onTimeSelected: _onTimeSelected),
                         ),
                       ],
                     ),
@@ -163,9 +208,10 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                 ),
                 const SizedBox(height: 5.0),
-                const SizedBox(
+                SizedBox(
                   height: 230.0,
-                  child: MapDisplay(),
+                  child: MapDisplayCreateReport(
+                      onLocationChange: _onLocationChange),
                 ),
                 const SizedBox(height: 8.0),
                 const Text(
@@ -184,7 +230,7 @@ class _ReportPageState extends State<ReportPage> {
                           height: 100,
                           width: constraints.maxWidth,
                           child: DescriptionTextField(
-                            controller: _reportController,
+                            controller: _descriptionController,
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -203,6 +249,8 @@ class _ReportPageState extends State<ReportPage> {
                               fontSize: 20.0,
                             ),
                             onSubmit: () {
+                              createReport();
+                              
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:
