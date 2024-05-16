@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'package:app/constant/environment.dart';
 import 'package:app/model/base_response.dart';
-import 'package:app/model/report/report.dart';
 import 'package:app/model/report/reports.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportService {
-  static Future<BaseResponse<ReportResponse>> createReport(
+  static Future<BaseResponse<Null>> createReport(
       File image,
       String title,
       String description,
@@ -33,27 +32,13 @@ class ReportService {
         '${EnvironmentConstant.baseurl}/report/create',
         data: data,
       );
-      var response = BaseResponse<ReportResponse>.fromJson(
-        res.data,
-        (payload) => ReportResponse.fromJson(payload),
-      );
+      var response = BaseResponse<Null>.fromJson(res.data, null);
       return response;
     } catch (e) {
-      return BaseResponse<ReportResponse>(
+      return BaseResponse<Null>(
         success: false,
         message: e.toString(),
-        payload: ReportResponse(
-          id: 0,
-          title: '',
-          description: '',
-          type: '',
-          time: DateTime.now(),
-          latitude: 0,
-          longitude: 0,
-          image: '',
-          user: '',
-          userImage: '',
-        ),
+        payload: null,
       );
     }
   }

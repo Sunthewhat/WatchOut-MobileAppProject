@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/pages/home/home.dart';
 import 'package:app/pages/report/components/add_picture.dart';
 import 'package:app/pages/report/components/button_type.dart';
 import 'package:app/pages/report/components/description_text_field.dart';
@@ -46,9 +47,10 @@ class _ReportPageState extends State<ReportPage> {
 
   String _createDateString(int minutesAgo) {
     final now = DateTime.now();
-    final date = now.subtract(Duration(minutes: minutesAgo));
+    final date =
+        minutesAgo == 0 ? now : now.subtract(Duration(minutes: minutesAgo));
     // 2024-05-15T15:56:32.037Z
-    return '${date.year}-${date.month}-${date.day}T${date.hour}:${date.minute}:${date.second}.000Z';
+    return '${date.year}-${date.month < 10 ? '0${date.month}' : date.month}-${date.day < 10 ? '0${date.day}' : date.day}T${date.hour < 10 ? '0${date.hour}' : date.hour}:${date.minute < 10 ? '0${date.minute}' : date.minute}:${date.second < 10 ? '0${date.second}' : date.second}.000Z';
   }
 
   Future<bool> createReport() async {
@@ -60,7 +62,6 @@ class _ReportPageState extends State<ReportPage> {
         _location!.latitude,
         _location!.longitude,
         _createDateString(_selectedTime));
-
     return res.success;
   }
 
@@ -80,8 +81,30 @@ class _ReportPageState extends State<ReportPage> {
     }
   }
 
+  void handleHome() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (Route<dynamic> route) => false);
+  }
+
+  @override
+  void dispose() {
+    _topicController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
+        String s) {
+      return ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(s),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFB5432A),
       appBar: AppBar(
@@ -113,6 +136,7 @@ class _ReportPageState extends State<ReportPage> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Added a Container to set the height of AddPictureButton equal to MapDisplay
                 SizedBox(
@@ -208,11 +232,10 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                 ),
                 const SizedBox(height: 5.0),
-                SizedBox(
-                  height: 230.0,
-                  child: MapDisplayCreateReport(
-                      onLocationChange: _onLocationChange),
-                ),
+                Stack(children: [
+                  MapDisplayCreateReport(
+                      point: _location, onLocationChange: _onLocationChange),
+                ]),
                 const SizedBox(height: 8.0),
                 const Text(
                   'Description',
@@ -222,48 +245,58 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                 ),
                 const SizedBox(height: 5.0),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 100,
-                          width: constraints.maxWidth,
-                          child: DescriptionTextField(
-                            controller: _descriptionController,
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        SizedBox(
-                          width: constraints.maxWidth,
-                          child: SlideAction(
-                            height: 70,
-                            borderRadius: 30,
-                            innerColor: const Color(0xFFFF5833),
-                            outerColor: const Color(0xFFFFA590),
-                            sliderButtonIcon: const Icon(Icons.arrow_forward,
-                                color: Color(0xFFFF5833)),
-                            text: 'Slide to submit',
-                            textStyle: const TextStyle(
-                              color: Color.fromARGB(143, 255, 255, 255),
-                              fontSize: 20.0,
-                            ),
-                            onSubmit: () {
-                              createReport();
-                              
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('Report submitted successfully'),
-                                ),
-                              );
-                              return null;
-                            },
-                          ),
-                        ),
-                      ],
-                    );
-                  },
+                SizedBox(
+                  height: 100.0,
+                  child: DescriptionTextField(
+                    controller: _descriptionController,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  height: 70,
+                  child: SlideAction(
+                    height: 70,
+                    borderRadius: 30,
+                    innerColor: const Color(0xFFFF5833),
+                    outerColor: const Color(0xFFFFA590),
+                    sliderButtonIcon: const Icon(Icons.arrow_forward,
+                        color: Color(0xFFFF5833)),
+                    text: 'Slide to submit',
+                    textStyle: const TextStyle(
+                      color: Color.fromARGB(143, 255, 255, 255),
+                      fontSize: 20.0,
+                    ),
+                    onSubmit: () async {
+                      if (_imageFile == null) {
+                        showSnackBar('Please select an image');
+                        return null;
+                      }
+                      if (_selectedType == null) {
+                        showSnackBar('Please select a type');
+                        return null;
+                      }
+                      if (_location == null) {
+                        showSnackBar('Please select a location');
+                        return null;
+                      }
+                      if (_topicController.text.isEmpty) {
+                        showSnackBar('Please enter a topic name');
+                        return null;
+                      }
+                      if (_descriptionController.text.isEmpty) {
+                        showSnackBar('Please enter a description');
+                        return null;
+                      }
+                      var res = await createReport();
+                      if (res) {
+                        showSnackBar('Report created successfully');
+                        handleHome();
+                      } else {
+                        showSnackBar('Failed to create report');
+                      }
+                      return null;
+                    },
+                  ),
                 ),
               ],
             ),

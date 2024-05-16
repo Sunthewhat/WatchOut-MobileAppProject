@@ -110,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
             left: 0,
             right: 0,
             child: Container(
-              margin: const EdgeInsets.only(top:5),
+              margin: const EdgeInsets.only(top: 5),
               padding: const EdgeInsets.symmetric(vertical: 8),
               color: const Color(0xFFFF6947),
               child: Row(

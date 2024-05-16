@@ -4,14 +4,20 @@ import 'package:location/location.dart';
 
 class MapDisplayCreateReport extends StatefulWidget {
   final Function(LatLng) onLocationChange;
-  const MapDisplayCreateReport({super.key, required this.onLocationChange});
+  final LatLng? point;
+
+  const MapDisplayCreateReport({
+    super.key,
+    required this.onLocationChange,
+    required this.point,
+  });
 
   @override
   State<MapDisplayCreateReport> createState() => _MapDisplayCreateReportState();
 }
 
 class _MapDisplayCreateReportState extends State<MapDisplayCreateReport> {
-  late GoogleMapController mapController;
+  GoogleMapController? mapController;
   LatLng currentPosition = const LatLng(0, 0);
   Marker? centerMarker;
   bool isLoading = true;
@@ -21,6 +27,14 @@ class _MapDisplayCreateReportState extends State<MapDisplayCreateReport> {
   void initState() {
     super.initState();
     _fetchCurrentPosition();
+  }
+
+  @override
+  void didUpdateWidget(MapDisplayCreateReport oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.point != null && widget.point != oldWidget.point) {
+      _updateMarkerPosition(widget.point!);
+    }
   }
 
   Future<void> _fetchCurrentPosition() async {
@@ -36,7 +50,10 @@ class _MapDisplayCreateReportState extends State<MapDisplayCreateReport> {
         widget.onLocationChange(currentPosition);
       });
     } catch (e) {
-      print(e);
+      setState(() {
+        isLoading = false;
+        isError = true;
+      });
     }
   }
 
@@ -81,36 +98,56 @@ class _MapDisplayCreateReportState extends State<MapDisplayCreateReport> {
     });
   }
 
+  void _updateMarkerPosition(LatLng newPoint) {
+    setState(() {
+      currentPosition = newPoint;
+      centerMarker = Marker(
+        markerId: const MarkerId("center_marker"),
+        position: newPoint,
+      );
+    });
+
+    if (mapController != null) {
+      mapController!.animateCamera(CameraUpdate.newLatLng(newPoint));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Center(
-          child: Container(
-        color: const Color(0xFFFFFFFF),
-        child: const CircularProgressIndicator(),
-      ));
+      return const Center(child: CircularProgressIndicator());
     } else if (isError) {
-      return const Center(child: Text('Could not fetch location'));
-    } else {
       return ClipRRect(
-        borderRadius:
-            BorderRadius.circular(20), // Adjust the border radius as needed
-        child: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: currentPosition,
-            zoom: 17.0,
+        borderRadius: BorderRadius.circular(20.0),
+        child: const SizedBox(
+          height: 230,
+          child: Center(
+            child: Text('Could not fetch location'),
           ),
-          myLocationButtonEnabled: false,
-          myLocationEnabled: true,
-          scrollGesturesEnabled: true, // Enable scrolling
-          zoomGesturesEnabled: false, // Disable zooming
-          rotateGesturesEnabled: true, // Enable rotation
-          tiltGesturesEnabled: false, // Disable tilt
-          zoomControlsEnabled: true, // Enable zoom controls
-
-          markers: centerMarker != null ? {centerMarker!} : {},
-          onCameraMove: _onCameraMove, // Update marker position on camera move
+        ),
+      );
+    } else {
+      return SizedBox(
+        height: 230,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: widget.point ?? currentPosition,
+              zoom: 17.0,
+            ),
+            myLocationButtonEnabled: false,
+            myLocationEnabled: true,
+            scrollGesturesEnabled: true, // Enable scrolling
+            zoomGesturesEnabled: false, // Disable zooming
+            rotateGesturesEnabled: true, // Enable rotation
+            tiltGesturesEnabled: false, // Disable tilt
+            zoomControlsEnabled: true, // Enable zoom controls
+            markers: centerMarker != null ? {centerMarker!} : {},
+            onCameraMove:
+                _onCameraMove, // Update marker position on camera move
+          ),
         ),
       );
     }

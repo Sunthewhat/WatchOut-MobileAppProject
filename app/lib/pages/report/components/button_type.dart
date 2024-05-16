@@ -9,8 +9,7 @@ class ButtonType extends StatefulWidget {
 }
 
 class _ButtonTypeState extends State<ButtonType> {
-  String _selectedType =
-      'Select Type'; // Natural, Collaps, Crash, Fight, Forest Fire, Residential Fire, Shooting, Theif, Traffic, Vandalism, Suspicious, Danger
+  String _selectedType = 'Select Type';
   int _selectedColor = 0xFFFF5833;
   int _buttonColor(String type) {
     switch (type) {

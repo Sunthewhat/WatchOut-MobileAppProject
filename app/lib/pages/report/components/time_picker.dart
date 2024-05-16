@@ -27,47 +27,63 @@ class _TimePickerState extends State<TimePicker> {
                     title: const Center(child: Text('Select Time')),
                     content: SizedBox(
                       height: 200,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100),
+                          const SizedBox(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  if (index > 0) {
+                                    setState(() {
+                                      index--;
+                                      selectedTime = times[index];
+                                    });
+                                    widget.onTimeSelected(selectedTime);
+                                  }
+                                },
+                                child: const Icon(
+                                    Icons.arrow_back_ios_new_rounded),
+                              ),
+                              SizedBox(
+                                width: 100,
+                                child: Center(
+                                  child: Text(
+                                    index == 0
+                                        ? 'Just now'
+                                        : '${times[index]} minutes ago',
+                                  ),
                                 ),
                               ),
-                            ),
-                            onPressed: () {
-                              if (index > 0) {
-                                setState(() {
-                                  index--;
-                                  selectedTime = times[index];
-                                  widget.onTimeSelected(selectedTime);
-                                });
-                              }
-                            },
-                            child: const Icon(Icons.arrow_back_ios_new_rounded),
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: Center(
-                              child: Text(
-                                '${times[index]} minutes',
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (index < times.length - 1) {
+                                    setState(() {
+                                      index++;
+                                      selectedTime = times[index];
+                                    });
+                                    widget.onTimeSelected(selectedTime);
+                                  }
+                                },
+                                child:
+                                    const Icon(Icons.arrow_forward_ios_rounded),
                               ),
-                            ),
+                            ],
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              if (index < times.length - 1) {
-                                setState(() {
-                                  index++;
-                                  selectedTime = times[index];
-                                  widget.onTimeSelected(selectedTime);
-                                });
-                              }
+                              Navigator.pop(context);
                             },
-                            child: const Icon(Icons.arrow_forward_ios_rounded),
+                            child: const Text('Confirm'),
                           ),
                         ],
                       ),
@@ -82,7 +98,7 @@ class _TimePickerState extends State<TimePicker> {
             fixedSize: const Size(150, 50),
           ),
           child: Text(
-            selectedTime == 0 ? 'Select Time' : '$selectedTime minutes',
+            selectedTime == 0 ? 'Just now' : '$selectedTime minutes ago',
             style: const TextStyle(
               color: Colors.white,
             ),
