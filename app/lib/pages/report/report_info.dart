@@ -91,33 +91,19 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                 // Image.asset('assets/images/map.png'),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(50.0)),
-                    ),
-                    child: Chip(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(50.0))),
-                      side: BorderSide.none,
-                      label: Text(
-                        widget.report.incidentType,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
+                  child: Chip(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(50.0))),
+                    side: BorderSide.none,
+                    label: Text(
+                      widget.report.incidentType,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
                       ),
-                      backgroundColor: const Color(0xFFFF5833),
                     ),
+                    backgroundColor: const Color(0xFFFF5833),
                   ),
                 ),
                 const SizedBox(height: 10),
