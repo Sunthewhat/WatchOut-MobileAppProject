@@ -19,6 +19,9 @@ const GetAllReportService = async () => {
 				},
 			},
 		},
+		orderBy: {
+			time: 'asc',
+		},
 	});
 	const AWSGetKey = Bun.env.AWS_BUCKET_GET_URL!;
 	const reports = response.map((report) => {

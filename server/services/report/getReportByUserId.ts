@@ -22,6 +22,9 @@ const GetUserReportService = async (userId: number) => {
 		where: {
 			userId: userId,
 		},
+		orderBy: {
+			time: 'asc',
+		},
 	});
 	const AWSGetKey = Bun.env.AWS_BUCKET_GET_URL!;
 	const reports = response.map((report) => {
