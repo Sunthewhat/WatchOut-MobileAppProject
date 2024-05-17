@@ -28,13 +28,13 @@ class ReportResponse {
       id: json['id'],
       title: json['title'],
       description: json['description'],
+      image: json['image'],
       type: json['type'],
       time: DateTime.parse(json['time']),
       latitude: double.parse(json['latitude']),
       longitude: double.parse(json['longitude']),
       user: json['user'],
-      userImage: json['user_image'],
-      image: json['image'],
+      userImage: json['userImage'],
     );
   }
 }

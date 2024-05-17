@@ -232,10 +232,8 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                 ),
                 const SizedBox(height: 5.0),
-                Stack(children: [
-                  MapDisplayCreateReport(
-                      point: _location, onLocationChange: _onLocationChange),
-                ]),
+                MapDisplayCreateReport(
+                    point: _location, onLocationChange: _onLocationChange),
                 const SizedBox(height: 8.0),
                 const Text(
                   'Description',

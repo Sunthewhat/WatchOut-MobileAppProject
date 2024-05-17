@@ -1,9 +1,9 @@
-import 'package:app/components/reports.dart';
+import 'package:app/model/report/report.dart';
 import 'package:app/pages/maptest.dart';
 import 'package:flutter/material.dart';
 
 class ReportInfoPage extends StatefulWidget {
-  final Report report;
+  final ReportResponse report;
 
   const ReportInfoPage({super.key, required this.report});
 
@@ -57,7 +57,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                     borderRadius: BorderRadius.circular(
                         15.0), // Adjust the radius as needed
                     child: Image.network(
-                      widget.report.imageUrl,
+                      widget.report.image,
                       width: 331.0,
                       height: 195.0,
                       fit: BoxFit.cover,
@@ -93,11 +93,10 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                   alignment: Alignment.centerLeft,
                   child: Chip(
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(50.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(50.0))),
                     side: BorderSide.none,
                     label: Text(
-                      widget.report.incidentType,
+                      widget.report.type,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -131,7 +130,7 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                   ),
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    widget.report.reportDescription,
+                    widget.report.description,
                     style: const TextStyle(
                       fontSize: 16.0,
                     ),

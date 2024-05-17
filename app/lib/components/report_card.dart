@@ -1,48 +1,30 @@
-import 'package:app/components/reports.dart';
+import 'package:app/model/report/report.dart';
 import 'package:app/pages/report/report_info.dart';
+import 'package:app/services/report/calculate_distance.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class CustomReportCard extends StatelessWidget {
-  final String title;
-  final String imageUrl;
-  final String description;
-  final String reporterName;
-  final String location;
-  final double range;
-  final String reportTime;
-  final String type;
+  final ReportResponse report;
+  final LatLng userLocation;
 
   const CustomReportCard({
     super.key,
-    required this.title,
-    required this.imageUrl,
-    required this.description,
-    required this.reporterName,
-    required this.location,
-    required this.range,
-    required this.reportTime,
-    required this.type,
+    required this.report,
+    required this.userLocation,
   });
 
   @override
   Widget build(BuildContext context) {
+    print(report.time);
+    print(DateTime.now());
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ReportInfoPage(
-              report: Report(
-                incidentType: type,
-                location: location,
-                imageUrl: imageUrl,
-                userName: reporterName,
-                reportDescription: description,
-                range: range,
-                reportTime: reportTime,
-                title: title,
-              ),
-            ),
+            builder: (context) => ReportInfoPage(report: report),
           ),
         );
       },
@@ -60,13 +42,19 @@ class CustomReportCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(reportTime,
+                  Text(timeago.format(report.time),
                       style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 13.0,
                       )),
-                  Text('$range km',
+                  Text(
+                      '${CalculateDistance.getDistance(
+                        userLocation.latitude,
+                        userLocation.longitude,
+                        report.latitude,
+                        report.longitude,
+                      )} km',
                       style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -78,7 +66,7 @@ class CustomReportCard extends StatelessWidget {
             Stack(
               children: [
                 Image.network(
-                  imageUrl,
+                  report.image,
                   fit: BoxFit.cover,
                   height: 200.0,
                   width: double.infinity,
@@ -90,7 +78,7 @@ class CustomReportCard extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     color: Colors.black.withOpacity(0.5),
                     child: Text(
-                      type,
+                      report.type,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -105,7 +93,7 @@ class CustomReportCard extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               color: const Color(0xFFFF6947),
               child: Text(
-                title,
+                report.title,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13.0,
@@ -119,7 +107,7 @@ class CustomReportCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    reporterName,
+                    report.user,
                     style: const TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.bold,

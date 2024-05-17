@@ -1,26 +1,35 @@
 import 'package:app/components/report_card.dart';
+import 'package:app/constant/environment.dart';
+import 'package:app/model/report/report.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:app/pages/report/create_report.dart';
+import 'package:app/services/auth/user.dart';
+import 'package:app/services/location.dart';
+import 'package:app/services/report/calculate_distance.dart';
 import 'package:app/services/report/report.dart';
 // import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:app/components/reports.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState(); 
 }
 
 class _HomePageState extends State<HomePage> {
   String _sortBy = 'Range';
+  String? userImg;
+  LatLng userLocation = const LatLng(0, 0);
 
   @override
   void initState() {
     super.initState();
     _fetchReports();
+    _fetchUserData();
+    _fetchCurrentPosition();
     // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
     //   if (!isAllowed) {
     //     AwesomeNotifications().requestPermissionToSendNotifications();
@@ -28,27 +37,43 @@ class _HomePageState extends State<HomePage> {
     // });
   }
 
-  List<Report> reports = [];
+  List<ReportResponse> reports = [];
   bool isLoading = true;
+
+  void _sortReports(String type) async {
+    if (reports.isEmpty) return;
+    switch (type) {
+      case "Range":
+        reports.sort(
+          (a, b) => CalculateDistance.getDistance(
+            userLocation.latitude,
+            userLocation.longitude,
+            a.latitude,
+            a.longitude,
+          ).compareTo(
+            CalculateDistance.getDistance(
+              userLocation.latitude,
+              userLocation.longitude,
+              b.latitude,
+              b.longitude,
+            ),
+          ),
+        );
+        return;
+      case "Time":
+        reports.sort((a, b) => a.time.compareTo(b.time));
+        return;
+    }
+  }
 
   Future<void> _fetchReports() async {
     final response = await ReportService.getAllReports();
     if (response.success && response.payload != null) {
       setState(() {
-        reports = response.payload!.reports
-            .map((r) => Report(
-                  incidentType: r.type,
-                  location: r.user,
-                  imageUrl: r.image,
-                  userName: r.user,
-                  reportDescription: r.description,
-                  range: r.latitude,
-                  reportTime: r.time.toString(),
-                  title: r.title,
-                ))
-            .toList();
+        reports = response.payload!.reports;
         isLoading = false;
       });
+      _sortReports("Time");
     } else {
       setState(() {
         isLoading = false;
@@ -57,18 +82,33 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  String _formatTimeAgo(DateTime dateTime) {
-    return timeago.format(dateTime);
+  void _fetchUserData() async {
+    final userResponse = await User.getUser();
+    if (userResponse.success && userResponse.payload != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(
+        EnvironmentConstant.userProfile,
+        userResponse.payload!.image,
+      );
+      prefs.setString(
+        EnvironmentConstant.userName,
+        userResponse.payload!.name,
+      );
+      setState(() {
+        userImg = userResponse.payload!.image;
+      });
+    }
+  }
+
+  void _fetchCurrentPosition() async {
+    LatLng pos = await LocationHandler.getCurrentPosition();
+    setState(() {
+      userLocation = pos;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_sortBy == 'Range') {
-      reports.sort((a, b) => a.range.compareTo(b.range));
-    } else if (_sortBy == 'Time') {
-      reports.sort((a, b) => b.reportTime.compareTo(a.reportTime));
-    }
-
     double screenHeight = MediaQuery.of(context).size.height;
     double whiteBoxHeight = screenHeight * 0.85;
     double spaceAtTop = screenHeight - whiteBoxHeight;
@@ -123,9 +163,9 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => const ProfilePage()),
                       );
                     },
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/images/jerrymeme.jpg'),
+                          userImg != null ? NetworkImage(userImg!) : null,
                       radius: 30,
                     ),
                   )
@@ -168,6 +208,7 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               _sortBy = newValue!;
                             });
+                            _sortReports(_sortBy);
                           },
                           items: <String>['Range', 'Time'].map((String value) {
                             return DropdownMenuItem<String>(
@@ -192,19 +233,9 @@ class _HomePageState extends State<HomePage> {
                                   itemCount: reports.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    DateTime reportDateTime = DateTime.parse(
-                                        reports[index].reportTime);
                                     return CustomReportCard(
-                                      title: reports[index].title,
-                                      type: reports[index].incidentType,
-                                      imageUrl: reports[index].imageUrl,
-                                      description:
-                                          reports[index].reportDescription,
-                                      reporterName: reports[index].userName,
-                                      location: reports[index].location,
-                                      range: reports[index].range,
-                                      reportTime:
-                                          _formatTimeAgo(reportDateTime),
+                                      report: reports[index],
+                                      userLocation: userLocation,
                                     );
                                   },
                                 )

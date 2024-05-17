@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'package:app/constant/environment.dart';
+import 'package:app/model/report/report.dart';
 import 'package:app/pages/auth/login/login.dart';
 import 'package:app/services/auth/profile_image.dart';
 import 'package:app/services/auth/user.dart';
+import 'package:app/services/location.dart';
 import 'package:app/services/report/report.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app/components/report_card.dart';
-import 'package:app/components/reports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future pickImage(ImageSource source) async {
@@ -28,33 +30,44 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String? userImg;
-  List<Report> reports = [];
+  String? userName;
+  List<ReportResponse> reports = [];
+  LatLng userLocation = const LatLng(0, 0);
 
-  void getUserData() async {
-    var user = await User.getUser();
+  void _fetchCurrentPosition() async {
+    LatLng pos = await LocationHandler.getCurrentPosition();
     setState(() {
-      if (user.payload != null) {
-        userImg = user.payload!.image;
-      }
+      userLocation = pos;
     });
   }
 
+  void getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userImg = prefs.getString(EnvironmentConstant.userProfile);
+    String? userName = prefs.getString(EnvironmentConstant.userName);
+    if (userImg != null && userName != null) {
+      setState(() {
+        this.userImg = userImg;
+        this.userName = userName;
+      });
+    } else {
+      var userData = await User.getUser();
+      if (userData.payload != null) {
+        setState(() {
+          this.userImg = userData.payload!.image;
+          this.userName = userData.payload!.name;
+        });
+      }
+    }
+  }
+
   void getUserReport() async {
-    var reports = await ReportService.getUserReports();
+    var res = await ReportService.getUserReports();
     setState(() {
-      if (reports.payload != null) {
-        this.reports = reports.payload!.reports
-            .map((r) => Report(
-                  incidentType: r.type,
-                  location: r.user,
-                  imageUrl: r.image,
-                  userName: r.user,
-                  reportDescription: r.description,
-                  range: r.latitude,
-                  reportTime: r.time.toString(),
-                  title: r.title,
-                ))
-            .toList();
+      if (res.payload != null) {
+        setState(() {
+          reports = res.payload!.reports;
+        });
       }
     });
   }
@@ -85,6 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     getUserData();
     getUserReport();
+    _fetchCurrentPosition();
     super.initState();
   }
 
@@ -238,9 +252,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               ),
                               const SizedBox(width: 20),
-                              const Text(
-                                'John Doe',
-                                style: TextStyle(
+                              Text(
+                                userName != null ? userName! : 'User Name',
+                                style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -262,14 +276,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             itemCount: reports.length,
                             itemBuilder: (BuildContext context, int index) {
                               return CustomReportCard(
-                                title: reports[index].title,
-                                imageUrl: reports[index].imageUrl,
-                                description: reports[index].reportDescription,
-                                reporterName: reports[index].userName,
-                                location: reports[index].location,
-                                range: reports[index].range,
-                                reportTime: reports[index].reportTime,
-                                type: reports[index].incidentType,
+                                report: reports[index],
+                                userLocation: userLocation,
                               );
                             },
                           )
