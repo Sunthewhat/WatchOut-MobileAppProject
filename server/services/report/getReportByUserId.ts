@@ -23,7 +23,7 @@ const GetUserReportService = async (userId: number) => {
 			userId: userId,
 		},
 		orderBy: {
-			time: 'asc',
+			time: 'desc',
 		},
 	});
 	const AWSGetKey = Bun.env.AWS_BUCKET_GET_URL!;

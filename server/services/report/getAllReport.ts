@@ -20,7 +20,7 @@ const GetAllReportService = async () => {
 			},
 		},
 		orderBy: {
-			time: 'asc',
+			time: 'desc',
 		},
 	});
 	const AWSGetKey = Bun.env.AWS_BUCKET_GET_URL!;
@@ -38,6 +38,7 @@ const GetAllReportService = async () => {
 			userImage: AWSGetKey + report.User.Images.key,
 		};
 	});
+	console.log(reports);
 	return reports;
 };
 

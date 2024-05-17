@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState(); 
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -48,20 +48,20 @@ class _HomePageState extends State<HomePage> {
           (a, b) => CalculateDistance.getDistance(
             userLocation.latitude,
             userLocation.longitude,
-            a.latitude,
-            a.longitude,
+            b.latitude,
+            b.longitude,
           ).compareTo(
             CalculateDistance.getDistance(
               userLocation.latitude,
               userLocation.longitude,
-              b.latitude,
-              b.longitude,
+              a.latitude,
+              a.longitude,
             ),
           ),
         );
         return;
       case "Time":
-        reports.sort((a, b) => a.time.compareTo(b.time));
+        reports.sort((a, b) => b.time.compareTo(a.time));
         return;
     }
   }
@@ -73,7 +73,6 @@ class _HomePageState extends State<HomePage> {
         reports = response.payload!.reports;
         isLoading = false;
       });
-      _sortReports("Time");
     } else {
       setState(() {
         isLoading = false;
@@ -210,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                             });
                             _sortReports(_sortBy);
                           },
-                          items: <String>['Range', 'Time'].map((String value) {
+                          items: <String>['Time', 'Range'].map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),

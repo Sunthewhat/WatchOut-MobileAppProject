@@ -1,6 +1,8 @@
-import 'package:app/model/report/report.dart';
-import 'package:app/pages/maptest.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:app/model/report/report.dart'; // Adjust the import according to your project structure
+import 'package:app/pages/map_report_info.dart'; // Adjust the import according to your project structure
 
 class ReportInfoPage extends StatefulWidget {
   final ReportResponse report;
@@ -53,19 +55,22 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                       10.0, // Set the elevation value to achieve the desired shadow effect
                   borderRadius: BorderRadius.circular(
                       15.0), // Ensure the border radius matches
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        15.0), // Adjust the radius as needed
-                    child: Image.network(
-                      widget.report.image,
-                      width: 331.0,
-                      height: 195.0,
-                      fit: BoxFit.cover,
-                      // Add any additional properties as needed
+                  child: GestureDetector(
+                    onTap: () =>
+                        _showFullScreenImage(context, widget.report.image),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          15.0), // Adjust the radius as needed
+                      child: Image.network(
+                        widget.report.image,
+                        width: 331.0,
+                        height: 195.0,
+                        fit: BoxFit.cover,
+                        // Add any additional properties as needed
+                      ),
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20.0),
                 Row(
                   children: [
@@ -76,19 +81,9 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                         fontSize: 25.0,
                       ),
                     ),
-
                     const SizedBox(width: 10),
-                    // Text(
-                    //   widget.report.location,
-                    //   style: const TextStyle(
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 16.0,
-                    //     color: Colors.grey,
-                    //   ),
-                    // ),
                   ],
                 ),
-                // Image.asset('assets/images/map.png'),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Chip(
@@ -106,9 +101,11 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const SizedBox(
+                SizedBox(
                   height: 230.0,
-                  child: MapDisplay(),
+                  child: MapDisplay(
+                      casePosition: LatLng(
+                          widget.report.latitude, widget.report.longitude)),
                 ),
                 const Text(
                   'Description',
@@ -117,7 +114,6 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                     fontSize: 16.0,
                   ),
                 ),
-
                 Container(
                   width: 300,
                   height: 100,
@@ -138,6 +134,31 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showFullScreenImage(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    imageUrl,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
