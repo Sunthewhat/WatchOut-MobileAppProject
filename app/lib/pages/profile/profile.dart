@@ -73,8 +73,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void logout() {
-    SharedPreferences.getInstance()
-        .then((pref) => pref.remove(EnvironmentConstant.userToken));
+    SharedPreferences.getInstance().then((pref) => {
+          pref.remove(EnvironmentConstant.userToken),
+          pref.remove(EnvironmentConstant.userName),
+          pref.remove(EnvironmentConstant.userProfile)
+        });
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const LoginPage()),
         (Route<dynamic> route) => false);
@@ -92,6 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       userImg = newUserData.payload!.image;
     });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(EnvironmentConstant.userProfile, userImg!);
   }
 
   @override

@@ -3248,7 +3248,7 @@ export namespace Prisma {
     id: number
     username: string
     name: string
-    imageId: number
+    imageId: number | null
     password: string
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
@@ -3278,7 +3278,7 @@ export namespace Prisma {
     imageId?: boolean
     password?: boolean
     Reports?: boolean | Users$ReportsArgs<ExtArgs>
-    Images?: boolean | ImagesDefaultArgs<ExtArgs>
+    Images?: boolean | Users$ImagesArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
@@ -3293,7 +3293,7 @@ export namespace Prisma {
 
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Reports?: boolean | Users$ReportsArgs<ExtArgs>
-    Images?: boolean | ImagesDefaultArgs<ExtArgs>
+    Images?: boolean | Users$ImagesArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3302,13 +3302,13 @@ export namespace Prisma {
     name: "Users"
     objects: {
       Reports: Prisma.$ReportsPayload<ExtArgs>[]
-      Images: Prisma.$ImagesPayload<ExtArgs>
+      Images: Prisma.$ImagesPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       username: string
       name: string
-      imageId: number
+      imageId: number | null
       password: string
     }, ExtArgs["result"]["users"]>
     composites: {}
@@ -3677,7 +3677,7 @@ export namespace Prisma {
 
     Reports<T extends Users$ReportsArgs<ExtArgs> = {}>(args?: Subset<T, Users$ReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportsPayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    Images<T extends ImagesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ImagesDefaultArgs<ExtArgs>>): Prisma__ImagesClient<$Result.GetResult<Prisma.$ImagesPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+    Images<T extends Users$ImagesArgs<ExtArgs> = {}>(args?: Subset<T, Users$ImagesArgs<ExtArgs>>): Prisma__ImagesClient<$Result.GetResult<Prisma.$ImagesPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4031,6 +4031,21 @@ export namespace Prisma {
   }
 
   /**
+   * Users.Images
+   */
+  export type Users$ImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Images
+     */
+    select?: ImagesSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ImagesInclude<ExtArgs> | null
+    where?: ImagesWhereInput
+  }
+
+  /**
    * Users without action
    */
   export type UsersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4100,6 +4115,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -4282,17 +4305,17 @@ export namespace Prisma {
     id?: IntFilter<"Users"> | number
     username?: StringFilter<"Users"> | string
     name?: StringFilter<"Users"> | string
-    imageId?: IntFilter<"Users"> | number
+    imageId?: IntNullableFilter<"Users"> | number | null
     password?: StringFilter<"Users"> | string
     Reports?: ReportsListRelationFilter
-    Images?: XOR<ImagesRelationFilter, ImagesWhereInput>
+    Images?: XOR<ImagesNullableRelationFilter, ImagesWhereInput> | null
   }
 
   export type UsersOrderByWithRelationInput = {
     id?: SortOrder
     username?: SortOrder
     name?: SortOrder
-    imageId?: SortOrder
+    imageId?: SortOrderInput | SortOrder
     password?: SortOrder
     Reports?: ReportsOrderByRelationAggregateInput
     Images?: ImagesOrderByWithRelationInput
@@ -4305,17 +4328,17 @@ export namespace Prisma {
     OR?: UsersWhereInput[]
     NOT?: UsersWhereInput | UsersWhereInput[]
     name?: StringFilter<"Users"> | string
-    imageId?: IntFilter<"Users"> | number
+    imageId?: IntNullableFilter<"Users"> | number | null
     password?: StringFilter<"Users"> | string
     Reports?: ReportsListRelationFilter
-    Images?: XOR<ImagesRelationFilter, ImagesWhereInput>
+    Images?: XOR<ImagesNullableRelationFilter, ImagesWhereInput> | null
   }, "id" | "username">
 
   export type UsersOrderByWithAggregationInput = {
     id?: SortOrder
     username?: SortOrder
     name?: SortOrder
-    imageId?: SortOrder
+    imageId?: SortOrderInput | SortOrder
     password?: SortOrder
     _count?: UsersCountOrderByAggregateInput
     _avg?: UsersAvgOrderByAggregateInput
@@ -4331,7 +4354,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Users"> | number
     username?: StringWithAggregatesFilter<"Users"> | string
     name?: StringWithAggregatesFilter<"Users"> | string
-    imageId?: IntWithAggregatesFilter<"Users"> | number
+    imageId?: IntNullableWithAggregatesFilter<"Users"> | number | null
     password?: StringWithAggregatesFilter<"Users"> | string
   }
 
@@ -4466,14 +4489,14 @@ export namespace Prisma {
     name: string
     password: string
     Reports?: ReportsCreateNestedManyWithoutUserInput
-    Images: ImagesCreateNestedOneWithoutUsersInput
+    Images?: ImagesCreateNestedOneWithoutUsersInput
   }
 
   export type UsersUncheckedCreateInput = {
     id?: number
     username: string
     name: string
-    imageId: number
+    imageId?: number | null
     password: string
     Reports?: ReportsUncheckedCreateNestedManyWithoutUserInput
   }
@@ -4483,14 +4506,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     Reports?: ReportsUpdateManyWithoutUserNestedInput
-    Images?: ImagesUpdateOneRequiredWithoutUsersNestedInput
+    Images?: ImagesUpdateOneWithoutUsersNestedInput
   }
 
   export type UsersUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    imageId?: IntFieldUpdateOperationsInput | number
+    imageId?: NullableIntFieldUpdateOperationsInput | number | null
     password?: StringFieldUpdateOperationsInput | string
     Reports?: ReportsUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -4499,7 +4522,7 @@ export namespace Prisma {
     id?: number
     username: string
     name: string
-    imageId: number
+    imageId?: number | null
     password: string
   }
 
@@ -4513,7 +4536,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    imageId?: IntFieldUpdateOperationsInput | number
+    imageId?: NullableIntFieldUpdateOperationsInput | number | null
     password?: StringFieldUpdateOperationsInput | string
   }
 
@@ -4735,6 +4758,27 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type ImagesNullableRelationFilter = {
+    is?: ImagesWhereInput | null
+    isNot?: ImagesWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type UsersCountOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
@@ -4767,6 +4811,22 @@ export namespace Prisma {
   export type UsersSumOrderByAggregateInput = {
     id?: SortOrder
     imageId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type UsersCreateNestedOneWithoutReportsInput = {
@@ -4939,12 +4999,22 @@ export namespace Prisma {
     deleteMany?: ReportsScalarWhereInput | ReportsScalarWhereInput[]
   }
 
-  export type ImagesUpdateOneRequiredWithoutUsersNestedInput = {
+  export type ImagesUpdateOneWithoutUsersNestedInput = {
     create?: XOR<ImagesCreateWithoutUsersInput, ImagesUncheckedCreateWithoutUsersInput>
     connectOrCreate?: ImagesCreateOrConnectWithoutUsersInput
     upsert?: ImagesUpsertWithoutUsersInput
+    disconnect?: ImagesWhereInput | boolean
+    delete?: ImagesWhereInput | boolean
     connect?: ImagesWhereUniqueInput
     update?: XOR<XOR<ImagesUpdateToOneWithWhereWithoutUsersInput, ImagesUpdateWithoutUsersInput>, ImagesUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type ReportsUncheckedUpdateManyWithoutUserNestedInput = {
@@ -5082,18 +5152,56 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type UsersCreateWithoutReportsInput = {
     username: string
     name: string
     password: string
-    Images: ImagesCreateNestedOneWithoutUsersInput
+    Images?: ImagesCreateNestedOneWithoutUsersInput
   }
 
   export type UsersUncheckedCreateWithoutReportsInput = {
     id?: number
     username: string
     name: string
-    imageId: number
+    imageId?: number | null
     password: string
   }
 
@@ -5135,14 +5243,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    Images?: ImagesUpdateOneRequiredWithoutUsersNestedInput
+    Images?: ImagesUpdateOneWithoutUsersNestedInput
   }
 
   export type UsersUncheckedUpdateWithoutReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    imageId?: IntFieldUpdateOperationsInput | number
+    imageId?: NullableIntFieldUpdateOperationsInput | number | null
     password?: StringFieldUpdateOperationsInput | string
   }
 
@@ -5280,7 +5388,7 @@ export namespace Prisma {
     id?: IntFilter<"Users"> | number
     username?: StringFilter<"Users"> | string
     name?: StringFilter<"Users"> | string
-    imageId?: IntFilter<"Users"> | number
+    imageId?: IntNullableFilter<"Users"> | number | null
     password?: StringFilter<"Users"> | string
   }
 

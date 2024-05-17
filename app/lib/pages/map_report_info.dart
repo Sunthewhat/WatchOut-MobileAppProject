@@ -4,10 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class MapDisplay extends StatefulWidget {
   final LatLng casePosition;
 
-  const MapDisplay({
-    super.key,
-    required this.casePosition,
-  });
+  const MapDisplay({super.key, required this.casePosition});
 
   @override
   State<MapDisplay> createState() => _MapDisplayState();
@@ -23,7 +20,6 @@ class _MapDisplayState extends State<MapDisplay> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    setState(() {});
   }
 
   void _openFullScreenMap() async {
@@ -114,19 +110,19 @@ class _FullScreenMapState extends State<FullScreenMap> {
     mapController = controller;
   }
 
-  void _onSelectLocation() {
-    Navigator.pop(context, selectedPosition);
+  void _onMapClose() {
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Location'),
+        title: const Text('Single report Map'),
         actions: [
           IconButton(
             icon: const Icon(Icons.close),
-            onPressed: _onSelectLocation,
+            onPressed: _onMapClose,
           ),
         ],
       ),

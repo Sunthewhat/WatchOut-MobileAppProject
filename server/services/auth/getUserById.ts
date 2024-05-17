@@ -13,7 +13,9 @@ const GetUserById = async (id: number) => {
 	});
 	return {
 		name: response[0].name,
-		image: Bun.env.AWS_BUCKET_GET_URL! + response[0].Images.key,
+		image: response[0].Images
+			? Bun.env.AWS_BUCKET_GET_URL! + response[0].Images.key
+			: '',
 	};
 };
 

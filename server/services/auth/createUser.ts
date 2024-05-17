@@ -11,7 +11,6 @@ const CreateUser = async (
 			name: firstname + ' ' + lastname,
 			username,
 			password,
-			imageId: 0,
 		},
 	});
 	return user;

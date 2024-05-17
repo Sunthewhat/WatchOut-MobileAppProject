@@ -35,10 +35,11 @@ const GetAllReportService = async () => {
 			latitude: report.latitude,
 			longitude: report.longitude,
 			user: report.User.name,
-			userImage: AWSGetKey + report.User.Images.key,
+			userImage: report.User.Images
+				? AWSGetKey + report.User.Images.key
+				: '',
 		};
 	});
-	console.log(reports);
 	return reports;
 };
 

@@ -1,6 +1,7 @@
 import 'package:app/components/report_card.dart';
 import 'package:app/constant/environment.dart';
 import 'package:app/model/report/report.dart';
+import 'package:app/pages/map/map_page.dart';
 import 'package:app/pages/profile/profile.dart';
 import 'package:app/pages/report/create_report.dart';
 import 'package:app/services/auth/user.dart';
@@ -20,7 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _sortBy = 'Range';
+  String _sortBy = 'Time';
   String? userImg;
   LatLng userLocation = const LatLng(0, 0);
 
@@ -209,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                               _sortBy = newValue;
                             });
                           },
-                          items: <String>['Time', 'Range'].map((String value) {
+                          items: <String>['Range', 'Time'].map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -248,21 +249,51 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ReportPage()),
-          );
-        },
-        backgroundColor: const Color(0xFFB5432A),
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FloatingActionButton(
+              heroTag: null,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MapPage(
+                      reports: reports,
+                    ),
+                  ),
+                );
+              },
+              backgroundColor: const Color(0xFFB5432A),
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.map,
+                color: Colors.white,
+              ),
+            ),
+            FloatingActionButton(
+              heroTag: null,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReportPage(),
+                  ),
+                );
+              },
+              backgroundColor: const Color(0xFFB5432A),
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
