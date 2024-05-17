@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   List<ReportResponse> reports = [];
   bool isLoading = true;
 
-  void _sortReports(String type) async {
+  void _sortReports(String type) {
     if (reports.isEmpty) return;
     switch (type) {
       case "Range":
@@ -48,21 +48,21 @@ class _HomePageState extends State<HomePage> {
           (a, b) => CalculateDistance.getDistance(
             userLocation.latitude,
             userLocation.longitude,
-            b.latitude,
-            b.longitude,
+            a.latitude,
+            a.longitude,
           ).compareTo(
             CalculateDistance.getDistance(
               userLocation.latitude,
               userLocation.longitude,
-              a.latitude,
-              a.longitude,
+              b.latitude,
+              b.longitude,
             ),
           ),
         );
-        return;
+        break;
       case "Time":
         reports.sort((a, b) => b.time.compareTo(a.time));
-        return;
+        break;
     }
   }
 
@@ -204,10 +204,10 @@ class _HomePageState extends State<HomePage> {
                         DropdownButton<String>(
                           value: _sortBy,
                           onChanged: (String? newValue) {
+                            _sortReports(newValue!);
                             setState(() {
-                              _sortBy = newValue!;
+                              _sortBy = newValue;
                             });
-                            _sortReports(_sortBy);
                           },
                           items: <String>['Time', 'Range'].map((String value) {
                             return DropdownMenuItem<String>(

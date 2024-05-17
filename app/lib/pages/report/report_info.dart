@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import 'package:app/model/report/report.dart'; // Adjust the import according to your project structure
-import 'package:app/pages/map_report_info.dart'; // Adjust the import according to your project structure
+import 'package:app/model/report/report.dart';
+import 'package:app/pages/map_report_info.dart';
 
 class ReportInfoPage extends StatefulWidget {
   final ReportResponse report;
