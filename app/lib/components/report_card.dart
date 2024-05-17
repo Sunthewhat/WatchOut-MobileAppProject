@@ -17,8 +17,6 @@ class CustomReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(report.time);
-    print(DateTime.now());
     return InkWell(
       onTap: () {
         Navigator.push(
