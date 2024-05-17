@@ -54,7 +54,7 @@ class CustomReportCard extends StatelessWidget {
                         userLocation.longitude,
                         report.latitude,
                         report.longitude,
-                      )} km',
+                      ).toStringAsFixed(1)} km',
                       style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
