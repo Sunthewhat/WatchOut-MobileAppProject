@@ -1,9 +1,9 @@
 import 'package:app/model/report/report.dart';
 import 'package:app/pages/report/report_info.dart';
 import 'package:app/services/report/calculate_distance.dart';
+import 'package:app/services/timeago.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class CustomReportCard extends StatelessWidget {
   final ReportResponse report;
@@ -40,7 +40,9 @@ class CustomReportCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(timeago.format(report.time),
+                  Text(
+                      TimeCalc.timeAgo(
+                          report.time.subtract(const Duration(hours: 7))),
                       style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
