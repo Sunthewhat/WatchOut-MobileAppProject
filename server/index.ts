@@ -1,3 +1,4 @@
+const st = new Date().getTime();
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
 import { config } from 'dotenv';
@@ -32,6 +33,9 @@ app.route('/auth', auth);
 app.route('/image', image);
 app.route('/report', report);
 
+const en = new Date().getTime();
+
+console.log(`${en - st} ms to start the server`);
 export default {
 	port: Bun.env.PORT || 8000,
 	fetch: app.fetch,

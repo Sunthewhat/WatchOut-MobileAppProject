@@ -258,11 +258,14 @@ class _ReportPageState extends State<ReportPage> {
                     innerColor: const Color(0xFFFF5833),
                     outerColor: const Color(0xFFFFA590),
                     sliderButtonIcon: const Icon(Icons.arrow_forward,
-                        color: Color(0xFFFF5833)),
+                        color: Color(0xFFFFA590)),
                     text: 'Slide to submit',
                     textStyle: const TextStyle(
                       color: Color.fromARGB(143, 255, 255, 255),
                       fontSize: 20.0,
+                    ),
+                    submittedIcon: const CircularProgressIndicator(
+                      color: Color(0xFFFF5833),
                     ),
                     onSubmit: () async {
                       if (_imageFile == null) {

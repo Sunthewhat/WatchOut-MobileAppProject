@@ -4,6 +4,7 @@ import CreateReportService from '../../services/report/createReport';
 import UploadImageService from '../../services/image/uploadImage';
 
 const CreateReport = async (c: Context) => {
+	const st = new Date().getTime();
 	try {
 		const body = await c.req.parseBody();
 		const file = body['file'];
@@ -39,6 +40,8 @@ const CreateReport = async (c: Context) => {
 			userId,
 			date
 		);
+		const en = new Date().getTime();
+		console.log(`${en - st} ms to Create Report`);
 		return c.json(
 			{
 				success: true,
@@ -48,6 +51,8 @@ const CreateReport = async (c: Context) => {
 			200
 		);
 	} catch (e) {
+		const en = new Date().getTime();
+		console.log(`${en - st} ms to Create Report`);
 		console.error(e);
 		return c.json(
 			{
