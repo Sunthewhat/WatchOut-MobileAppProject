@@ -36,7 +36,7 @@ class _TimePickerState extends State<TimePicker> {
                             children: [
                               ElevatedButton(
                                 style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
+                                  shape: WidgetStateProperty.all(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(100),
                                     ),
