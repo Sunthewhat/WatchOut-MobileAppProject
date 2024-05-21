@@ -1,6 +1,5 @@
 import 'package:app/constant/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:app/model/report/report.dart';
 import 'package:app/pages/map_report_info.dart';
@@ -83,6 +82,18 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
+                    const Text('Date :'),
+                    const SizedBox(width: 10),
+                    Text(widget.report.time.toString().substring(0, 10)),
+                    const SizedBox(width: 10),
+                    const Text('Time :'),
+                    const SizedBox(width: 10),
+                    Text(widget.report.time.toString().substring(11, 16)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
                     const Text('By :'),
                     const SizedBox(width: 10),
                     CircleAvatar(
@@ -112,13 +123,14 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                         Color(AppColors.getReportColor(widget.report.type)),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 SizedBox(
                   height: 230.0,
                   child: MapDisplay(
                       casePosition: LatLng(
                           widget.report.latitude, widget.report.longitude)),
                 ),
+                const SizedBox(height: 20),
                 const Text(
                   'Description',
                   style: TextStyle(

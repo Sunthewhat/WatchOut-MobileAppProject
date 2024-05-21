@@ -1,3 +1,5 @@
+import 'package:app/services/location.dart';
+import 'package:app/services/report/calculate_distance.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -12,10 +14,21 @@ class MapDisplay extends StatefulWidget {
 
 class _MapDisplayState extends State<MapDisplay> {
   GoogleMapController? mapController;
+  LatLng currentLocation = const LatLng(0, 0);
+  bool isLocationFetched = false;
 
   @override
   void initState() {
+    _fetchLocation();
     super.initState();
+  }
+
+  void _fetchLocation() async {
+    LatLng pos = await LocationHandler.getCurrentPosition();
+    setState(() {
+      currentLocation = pos;
+      isLocationFetched = true;
+    });
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -65,13 +78,42 @@ class _MapDisplayState extends State<MapDisplay> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: _openFullScreenMap,
-                child: const Center(
-                  child: Text(
-                    'Tap to see fullscreen',
-                    style: TextStyle(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          color: Colors.black38,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                              right: 10,
+                              top: 3,
+                              bottom: 3,
+                            ),
+                            child: Text(
+                              isLocationFetched
+                                  ? '${CalculateDistance.getDistance(currentLocation.latitude, currentLocation.longitude, widget.casePosition.latitude, widget.casePosition.longitude).toStringAsFixed(1)}km away.'
+                                  : 'Calculating...',
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      'Tap to see fullscreen',
+                      style: TextStyle(
                         color: Colors.white,
-                        backgroundColor: Color.fromARGB(60, 0, 0, 0)),
-                  ),
+                        backgroundColor: Colors.black45,
+                      ),
+                    ),
+                    const SizedBox(),
+                  ],
                 ),
               ),
             ),
