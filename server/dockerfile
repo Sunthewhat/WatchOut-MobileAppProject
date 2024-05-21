@@ -4,7 +4,5 @@ COPY . .
 
 RUN bun install
 
-RUN bun prisma
-
 EXPOSE 8000
 ENTRYPOINT [ "bun", "start" ]
