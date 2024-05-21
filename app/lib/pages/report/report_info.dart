@@ -1,4 +1,6 @@
+import 'package:app/constant/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:app/model/report/report.dart';
 import 'package:app/pages/map_report_info.dart';
@@ -71,18 +73,27 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
+                Text(
+                  widget.report.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
-                    Text(
-                      widget.report.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25.0,
-                      ),
+                    const Text('By :'),
+                    const SizedBox(width: 10),
+                    CircleAvatar(
+                      radius: 15,
+                      backgroundImage: NetworkImage(widget.report.userImage),
                     ),
                     const SizedBox(width: 10),
+                    Text(widget.report.user),
                   ],
                 ),
+                const SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Chip(
@@ -91,12 +102,14 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
                     side: BorderSide.none,
                     label: Text(
                       widget.report.type,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Color(
+                            AppColors.getReportTextColor(widget.report.type)),
                         fontSize: 20,
                       ),
                     ),
-                    backgroundColor: const Color(0xFFFF5833),
+                    backgroundColor:
+                        Color(AppColors.getReportColor(widget.report.type)),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -144,20 +157,20 @@ class _ReportInfoPageState extends State<ReportInfoPage> {
       context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
-        child: GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.0),
+          child: InteractiveViewer(
+            panEnabled: true,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
                   child: Image.network(
                     imageUrl,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

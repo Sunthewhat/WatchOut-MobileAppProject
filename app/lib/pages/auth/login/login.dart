@@ -190,6 +190,9 @@ class _LoginPageState extends State<LoginPage> {
                                 child: TextField(
                                   controller: _passwordController,
                                   obscureText: _isObscure,
+                                  onSubmitted: (value) {
+                                    login();
+                                  },
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),

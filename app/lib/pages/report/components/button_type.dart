@@ -1,3 +1,4 @@
+import 'package:app/constant/colors.dart';
 import 'package:flutter/material.dart';
 
 class ButtonType extends StatefulWidget {
@@ -12,65 +13,11 @@ class _ButtonTypeState extends State<ButtonType> {
   String _selectedType = 'Select Type';
   int _selectedColor = 0xFFFF5833;
   int _buttonColor(String type) {
-    switch (type) {
-      case 'Natural':
-        return 0xFF71D374;
-      case 'Collaps':
-        return 0xFF757575;
-      case 'Crash':
-        return 0xFFF53535;
-      case 'Fight':
-        return 0xFFFFB01F;
-      case 'Forest Fire':
-        return 0xFFFF591C;
-      case 'Resident Fire':
-        return 0xFF871212;
-      case 'Shooting':
-        return 0xFF13137F;
-      case 'Theif':
-        return 0xFF1D1D1D;
-      case 'Traffic':
-        return 0xFFFDFD3E;
-      case 'Vandalism':
-        return 0xFFA74AA7;
-      case 'Suspicious':
-        return 0xFF808080;
-      case 'Danger':
-        return 0xFFFF0000;
-      default:
-        return 0xFFFF5833;
-    }
+    return AppColors.getReportColor(type);
   }
 
   int _textColor(String type) {
-    switch (type) {
-      case 'Natural':
-        return 0xFF333333;
-      case 'Collaps':
-        return 0xFFFFFFFF;
-      case 'Crash':
-        return 0xFFFFFFFF;
-      case 'Fight':
-        return 0xFF212427;
-      case 'Forest Fire':
-        return 0xFFFFFFFF;
-      case 'Resident Fire':
-        return 0xFFFFFFFF;
-      case 'Shooting':
-        return 0xFFFFFFFF;
-      case 'Theif':
-        return 0xFFFFFFFF;
-      case 'Traffic':
-        return 0xFF333333;
-      case 'Vandalism':
-        return 0xFFFFFFFF;
-      case 'Suspicious':
-        return 0xFFFFFFFF;
-      case 'Danger':
-        return 0xFFFFFFFF;
-      default:
-        return 0xFFFFFFFF;
-    }
+    return AppColors.getReportTextColor(type);
   }
 
   void _selectType(String type) {
