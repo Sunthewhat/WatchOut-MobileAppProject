@@ -6,7 +6,7 @@ const ConvertToPNG = async (raw: File) => {
 	const rawBuffer = Buffer.from(rawArrBuffer);
 	const pngBuffer = await Sharp(rawBuffer)
 		.png({ quality: 20 })
-		.rotate(90)
+		// .rotate(90)
 		.toBuffer();
 	const pngFile = new File([pngBuffer], raw.name, { type: 'image/png' });
 	const en = new Date().getTime();
